@@ -1,0 +1,23 @@
+[名字 - 字号最大，最明显颜色]
+Cozy Zhu
+
+[主标题 H1 - 你的核心定位，字号第二大]
+AI 工程与商业化的创新型产品经理
+
+[副标题 H2 - 灰色字，对主标题的补充说明，字号中等]
+浙江大学27届工业设计工程硕士。2家AI Start up联合创始人，主导AI家装与跨境直播 SaaS 产品的从 0 到 1。曾在头部大厂（AI 医疗、共享出行）担任 PM 。获20 + 计算机/设计/创业类奖项，发表 3 篇 EI / IEEE 收录的国际论文，参与2项Global项目。
+
+[核心标签 Tags - 胶囊状 UI 元素]
+AIGC
+AI Engineering
+Data Evaluation
+Start-up
+
+[图标链接 - 放在左下角或右上角，邮箱链接：SWEcozyzhu@gmail.com，点击是复制，电话附近还有一个复制电话的交互]
+[领英链接：www.linkedin.com/in/kesi-zhu，点击直接跳转]
+[邮箱链接：SWEcozyzhu@gmail.com，点击是复制]
+[微信，图片链接<WeixinQR.jpg>]
+邮箱 | 微信 | 领英 
+
+[CTA 按钮 - 引导用户下一步动作]
+[ 简历下载 ]
