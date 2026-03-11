@@ -28,7 +28,7 @@
 * **落地场景:** ↳ 构建端到端的多模态工作流，单功能成本降低 70%；协助构建AIGC多模态评价系统，具备 AI 工具链重度使用与二次开发能力。
 
 ### 模块 2：产品架构与数据策略 (Product & Data Strategy)
-* **标签:** B2B/SaaS 架构设计 / MVP 快速验证 / QFD 评价模型 / SQL / 核心指标拆解
+* **标签:** B2B/SaaS 架构设计 / MVP 快速验证 / QFD 评价模型 / 核心指标拆解
 * **落地场景:** ↳ 创业经历及owner视角，从 0 到 1 定义“獭獭搭家”资产数据结构，驱动哈啰出行硬件体验量化评价体系建立。
 
 ### 模块 3：用户体验与原型 (UX & Prototyping)
@@ -41,12 +41,12 @@
 
 ## 3. 工作经验 (Experience)
 
-### 项目 1：奇点跃迁 (Singularity Leap) [自带详情页跳转 `/projects/otters-home`]
+### 项目 1：奇点跃迁 [自带详情页跳转 `/projects/otters-home`]
 * **角色:** 联合创始人
 * **标签:** 从0到1的owner / AIGC / Saas平台 / 产品架构
 * **文字:** “獭獭搭家”AIGC 室内设计 SaaS 平台，1分钟生成家装方案; 作为产品开发主要负责人, 负责项目整体开发进程、 从0到1商业化落地，创新打造 B2B2C 商业模式，为装企提供资产管理系统，获Microsoft fund创业基金支持。
 
-### 项目 2：Acuispire (HK) [自带详情页跳转 `/projects/pilive`]
+### 项目 2：Acuispire (HongKong) [自带详情页跳转 `/projects/pilive`]
 * **角色:** 联合创始人
 * **标签:** Agent / 互动策略 / 降本增效 / Ai Flow
 * **文字:** “Pilive”聚焦跨境直播场景，构建 AI 实时商品识别与互动增长系统。作为产品和Ai Engineer，负责产品功能需求定义，AI Flow，成果与港理nvidia联合实验室合著论文、字节旗下bytedance ai服务平台支持，杭州良仓基地最具投资潜力奖。
@@ -75,7 +75,7 @@
 
 ### 卡片 3 (无跳转链接，展示极客属性)
 * **图片:** `/assets/LearningAgent_cover.png`
-* **标题:** Learning Agent | 正在 Building 的开源学习工具
+* **标题:** Learning Agent学习工具（Building）
 * **副标题:** 整合全站信息的效率智能体
 
 ### 卡片 4 (无跳转链接，视频展示)
