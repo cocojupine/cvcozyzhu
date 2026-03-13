@@ -518,7 +518,7 @@ export default function Home() {
       <GridBackground />
       <StatusBar lang={lang} setLang={setLang} t={t} />
 
-      <div className="relative z-10 max-w-3xl mx-auto px-6 pt-32 md:pt-40">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-32 md:pt-40">
         {/* HERO SECTION */}
         <motion.section
           initial={{ opacity: 0, filter: "blur(10px)" }}
@@ -531,19 +531,19 @@ export default function Home() {
           
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
-              <div className="micro-text text-emerald-500 mb-2 flex items-center gap-2">
+              <div className="micro-text text-emerald-500 mb-2 flex items-center gap-2 text-xs md:text-sm">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-sm" />
                 {t.hero.location}
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tighter text-white leading-[0.9] mix-blend-screen">
+              <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white leading-[0.9] mix-blend-screen">
                 {t.hero.firstName}
                 <br />
                 <span className="text-zinc-600">{t.hero.lastName}</span>
               </h1>
             </div>
             <div className="md:text-right">
-              <div className="micro-text text-zinc-500 mb-1">{t.hero.currentRoleLabel}</div>
-              <div className="text-sm font-bold text-white tracking-widest">{t.hero.role}</div>
+              <div className="micro-text text-zinc-500 mb-1 text-xs">{t.hero.currentRoleLabel}</div>
+              <div className="text-base font-bold text-white tracking-widest">{t.hero.role}</div>
             </div>
           </div>
 
@@ -560,9 +560,9 @@ export default function Home() {
           <SectionHeader index="01" title={t.sections.skills} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {t.skills.map((s, i) => (
-              <div key={i} className="group p-5 rounded-lg border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-all hover:border-white/10">
-                <h4 className="text-sm font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors flex items-center gap-2">
-                  <span className="w-1 h-1 bg-zinc-600 rounded-full group-hover:bg-emerald-500 transition-colors" />
+              <div key={i} className="group p-6 rounded-lg border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-all hover:border-white/10">
+                <h4 className="text-base font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 bg-zinc-600 rounded-full group-hover:bg-emerald-500 transition-colors" />
                   {s.title}
                 </h4>
                 
@@ -570,14 +570,14 @@ export default function Home() {
                   {s.tags.map((tag, j) => (
                     <span 
                       key={j} 
-                      className="text-[9px] px-2 py-1 rounded-full bg-zinc-900/50 border border-white/10 text-zinc-400 font-mono tracking-tight group-hover:border-white/20 group-hover:text-zinc-300 transition-colors"
+                      className="text-xs px-2 py-1 rounded-full bg-zinc-900/50 border border-white/10 text-zinc-400 font-mono tracking-tight group-hover:border-white/20 group-hover:text-zinc-300 transition-colors"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
                 
-                <p className="text-[11px] leading-relaxed text-zinc-500 border-t border-dashed border-white/10 pt-3">
+                <p className="text-sm leading-relaxed text-zinc-500 border-t border-dashed border-white/10 pt-3">
                   {s.desc}
                 </p>
               </div>
@@ -600,25 +600,25 @@ export default function Home() {
                 <div className="absolute -left-[3px] top-1.5 w-[5px] h-[5px] bg-zinc-800 rounded-full ring-4 ring-black group-hover:bg-emerald-500 transition-colors" />
                 
                 <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
-                  <h4 className="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">
+                  <h4 className="text-base font-bold text-white group-hover:text-emerald-400 transition-colors">
                     {exp.company}
                   </h4>
-                  <span className="micro-text font-mono text-zinc-600">{exp.period}</span>
+                  <span className="micro-text font-mono text-zinc-600 text-xs">{exp.period}</span>
                 </div>
                 
-                <div className="text-[10px] font-bold text-zinc-400 mb-3 tracking-wide uppercase">
+                <div className="text-xs font-bold text-zinc-400 mb-3 tracking-wide uppercase">
                   {exp.role}
                 </div>
                 
                 <div className="flex gap-2 mb-3">
                   {exp.tags.map((t, j) => (
-                    <span key={j} className="text-[9px] px-1.5 py-0.5 border border-white/10 rounded-sm text-zinc-600 font-mono bg-zinc-900/30">
+                    <span key={j} className="text-xs px-1.5 py-0.5 border border-white/10 rounded-sm text-zinc-600 font-mono bg-zinc-900/30">
                       {t}
                     </span>
                   ))}
                 </div>
 
-                <p className="text-[11px] leading-relaxed text-zinc-500 max-w-3xl">
+                <p className="text-sm leading-relaxed text-zinc-500 max-w-3xl">
                   {exp.detail}
                 </p>
               </div>
@@ -634,7 +634,7 @@ export default function Home() {
           className="mb-16"
         >
           <SectionHeader index="03" title={t.sections.projects} />
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {t.projects.map((p) => {
               const CardContent = (
                 <motion.div
@@ -668,37 +668,37 @@ export default function Home() {
                     
                     {/* Badge - Positioned inside image */}
                     <div className="absolute top-2 right-2 z-10">
-                       <div className="bg-black/60 backdrop-blur-md border border-white/10 px-1.5 py-0.5 rounded-[2px] text-[8px] font-bold text-white tracking-wider flex items-center gap-1 shadow-lg">
-                         <span className={`w-1 h-1 rounded-full ${p.id === '03' ? 'bg-amber-500' : p.id === '04' ? 'bg-zinc-500' : 'bg-emerald-500'}`} />
+                       <div className="bg-black/60 backdrop-blur-md border border-white/10 px-2 py-1 rounded-[2px] text-[10px] font-bold text-white tracking-wider flex items-center gap-1 shadow-lg">
+                         <span className={`w-1.5 h-1.5 rounded-full ${p.id === '03' ? 'bg-amber-500' : p.id === '04' ? 'bg-zinc-500' : 'bg-emerald-500'}`} />
                          {p.statLabel}
                        </div>
                     </div>
                   </div>
 
                   {/* Content - Below Image */}
-                  <div className="p-3 bg-white/[0.01] backdrop-blur-sm relative border-t border-white/5 flex-1 flex flex-col">
-                    <div className="flex justify-between items-start mb-1.5">
+                  <div className="p-4 bg-white/[0.01] backdrop-blur-sm relative border-t border-white/5 flex-1 flex flex-col">
+                    <div className="flex justify-between items-start mb-2">
                       <div>
-                        <div className="micro-text text-emerald-500/80 mb-0.5 text-[8px]">{p.type}</div>
-                        <h3 className="text-xs font-bold text-zinc-200 tracking-tight group-hover:text-emerald-50 transition-colors leading-tight">
+                        <div className="micro-text text-emerald-500/80 mb-1 text-[10px]">{p.type}</div>
+                        <h3 className="text-sm font-bold text-zinc-200 tracking-tight group-hover:text-emerald-50 transition-colors leading-tight">
                           {p.name}
                         </h3>
                       </div>
                     </div>
 
-                    <p className="text-[9px] leading-relaxed text-zinc-500 mb-2 line-clamp-2 group-hover:text-zinc-400 transition-colors flex-1">
+                    <p className="text-xs leading-relaxed text-zinc-500 mb-3 line-clamp-2 group-hover:text-zinc-400 transition-colors flex-1">
                       {p.desc}
                     </p>
 
                     {p.link ? (
-                      <div className="flex items-center gap-1.5 micro-text text-zinc-600 group-hover:text-zinc-300 transition-colors text-[8px] mt-auto">
+                      <div className="flex items-center gap-1.5 micro-text text-zinc-600 group-hover:text-zinc-300 transition-colors text-[10px] mt-auto">
                         <span className="tracking-widest border-b border-transparent group-hover:border-zinc-300 transition-colors pb-px">
                           {p.cta}
                         </span>
-                        <ArrowUpRight className="w-2.5 h-2.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </div>
                     ) : (
-                      <div className="micro-text text-zinc-700 cursor-not-allowed text-[8px] mt-auto">
+                      <div className="micro-text text-zinc-700 cursor-not-allowed text-[10px] mt-auto">
                         {p.cta}
                       </div>
                     )}
