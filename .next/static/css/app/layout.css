@@ -713,6 +713,9 @@
   .gap-2 {
     gap: calc(var(--spacing) * 2);
   }
+  .gap-2\.5 {
+    gap: calc(var(--spacing) * 2.5);
+  }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
   }
@@ -766,6 +769,13 @@
       margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
+  .space-y-5 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 5) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 5) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
   .space-y-8 {
     :where(& > :not(:last-child)) {
       --tw-space-y-reverse: 0;
@@ -780,6 +790,13 @@
       margin-block-end: calc(calc(var(--spacing) * 10) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
+  .space-y-12 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 12) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 12) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
   .space-y-16 {
     :where(& > :not(:last-child)) {
       --tw-space-y-reverse: 0;
@@ -792,6 +809,13 @@
       --tw-space-y-reverse: 0;
       margin-block-start: calc(calc(var(--spacing) * 24) * var(--tw-space-y-reverse));
       margin-block-end: calc(calc(var(--spacing) * 24) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-32 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 32) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 32) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
   .gap-x-6 {
@@ -1127,6 +1151,9 @@
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
+  }
+  .px-2\.5 {
+    padding-inline: calc(var(--spacing) * 2.5);
   }
   .px-3 {
     padding-inline: calc(var(--spacing) * 3);
@@ -1812,6 +1839,11 @@
   .md\:grid-cols-\[180px_1fr\] {
     @media (width >= 48rem) {
       grid-template-columns: 180px 1fr;
+    }
+  }
+  .md\:grid-cols-\[200px_1fr\] {
+    @media (width >= 48rem) {
+      grid-template-columns: 200px 1fr;
     }
   }
   .md\:flex-row {

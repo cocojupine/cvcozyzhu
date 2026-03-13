@@ -82,14 +82,14 @@ export default function OttersHomeProject() {
         </motion.div>
       </header>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 py-16 md:py-24 grid grid-cols-1 md:grid-cols-[180px_1fr] gap-12 md:gap-24">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 py-16 md:py-24 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-12 md:gap-24">
         
         {/* Left Column: Sticky Metadata */}
-        <aside className="hidden md:block h-fit sticky top-32 space-y-10">
+        <aside className="hidden md:block h-fit sticky top-32 space-y-12">
           <div>
             <SectionLabel>担任角色</SectionLabel>
-            <ul className="space-y-2 text-sm text-zinc-400 font-medium leading-relaxed">
-              <li className="text-zinc-200 font-bold">联合创始人</li>
+            <ul className="space-y-3 text-sm text-zinc-300 font-medium leading-relaxed">
+              <li className="text-white font-bold">联合创始人</li>
               <li>产品负责人</li>
               <li>工作流架构师</li>
             </ul>
@@ -97,9 +97,9 @@ export default function OttersHomeProject() {
           
           <div>
             <SectionLabel>核心技术栈</SectionLabel>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2.5">
               {['Stable Diffusion', 'ComfyUI', 'Next.js', 'Python', 'PostgreSQL'].map((tech) => (
-                <span key={tech} className="px-2 py-1 rounded bg-zinc-900/50 border border-white/10 text-[10px] text-zinc-400 font-mono">
+                <span key={tech} className="px-2.5 py-1 rounded bg-zinc-900/50 border border-white/10 text-xs text-zinc-400 font-mono">
                   {tech}
                 </span>
               ))}
@@ -108,21 +108,21 @@ export default function OttersHomeProject() {
 
           <div>
             <SectionLabel>核心成果</SectionLabel>
-            <div className="space-y-4">
-              <div className="p-4 bg-zinc-900/30 border border-white/5 rounded-lg">
-                <div className="text-xl font-mono font-bold text-emerald-400 mb-1">-70%</div>
-                <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-bold">生产成本</div>
+            <div className="space-y-5">
+              <div className="p-5 bg-zinc-900/30 border border-white/5 rounded-xl">
+                <div className="text-2xl font-mono font-bold text-emerald-400 mb-1.5">-70%</div>
+                <div className="text-[11px] text-zinc-500 uppercase tracking-wider font-bold">生产成本</div>
               </div>
-              <div className="p-4 bg-zinc-900/30 border border-white/5 rounded-lg">
-                <div className="text-xl font-mono font-bold text-white mb-1">27+</div>
-                <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-bold">B端合作商户</div>
+              <div className="p-5 bg-zinc-900/30 border border-white/5 rounded-xl">
+                <div className="text-2xl font-mono font-bold text-white mb-1.5">27+</div>
+                <div className="text-[11px] text-zinc-500 uppercase tracking-wider font-bold">B端合作商户</div>
               </div>
             </div>
           </div>
         </aside>
 
         {/* Right Column: Narrative Content */}
-        <article className="space-y-24">
+        <article className="space-y-32">
           
           {/* Overview */}
           <section>
