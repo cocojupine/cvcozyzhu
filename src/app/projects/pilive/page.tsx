@@ -43,10 +43,10 @@ export default function PiLiveProject() {
       <GridBackground />
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 h-16 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
-        <Link href="/" className="pointer-events-auto group flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/50 backdrop-blur-md border border-white/10 hover:border-white/30 transition-all relative z-50">
-          <ArrowLeft className="w-3.5 h-3.5 text-zinc-400 group-hover:text-white transition-colors" />
-          <span className="text-[10px] font-bold tracking-widest text-zinc-400 group-hover:text-white transition-colors">返回首页</span>
+      <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 h-16 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+        <Link href="/" className="pointer-events-auto group flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/50 backdrop-blur-md border border-white/10 hover:border-white/30 transition-all relative z-50">
+          <ArrowLeft className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors" />
+          <span className="text-xs font-bold tracking-widest text-zinc-400 group-hover:text-white transition-colors">返回首页</span>
         </Link>
       </nav>
 
@@ -67,8 +67,8 @@ export default function PiLiveProject() {
           </div>
           
           <h1 className="text-6xl md:text-8xl font-bold text-white tracking-tight leading-none mb-6">
-            PILIVE
-            <span className="block text-zinc-500 text-3xl md:text-5xl mt-2 font-medium">Live Spark Creator</span>
+            PiLive AI Live Plugin
+            <span className="block text-zinc-500 text-3xl md:text-5xl mt-2 font-medium">让每一场直播，都成为即时成交的孵化器</span>
           </h1>
           
           <p className="text-lg md:text-xl text-zinc-400 max-w-3xl leading-relaxed">
@@ -90,8 +90,8 @@ export default function PiLiveProject() {
                src="/Pilive_video.mp4" 
                autoPlay 
                loop 
-               muted 
                playsInline
+               controls
                className="w-full h-full object-contain rounded-2xl shadow-2xl"
              />
           </div>
@@ -117,7 +117,7 @@ export default function PiLiveProject() {
           <div>
             <SectionLabel>核心技术栈</SectionLabel>
             <div className="flex flex-wrap gap-3">
-              {['ASR (Whisper)', 'VLM', 'Next.js', 'WebSocket', 'Dify'].map((tech) => (
+              {['ASR', 'VLM', 'AIGC', 'Next.js', 'WebSocket', 'Dify'].map((tech) => (
                 <span key={tech} className="px-3 py-1.5 rounded bg-zinc-900/50 border border-white/10 text-sm text-zinc-400 font-mono">
                   {tech}
                 </span>

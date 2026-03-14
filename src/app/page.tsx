@@ -328,7 +328,7 @@ function StatusBar({ lang, setLang, t }: { lang: Lang; setLang: (l: Lang) => voi
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="fixed top-0 left-0 right-0 h-14 flex items-center justify-between px-6 z-50 border-b border-white/5 bg-black/50 backdrop-blur-sm"
+      className="fixed top-0 left-0 right-0 h-16 flex items-center justify-between px-8 z-50 border-b border-white/5 bg-black/50 backdrop-blur-sm"
     >
       <div className="flex items-center gap-4">
         <div className="w-2 h-2 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
@@ -373,92 +373,34 @@ function SectionHeader({ title, index }: { title: string; index: string }) {
 }
 
 function Dock({ t }: { t: any }) {
-  const [copied, setCopied] = useState(false);
-  const controls = [
-    {
-      icon: Smartphone,
-      action: () => {
-        navigator.clipboard.writeText("13568009560");
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      },
-      label: t.dock.phone,
-    },
-    {
-      icon: Mail,
-      action: () => {
-        navigator.clipboard.writeText("SWEcozyzhu@gmail.com");
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      },
-      label: t.dock.email,
-    },
-    {
-      icon: Linkedin,
-      action: () => window.open("https://www.linkedin.com/in/kesi-zhu", "_blank"),
-      label: t.dock.linkedin,
-    },
-    {
-      icon: FileText,
-      action: () => window.open("/assets/CV_simplyfy_KesiZhu.pdf", "_blank"),
-      label: t.dock.resume,
-    },
+  const dockItems = [
+    { id: "phone", label: t.dock.phone, icon: Smartphone, href: "tel:131xxxxxxxx" },
+    { id: "email", label: t.dock.email, icon: Mail, href: "mailto:kesizhu@example.com" },
+    { id: "linkedin", label: t.dock.linkedin, icon: Linkedin, href: "https://www.linkedin.com/in/kesizhu/" },
+    { id: "resume", label: t.dock.resume, icon: FileText, href: "/resume.pdf" },
   ];
 
   return (
-    <>
-      <motion.div
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        transition={{ type: "spring", damping: 20, stiffness: 300, delay: 0.5 }}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit px-4"
-      >
-        <div className="flex items-center gap-2 md:gap-3 px-3 py-2 bg-zinc-900/90 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl shadow-black/80 ring-1 ring-white/10">
-          {controls.map((item, i) => (
-            <button
-              key={i}
-              onClick={item.action}
-              className="relative group p-2 rounded-xl hover:bg-white/10 transition-all active:scale-95 flex flex-col items-center gap-1 min-w-[50px] md:min-w-[auto]"
-            >
-              <item.icon
-                className="w-5 h-5 text-zinc-200 group-hover:text-white transition-colors"
-                strokeWidth={1.5}
-              />
-              {/* Mobile Label (Always visible) */}
-              <span className="text-[10px] font-medium text-zinc-400 md:hidden uppercase tracking-tight">
-                {item.label}
-              </span>
-              
-              {/* Desktop Tooltip (Hover only) */}
-              <span className="hidden md:block absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-zinc-900 border border-white/10 text-xs font-bold tracking-wider text-zinc-300 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap uppercase shadow-xl">
-                {item.label}
-              </span>
-              
-              {/* Active Indicator */}
-              <div className="hidden md:block absolute bottom-0.5 left-1/2 -translate-x-1/2 w-0.5 h-0.5 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-            </button>
-          ))}
-        </div>
-      </motion.div>
-
-      <AnimatePresence>
-        {copied && (
-          <motion.div
-            initial={{ opacity: 0, y: 10, x: "-50%" }}
-            animate={{ opacity: 1, y: 0, x: "-50%" }}
-            exit={{ opacity: 0, y: -10, x: "-50%" }}
-            className="fixed bottom-36 left-1/2 z-50 flex items-center gap-3 px-5 py-2.5 bg-emerald-950 border border-emerald-500/30 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+      <div className="flex items-center gap-3 md:gap-4 px-4 py-3 bg-zinc-900/90 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl shadow-black/80 ring-1 ring-white/10">
+        {dockItems.map(({ id, label, icon: Icon, href }) => (
+          <a
+            key={id}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative group p-2 rounded-xl hover:bg-white/10 transition-all active:scale-95 flex flex-col items-center gap-1 min-w-[50px] md:min-w-[auto]"
           >
-            <div className="bg-emerald-500/20 p-1 rounded-full">
-              <Check className="w-3 h-3 text-emerald-400" strokeWidth={3} />
-            </div>
-            <span className="text-[10px] font-bold text-emerald-100 tracking-widest uppercase">
-              {t.dock.copied}
+            <Icon className="w-6 h-6 text-zinc-200 group-hover:text-white transition-colors" aria-hidden="true" />
+            <span className="text-xs font-medium text-zinc-400 md:hidden uppercase tracking-tight">{label}</span>
+            <span className="hidden md:block absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-zinc-900 border border-white/10 text-xs font-bold tracking-wider text-zinc-300 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap uppercase shadow-xl">
+              {label}
             </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+            <div className="hidden md:block absolute bottom-0.5 left-1/2 -translate-x-1/2 w-0.5 h-0.5 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+        ))}
+      </div>
+    </div>
   );
 }
 
