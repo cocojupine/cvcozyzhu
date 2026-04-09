@@ -374,10 +374,10 @@ function SectionHeader({ title, index }: { title: string; index: string }) {
 
 function Dock({ t }: { t: any }) {
   const dockItems = [
-    { id: "phone", label: t.dock.phone, icon: Smartphone, href: "tel:131xxxxxxxx" },
-    { id: "email", label: t.dock.email, icon: Mail, href: "mailto:kesizhu@example.com" },
-    { id: "linkedin", label: t.dock.linkedin, icon: Linkedin, href: "https://www.linkedin.com/in/kesizhu/" },
-    { id: "resume", label: t.dock.resume, icon: FileText, href: "/resume.pdf" },
+    { id: "phone", label: t.dock.phone, icon: Smartphone, href: "tel:13568009560" },
+    { id: "email", label: t.dock.email, icon: Mail, href: "mailto:1162135252@qq.com" },
+    { id: "linkedin", label: t.dock.linkedin, icon: Linkedin, href: "https://www.linkedin.com/in/kesi-zhu" },
+    { id: "resume", label: t.dock.resume, icon: FileText, href: "/CV_simplyfy_KesiZhu.pdf" },
   ];
 
   return (
