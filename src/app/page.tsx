@@ -80,7 +80,7 @@ const content = {
         role: "PRODUCT MANAGER INTERN",
         period: "2026.05-PRESENT",
         tags: ["AI PRODUCT", "EVAL PLATFORM", "MULTIMODAL"],
-        detail: "Owned PowerPoint AI Skill quality iteration and Eval analysis. Designed Topic Aggregation with evidence drill-down and built the MVP in one week using AI coding, aggregating 14 cases per run (~2K words each) to surface 10 major failure themes in ~15 minutes. Traced output failures to multimodal generation paths, Skill invocation, and quality-latency trade-offs, driving strategy and pipeline changes.",
+        detail: "Responsible for brand capabilities and quality evaluation for enterprise AI PowerPoint generation. Through test system design, Failure Pattern attribution, and product solution exploration, drove continuous improvements in brand consistency, content adaptation, and delivery reliability.",
       },
       {
         company: "SINGULARITY LEAP · START-UP",
@@ -219,7 +219,7 @@ const content = {
         role: "产品经理实习生 (PowerPoint AI)",
         period: "2026.05-至今",
         tags: ["AI 产品", "Eval 平台", "多模态生成"],
-        detail: "负责 PowerPoint AI Skill 生成质量与 Eval 分析。独立设计 Topic Aggregation 与 Evidence Drill-down，并用 AI Coding 在 1 周内完成 MVP，将每轮 14 组、单组约 2K 字的评估结果聚合为主要低分原因，约 15 分钟定位 10 项问题；同时从生成结果反向拆解多模态生成路径、Skill 调用与 Quality–Latency 权衡，推动生成策略与链路调整。",
+        detail: "负责企业级 AI PowerPoint 生成的品牌能力与质量评测，通过测试体系设计、Failure Pattern 归因及产品方案探索，推动生成结果在品牌一致性、内容适配与交付稳定性上的持续优化。",
       },
       {
         company: "奇点跃迁 · Start—up",

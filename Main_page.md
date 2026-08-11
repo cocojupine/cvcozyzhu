@@ -47,7 +47,7 @@
 ### 经历 1：微软 · Microsoft (2026.05-至今)
 * **角色:** 产品经理实习生 (PowerPoint AI)
 * **标签:** AI 产品 / Eval 平台 / 多模态生成
-* **详情:** 负责 PowerPoint AI Skill 生成质量与 Eval 分析。独立设计 Topic Aggregation 与 Evidence Drill-down，并用 AI Coding 在 1 周内完成 MVP，将每轮 14 组、单组约 2K 字的评估结果聚合为主要低分原因，约 15 分钟定位 10 项问题；同时从生成结果反向拆解多模态生成路径、Skill 调用与 Quality–Latency 权衡，推动生成策略与链路调整。
+* **详情:** 负责企业级 AI PowerPoint 生成的品牌能力与质量评测，通过测试体系设计、Failure Pattern 归因及产品方案探索，推动生成结果在品牌一致性、内容适配与交付稳定性上的持续优化。
 
 ### 经历 2：奇点跃迁 · Start up(2025.06-2026.03)
 * **角色:** 联合创始人
