@@ -42,7 +42,7 @@ const content = {
       location: "ZHEJIANG UNIV. M.Des (2027)",
       currentRoleLabel: "CURRENT ROLE",
       intro: [
-        "Co-Founder of 2 AI Startups. Previously PM at iFLYTEK & Hello Inc. 3 EI/IEEE Papers. 20+ Awards.",
+        "Product Manager Intern for Microsoft PowerPoint AI. Co-Founder of 2 AI Startups. Previously PM at iFLYTEK & Hello Inc. 3 EI/IEEE Papers. 20+ Awards.",
       ],
       tags: ["AIGC", "AI ENGINEERING", "DATA EVALUATION", "START-UP"],
     },
@@ -75,6 +75,13 @@ const content = {
       },
     ],
     experience: [
+      {
+        company: "MICROSOFT · POWERPOINT AI",
+        role: "PRODUCT MANAGER INTERN",
+        period: "2026.05-PRESENT",
+        tags: ["AI PRODUCT", "EVAL PLATFORM", "MULTIMODAL"],
+        detail: "Owned PowerPoint AI Skill quality iteration and Eval analysis. Designed Topic Aggregation with evidence drill-down and built the MVP in one week using AI coding, aggregating 14 cases per run (~2K words each) to surface 10 major failure themes in ~15 minutes. Traced output failures to multimodal generation paths, Skill invocation, and quality-latency trade-offs, driving strategy and pipeline changes.",
+      },
       {
         company: "SINGULARITY LEAP · START-UP",
         role: "CO-FOUNDER",
@@ -174,7 +181,7 @@ const content = {
       location: "浙江大学 · 工业设计工程硕士 · 27届",
       currentRoleLabel: "当前角色",
       intro: [
-        "2家 AI 创业公司联合创始人。曾在科大讯飞与哈啰出行担任 PM。发表 3 篇 EI/IEEE 论文，获 20+ 奖项。",
+        "微软 PowerPoint AI 产品经理实习生，2家 AI 创业公司联合创始人。曾在科大讯飞与哈啰出行担任 PM；发表 3 篇 EI/IEEE 论文，获 20+ 奖项。",
       ],
       tags: ["AIGC", "AI 工程化", "数据评估", "从0到1"],
     },
@@ -207,6 +214,13 @@ const content = {
       },
     ],
     experience: [
+      {
+        company: "微软 · Microsoft",
+        role: "产品经理实习生 (PowerPoint AI)",
+        period: "2026.05-至今",
+        tags: ["AI 产品", "Eval 平台", "多模态生成"],
+        detail: "负责 PowerPoint AI Skill 生成质量与 Eval 分析。独立设计 Topic Aggregation 与 Evidence Drill-down，并用 AI Coding 在 1 周内完成 MVP，将每轮 14 组、单组约 2K 字的评估结果聚合为主要低分原因，约 15 分钟定位 10 项问题；同时从生成结果反向拆解多模态生成路径、Skill 调用与 Quality–Latency 权衡，推动生成策略与链路调整。",
+      },
       {
         company: "奇点跃迁 · Start—up",
         role: "联合创始人",
