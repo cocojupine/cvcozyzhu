@@ -24,6 +24,7 @@ import {
   Code2,
   Sparkles,
 } from "lucide-react";
+import EditorialHome from "@/components/EditorialHome";
 
 // ─── Data (Multi-language) ────────────────────────────────────────────────────
 
@@ -461,7 +462,7 @@ function HeroIntro({ text, tags }: { text: string[]; tags: string[] }) {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-export default function Home() {
+function LegacyHome() {
   const { scrollYProgress } = useScroll();
   const [lang, setLang] = useState<Lang>("CN");
   const t = content[lang];
@@ -694,4 +695,8 @@ export default function Home() {
       <Dock t={t} />
     </main>
   );
+}
+
+export default function Home() {
+  return <EditorialHome content={content} />;
 }

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-sans: "Segoe UI Variable Text", "Noto Sans SC", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: "Cascadia Code", Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace;
 }
 
 @utility glass-card {
@@ -76,6 +76,55 @@ body {
   /* font-family handled by Tailwind @theme and layout.tsx */
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+.editorial-shell {
+  --editorial-ink: #090b0d;
+  --editorial-paper: #f2efe7;
+  --editorial-mint: #82d8b0;
+  font-family: "Segoe UI Variable Text", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+}
+
+.editorial-display {
+  font-family: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+}
+
+.editorial-label {
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.editorial-noise {
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+.editorial-orbit {
+  animation: editorial-spin 28s linear infinite;
+}
+
+.editorial-orbit-dot {
+  animation: editorial-pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes editorial-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes editorial-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editorial-orbit,
+  .editorial-orbit-dot {
+    animation: none;
+  }
 }
 
 * {
