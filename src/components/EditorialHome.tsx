@@ -1,550 +1,154 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowDown,
-  ArrowUpRight,
-  FileText,
-  Linkedin,
-  Mail,
-  Smartphone,
-} from "lucide-react";
+import { ArrowDown, ArrowUpRight, FileText, Linkedin, Mail, Smartphone } from "lucide-react";
 
 type Lang = "EN" | "CN";
-type HeroVariant = "desk" | "signal" | "manifesto";
+type Props = { content: Record<Lang, any> };
 
-type EditorialHomeProps = {
-  content: Record<Lang, any>;
-};
-
-const editorialCopy = {
+const copy = {
   CN: {
-    issue: "个人网站 · 第一期",
-    eyebrow: "HACKATHON SPIRIT · PRODUCT MINDSET",
+    issue: "个人网站 / 叙事原型 02",
+    nav: [["命题", "#thesis"], ["形成", "#formation"], ["证据", "#evidence"]],
+    eyebrow: "HACKATHON SPIRIT / PRODUCT JUDGMENT",
     thesis: ["一个带着", "黑客松精神", "做产品的人。"],
-    statement:
-      "兴趣把我带向新的问题，行动让我把想法做出来，而商业化思维让我判断，什么值得成为真正的产品。",
-    proof: "经过验证的事实",
-    facts: [
-      ["02", "AI 创业实践"],
-      ["03", "EI / IEEE 论文"],
-      ["20+", "奖项与认可"],
+    statement: "兴趣把我带向新的问题，行动让我把想法做出来，而商业化思维让我判断，什么值得成为真正的产品。",
+    signature: ["PERSONAL SIGNATURE / PLACEHOLDER", "你的视觉签名", "Apple Avatar、真实肖像或一件代表你的物品。它负责让人记住你，不替你讲故事。"],
+    facts: [["02", "AI 创业实践"], ["03", "EI / IEEE 论文"], ["20+", "奖项与认可"], ["01", "持续形成中的判断"]],
+    scroll: "故事从这里开始",
+    qLabel: "THE QUESTION THAT STAYED",
+    question: ["一个有趣的想法，", "什么时候才真正", "值得成为产品？"],
+    qNote: "我没有一开始就知道答案。答案是在一次次进入陌生领域、把东西做出来，再接受真实世界检验的过程中形成的。",
+    principles: [
+      ["01 / INTEREST", "兴趣", "让我愿意进入没有标准答案的新问题。"],
+      ["02 / ACTION", "行动", "让我不只讨论可能性，而是快速做出可验证的东西。"],
+      ["03 / JUDGMENT", "判断", "让我继续追问：它是否值得被使用、被信任、被长期做下去。"],
     ],
-    scroll: "向下阅读",
-    methodNote: "能力不是标签的集合，而是我面对新问题时可以调动的方法。",
-    experienceNote: "在不同系统中学习、判断并交付；业务不同，但行动方式始终连贯。",
-    projectsNote: "项目是能力留下的证据。具体业务可以改变，创造与落地的方法会持续生长。",
-    current: "现在",
-    notesTitle: "开放笔记",
-    notesIntro: "这些位置故意留白。它们不是虚构内容，而是下一次由你补上的个人线索。",
-    notePrompts: [
-      ["正在学习", "最近哪个新知识改变了你看问题的方式？"],
-      ["正在尝试", "最近有什么小想法，让你忍不住亲手做出来？"],
-      ["跨越边界", "哪次跨文化交流，让你重新理解了产品或合作？"],
+    formation: "判断如何形成",
+    formationNote: "不是一条履历时间线，而是三次对“做产品”的重新理解。",
+    acts: [
+      { no: "ACT I", year: "2023—2024", title: "先进入真实系统", lead: "好想法第一次遇到的，不是掌声，而是复杂度。", body: "在医疗与智能硬件的真实业务里，我开始理解：产品不是一张漂亮原型，而是需求、数据、流程与组织共同运转的系统。", bridge: "我学会了把模糊问题变成可定义、可测量、可迭代的对象。", entries: [3, 4], tone: "blue" },
+      { no: "ACT II", year: "2025—2026", title: "再把想法押进现实", lead: "当没有现成答案时，就亲手把答案做出来。", body: "联合创办两家 AI 产品，让我从功能、体验和工程一路走到用户、成本与商业模式。黑客松式行动力在这里不再只通往 Demo，而是开始承担结果。", bridge: "我开始知道，做出来只是起点；让它进入真实交易与协作，才会暴露真正的问题。", entries: [2, 1], tone: "orange" },
+      { no: "ACT III", year: "2026—NOW", title: "最后，学会让 AI 值得信任", lead: "越接近真实交付，越需要克制、标准与判断。", body: "在企业级 AI 生成产品中，我把注意力从“能力是否惊艳”推进到“质量是否稳定、结果是否适配、系统是否能够持续改进”。", bridge: "今天的我仍然愿意从未知开始，但会用更严格的标准决定什么值得走到最后。", entries: [0], tone: "mint" },
     ],
-    diagram: {
-      curiosity: "兴趣 / CURIOSITY",
-      action: "行动 / ACTION",
-      value: "价值 / VALUE",
-      center: "产品",
-    },
+    judgment: ["MISSING SCENE / TO BE WRITTEN", "一次真正改变你判断的现场", "这里不会再放一段项目介绍。它将记录一次真实取舍：你原本相信什么、现实推翻了什么、你最终放弃或坚持了什么。", ["原来的假设", "遇到的约束", "被放弃的方案", "形成的新判断"], "等待你提供真实材料后替换此占位内容。"],
+    evidence: "证据，而不是自我评价",
+    evidenceNote: "经历说明判断如何形成；这些能力与作品，让招聘者可以快速核验它。",
+    skills: "我如何做产品",
+    projects: "项目作为能力索引",
+    proofs: ["产品架构 / 商业验证", "AI Flow / 跨文化协作", "主动学习 / AI Engineering", "创意原型 / 独立实现"],
+    endingLabel: "STILL CURIOUS. MORE DELIBERATE.",
+    ending: "我仍然喜欢从一个新问题开始。不同的是，现在我不只问“能不能做出来”，也会追问“为什么值得做”。",
+    endingNote: "这不是一个已经完成的答案，而是我想继续带进下一段工作里的产品判断。",
+    resume: "查看完整简历",
   },
   EN: {
-    issue: "PERSONAL SITE · ISSUE 01",
-    eyebrow: "HACKATHON SPIRIT · PRODUCT MINDSET",
+    issue: "PERSONAL SITE / NARRATIVE PROTOTYPE 02",
+    nav: [["THESIS", "#thesis"], ["FORMATION", "#formation"], ["EVIDENCE", "#evidence"]],
+    eyebrow: "HACKATHON SPIRIT / PRODUCT JUDGMENT",
     thesis: ["A product person", "with a hackathon", "state of mind."],
-    statement:
-      "Curiosity leads me to new questions. Action turns ideas into things, and commercial judgment tells me what deserves to become a real product.",
-    proof: "PROOF, NOT PROMISES",
-    facts: [
-      ["02", "AI start-up journeys"],
-      ["03", "EI / IEEE papers"],
-      ["20+", "awards & recognition"],
+    statement: "Curiosity leads me to new questions. Action turns ideas into things, and commercial judgment tells me what deserves to become a real product.",
+    signature: ["PERSONAL SIGNATURE / PLACEHOLDER", "Your visual signature", "An Apple Avatar, portrait, or object that feels unmistakably yours. It creates recognition; it does not carry the story."],
+    facts: [["02", "AI start-up journeys"], ["03", "EI / IEEE papers"], ["20+", "awards & recognition"], ["01", "evolving point of view"]],
+    scroll: "The story starts here",
+    qLabel: "THE QUESTION THAT STAYED",
+    question: ["When does an", "interesting idea truly", "deserve to be a product?"],
+    qNote: "I did not begin with an answer. It emerged by entering unfamiliar fields, making things real, and letting reality test them.",
+    principles: [
+      ["01 / INTEREST", "Curiosity", "draws me toward questions without standard answers."],
+      ["02 / ACTION", "Action", "turns possibility into something that can be tested."],
+      ["03 / JUDGMENT", "Judgment", "asks whether it deserves to be used, trusted, and sustained."],
     ],
-    scroll: "Read the story",
-    methodNote: "Capabilities are not a pile of labels. They are the methods I can call on when a new problem appears.",
-    experienceNote: "Different systems, one continuous practice: learn quickly, make judgments, and deliver.",
-    projectsNote: "Projects are evidence. The business changes; the instinct to make and carry ideas into reality remains.",
-    current: "NOW",
-    notesTitle: "OPEN NOTES",
-    notesIntro: "These spaces are intentionally unfinished — prompts for the personal details only you can add next.",
-    notePrompts: [
-      ["LEARNING", "What new idea recently changed the way you see a problem?"],
-      ["MAKING", "What small idea made you want to build immediately?"],
-      ["CROSSING", "Which cross-cultural moment changed how you understand products or teams?"],
+    formation: "How judgment took shape",
+    formationNote: "Not a résumé timeline, but three changes in how I understand product work.",
+    acts: [
+      { no: "ACT I", year: "2023—2024", title: "Enter real systems", lead: "The first thing a good idea meets is not applause. It is complexity.", body: "Healthcare and intelligent hardware taught me that a product is more than a polished prototype: it is a system of requirements, data, workflows, and organizations.", bridge: "I learned to turn ambiguity into something definable, measurable, and iterative.", entries: [3, 4], tone: "blue" },
+      { no: "ACT II", year: "2025—2026", title: "Put ideas into reality", lead: "When no answer exists, make one and let the world respond.", body: "Co-founding two AI products took me from features, experience, and engineering to users, cost, and business models. Hackathon energy became accountable for outcomes, not only demos.", bridge: "Building was only the beginning. Real transactions and collaboration revealed the real problems.", entries: [2, 1], tone: "orange" },
+      { no: "ACT III", year: "2026—NOW", title: "Make AI worthy of trust", lead: "The closer a product gets to delivery, the more it needs restraint, standards, and judgment.", body: "In enterprise AI generation, my focus moved from whether a capability impresses to whether quality is stable, outcomes fit the context, and the system can improve continuously.", bridge: "I still begin with uncertainty, but now use a much stricter standard for what deserves to reach the end.", entries: [0], tone: "mint" },
     ],
-    diagram: {
-      curiosity: "CURIOSITY",
-      action: "ACTION",
-      value: "VALUE",
-      center: "PRODUCT",
-    },
+    judgment: ["MISSING SCENE / TO BE WRITTEN", "The moment that changed your judgment", "This will not become another project summary. It will capture a real trade-off: what you believed, what reality disproved, and what you chose to abandon or defend.", ["Original assumption", "Constraint encountered", "Idea abandoned", "Judgment formed"], "Placeholder — to be replaced when you provide the real material."],
+    evidence: "Evidence, not adjectives",
+    evidenceNote: "Experience explains how judgment formed. Capabilities and work let a recruiter verify it quickly.",
+    skills: "How I make products",
+    projects: "Projects as an evidence index",
+    proofs: ["Product architecture / business validation", "AI Flow / cross-cultural teamwork", "Active learning / AI engineering", "Creative prototyping / independent build"],
+    endingLabel: "STILL CURIOUS. MORE DELIBERATE.",
+    ending: "I still love starting with a new question. The difference is that I now ask not only ‘Can it be built?’ but also ‘Why is it worth building?’",
+    endingNote: "Not a finished answer — a way of thinking I want to carry into whatever comes next.",
+    resume: "View full résumé",
   },
 };
 
 function Reveal({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
-  const reduceMotion = useReducedMotion();
-  return (
-    <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.16 }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+  const reduced = useReducedMotion();
+  return <motion.div initial={reduced ? false : { opacity: 0, y: 28 }} whileInView={reduced ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: .14 }} transition={{ duration: .72, delay, ease: [0.22, 1, 0.36, 1] }} className={className}>{children}</motion.div>;
 }
 
-function ManifestoDiagram({ lang }: { lang: Lang }) {
-  const d = editorialCopy[lang].diagram;
-  return (
-    <div className="relative aspect-square w-full max-w-[520px] mx-auto" aria-label={`${d.curiosity}, ${d.action}, ${d.value}`}>
-      <div className="absolute inset-[9%] rounded-full border border-[#f2efe7]/15" />
-      <div className="absolute inset-[18%] rounded-full border border-dashed border-[#82d8b0]/30 editorial-orbit" />
-      <svg viewBox="0 0 100 100" className="absolute inset-[15%] h-[70%] w-[70%] overflow-visible" aria-hidden="true">
-        <path d="M50 8 L12 78 L88 78 Z" fill="none" stroke="rgba(242,239,231,.28)" strokeWidth=".45" />
-        <circle cx="50" cy="8" r="1.8" fill="#82d8b0" />
-        <circle cx="12" cy="78" r="1.8" fill="#6fa8ff" />
-        <circle cx="88" cy="78" r="1.8" fill="#f3a85f" />
-      </svg>
-
-      <div className="absolute left-1/2 top-[3%] -translate-x-1/2 text-center">
-        <span className="editorial-label text-[#82d8b0]">{d.curiosity}</span>
-      </div>
-      <div className="absolute bottom-[8%] left-[2%]">
-        <span className="editorial-label text-[#6fa8ff]">{d.action}</span>
-      </div>
-      <div className="absolute bottom-[8%] right-[2%] text-right">
-        <span className="editorial-label text-[#f3a85f]">{d.value}</span>
-      </div>
-
-      <div className="absolute left-1/2 top-1/2 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#f2efe7]/20 bg-[#0c0f12]/90 shadow-[0_0_80px_rgba(130,216,176,.08)]">
-        <span className="editorial-display text-2xl italic text-[#f2efe7]">{d.center}</span>
-      </div>
-
-      <span className="absolute left-[47%] top-[16%] h-2.5 w-2.5 rounded-full bg-[#82d8b0] shadow-[0_0_18px_#82d8b0] editorial-orbit-dot" />
-    </div>
-  );
+function TopBar({ lang, setLang, s }: { lang: Lang; setLang: (value: Lang) => void; s: any }) {
+  return <header className="fixed inset-x-0 top-0 z-50 border-b border-[#efe9dd]/10 bg-[#090b0d]/80 backdrop-blur-xl"><div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 md:px-10 lg:px-[6vw]">
+    <a href="#top" className="story-label text-[#efe9dd]">KZ / 2026</a>
+    <nav className="hidden gap-8 md:flex">{s.nav.map(([label, href]: string[]) => <a key={href} href={href} className="story-label text-[#71787c] hover:text-[#efe9dd]">{label}</a>)}</nav>
+    <div className="flex gap-1 rounded-full border border-[#efe9dd]/15 p-1">{(["CN", "EN"] as Lang[]).map(item => <button key={item} onClick={() => setLang(item)} className={`rounded-full px-3 py-1 text-[10px] font-bold tracking-[.16em] ${lang === item ? "bg-[#efe9dd] text-[#090b0d]" : "text-[#71787c]"}`}>{item}</button>)}</div>
+  </div></header>;
 }
 
-function SectionTitle({ number, title, note }: { number: string; title: string; note: string }) {
-  return (
-    <div className="mb-12 grid gap-6 border-t border-[#f2efe7]/16 pt-5 md:grid-cols-[140px_1fr_1fr] md:items-start">
-      <span className="editorial-label text-[#82d8b0]">{number}</span>
-      <h2 className="editorial-display text-4xl leading-none text-[#f2efe7] md:text-6xl">{title}</h2>
-      <p className="max-w-md text-sm leading-7 text-[#a9adaf] md:justify-self-end md:text-base">{note}</p>
-    </div>
-  );
+function Dock({ t }: { t: any }) {
+  const items = [{ label: t.dock.phone, icon: Smartphone, href: "tel:13568009560" }, { label: t.dock.email, icon: Mail, href: "mailto:1162135252@qq.com" }, { label: t.dock.linkedin, icon: Linkedin, href: "https://www.linkedin.com/in/kesi-zhu" }, { label: t.dock.resume, icon: FileText, href: "/CV_simplyfy_KesiZhu.pdf" }];
+  return <div className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2"><div className="flex gap-1 rounded-full border border-[#efe9dd]/20 bg-[#0a0c0e]/90 p-1.5 shadow-2xl backdrop-blur-xl">{items.map(({ label, icon: Icon, href }) => <a key={label} href={href} target={href.startsWith("http") || href.endsWith(".pdf") ? "_blank" : undefined} rel="noopener noreferrer" aria-label={label} className="group relative flex h-11 w-11 items-center justify-center rounded-full text-[#92989b] hover:bg-[#efe9dd] hover:text-[#090b0d]"><Icon className="h-[18px] w-[18px]" /><span className="pointer-events-none absolute -top-9 whitespace-nowrap rounded bg-[#efe9dd] px-2 py-1 text-[10px] font-bold text-[#090b0d] opacity-0 group-hover:opacity-100">{label}</span></a>)}</div></div>;
 }
 
-function ContactDock({ t }: { t: any }) {
-  const items = [
-    { label: t.dock.phone, icon: Smartphone, href: "tel:13568009560" },
-    { label: t.dock.email, icon: Mail, href: "mailto:1162135252@qq.com" },
-    { label: t.dock.linkedin, icon: Linkedin, href: "https://www.linkedin.com/in/kesi-zhu" },
-    { label: t.dock.resume, icon: FileText, href: "/CV_simplyfy_KesiZhu.pdf" },
-  ];
-
-  return (
-    <div className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2">
-      <div className="flex items-center gap-1 rounded-full border border-[#f2efe7]/16 bg-[#090b0d]/90 p-1.5 shadow-2xl shadow-black/60 backdrop-blur-xl">
-        {items.map(({ label, icon: Icon, href }) => (
-          <a
-            key={label}
-            href={href}
-            target={href.startsWith("http") || href.endsWith(".pdf") ? "_blank" : undefined}
-            rel="noopener noreferrer"
-            aria-label={label}
-            className="group relative flex h-11 w-11 items-center justify-center rounded-full text-[#8f9598] transition-colors hover:bg-[#f2efe7] hover:text-[#090b0d] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#82d8b0]"
-          >
-            <Icon className="h-[18px] w-[18px]" />
-            <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-[#f2efe7] px-2 py-1 text-[10px] font-semibold uppercase tracking-[.15em] text-[#090b0d] opacity-0 transition-opacity group-hover:opacity-100">
-              {label}
-            </span>
-          </a>
-        ))}
-      </div>
-    </div>
-  );
+function Experience({ exp, index }: { exp: any; index: number }) {
+  return <article className="grid gap-5 border-t border-[#141719]/15 py-7 md:grid-cols-[minmax(150px,.5fr)_1.5fr] md:py-9">
+    <div><span className="story-label text-[#656b6e]">EVIDENCE {String(index + 1).padStart(2, "0")}</span><p className="mt-3 font-mono text-xs text-[#656b6e]">{exp.period}</p></div>
+    <div><div className="flex flex-col justify-between gap-3 md:flex-row"><div><h4 className="text-xl font-black tracking-[-.025em] md:text-2xl">{exp.company}</h4><p className="mt-1 text-sm font-semibold text-[#555c60]">{exp.role}</p></div><div className="flex flex-wrap gap-1.5 md:max-w-[45%] md:justify-end">{exp.tags.map((tag: string) => <span key={tag} className="rounded-full border border-[#15191b]/15 px-2.5 py-1 font-mono text-[9px] text-[#555c60]">{tag}</span>)}</div></div><p className="mt-5 max-w-3xl text-sm leading-7 text-[#4d5458] md:text-base md:leading-8">{exp.detail}</p></div>
+  </article>;
 }
 
-function FactStrip({ facts }: { facts: string[][] }) {
-  return (
-    <div className="grid grid-cols-3 border-y border-[#f2efe7]/12 py-4">
-      {facts.map(([number, label]) => (
-        <div key={label} className="border-r border-[#f2efe7]/10 px-3 last:border-r-0">
-          <div className="editorial-display text-2xl text-[#f2efe7] md:text-3xl">{number}</div>
-          <div className="mt-1 text-[9px] uppercase leading-4 tracking-[.14em] text-[#707679] md:text-[10px]">{label}</div>
-        </div>
-      ))}
-    </div>
-  );
+function Act({ act, experiences, index }: { act: any; experiences: any[]; index: number }) {
+  return <section className={`story-act story-act-${act.tone} border-b border-[#090b0d]/10 px-5 py-24 text-[#111416] md:px-10 md:py-32 lg:px-[6vw]`}><div className="mx-auto max-w-[1500px]"><Reveal className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+    <div className="lg:sticky lg:top-28 lg:self-start"><div className="flex items-center gap-4"><span className="story-label">{act.no}</span><span className="h-px flex-1 bg-[#111416]/20" /><span className="font-mono text-[10px] text-[#4f5659]">{act.year}</span></div><div className="mt-10 flex h-14 w-14 items-center justify-center rounded-full border border-[#111416]/25 font-serif text-2xl italic">{index + 1}</div><h3 className="story-serif mt-7 max-w-xl text-5xl leading-[.95] tracking-[-.055em] md:text-7xl">{act.title}</h3></div>
+    <div className="lg:pt-20"><p className="max-w-3xl text-2xl font-black leading-[1.18] tracking-[-.035em] md:text-4xl">{act.lead}</p><p className="mt-8 max-w-2xl text-base leading-8 text-[#42494c] md:text-lg md:leading-9">{act.body}</p><div className="mt-14 border-y border-[#111416]/15">{act.entries.map((entry: number, order: number) => <Experience key={entry} exp={experiences[entry]} index={order} />)}</div><div className="mt-10 grid gap-4 border-l-2 border-[#111416] pl-6 md:grid-cols-[120px_1fr]"><span className="story-label text-[#555c60]">WHAT CHANGED</span><p className="story-serif text-xl italic leading-8 md:text-2xl">{act.bridge}</p></div></div>
+  </Reveal></div></section>;
 }
 
-function HeroDesk({ t, e, reduceMotion }: { t: any; e: any; reduceMotion: boolean | null }) {
-  return (
-    <section id="top" className="editorial-workbench relative z-10 min-h-screen overflow-hidden px-5 pb-24 pt-28 md:px-10 lg:px-[7vw]">
-      <div className="pointer-events-none absolute -right-[4vw] top-[6vh] select-none font-black leading-none tracking-[-.08em] text-[#f2efe7]/[.025] text-[clamp(12rem,35vw,38rem)]">48H</div>
-      <div className="relative mx-auto grid min-h-[calc(100vh-8rem)] max-w-[1540px] items-center gap-12 lg:grid-cols-[.9fr_1.1fr]">
-        <div className="relative z-20">
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, x: -18 }}
-            animate={reduceMotion ? undefined : { opacity: 1, x: 0 }}
-            transition={{ duration: 0.55 }}
-            className="mb-7 inline-flex -rotate-1 items-center gap-3 border border-[#82d8b0]/40 bg-[#0b1712] px-4 py-2 shadow-[6px_6px_0_rgba(130,216,176,.12)]"
-          >
-            <span className="h-2 w-2 rounded-full bg-[#82d8b0] shadow-[0_0_14px_#82d8b0]" />
-            <span className="editorial-label text-[#82d8b0]">{e.eyebrow}</span>
-          </motion.div>
-
-          <h1 className="max-w-[820px] text-[clamp(4.4rem,9.4vw,10.5rem)] font-black leading-[.77] tracking-[-.075em] text-[#f2efe7]">
-            <motion.span initial={reduceMotion ? false : { y: 50, opacity: 0 }} animate={reduceMotion ? undefined : { y: 0, opacity: 1 }} transition={{ duration: 0.75 }} className="block">{e.thesis[0]}</motion.span>
-            <motion.span initial={reduceMotion ? false : { y: 50, opacity: 0 }} animate={reduceMotion ? undefined : { y: 0, opacity: 1 }} transition={{ duration: 0.75, delay: .08 }} className="editorial-display block font-normal italic text-[#82d8b0]">{e.thesis[1]}</motion.span>
-            <motion.span initial={reduceMotion ? false : { y: 50, opacity: 0 }} animate={reduceMotion ? undefined : { y: 0, opacity: 1 }} transition={{ duration: 0.75, delay: .16 }} className="block">{e.thesis[2]}</motion.span>
-          </h1>
-
-          <div className="mt-10 max-w-2xl bg-[#f2efe7] p-5 text-[#090b0d] shadow-[10px_10px_0_#f3a85f] md:-rotate-1 md:p-7">
-            <span className="editorial-label text-[#52605a]">PERSONAL STATEMENT / 01</span>
-            <p className="mt-4 text-lg font-semibold leading-8 md:text-xl md:leading-9">{e.statement}</p>
-          </div>
-        </div>
-
-        <div className="relative z-10 grid gap-4 md:block md:min-h-[650px] lg:min-h-[720px]">
-          <div className="absolute inset-0 hidden border border-[#f2efe7]/12 bg-[#0b0e11]/70 shadow-[0_40px_100px_rgba(0,0,0,.35)] md:block">
-            <div className="absolute inset-x-0 top-0 flex h-10 items-center justify-between border-b border-[#f2efe7]/10 px-4">
-              <span className="editorial-label text-[#707679]">KZ_BUILD_DESK / LIVE BOARD</span>
-              <span className="editorial-label text-[#f3a85f]">TIMEBOX: OPEN</span>
-            </div>
-          </div>
-
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, rotate: -8, scale: .9 }}
-            animate={reduceMotion ? undefined : { opacity: 1, rotate: -4, scale: 1 }}
-            transition={{ duration: .8, delay: .2 }}
-            className="relative w-full -rotate-2 bg-[#d8ff54] p-5 text-[#11140b] shadow-[8px_10px_0_rgba(0,0,0,.35)] md:absolute md:left-[5%] md:top-[12%] md:w-[44%] md:-rotate-4 md:p-7 md:shadow-[12px_16px_0_rgba(0,0,0,.35)]"
-          >
-            <span className="editorial-label text-[#3f4c0a]">01 / INTEREST</span>
-            <p className="editorial-display mt-4 text-2xl leading-tight md:text-4xl">{t.hero.tags.join(" · ")}</p>
-            <div className="mt-7 h-px bg-[#11140b]/25" />
-            <span className="mt-3 block text-xs font-semibold">FOLLOW WHAT MAKES YOU CURIOUS →</span>
-          </motion.div>
-
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, rotate: 7, scale: .9 }}
-            animate={reduceMotion ? undefined : { opacity: 1, rotate: 3, scale: 1 }}
-            transition={{ duration: .8, delay: .34 }}
-            className="relative w-full rotate-1 bg-[#6fa8ff] p-5 text-[#07101e] shadow-[8px_10px_0_rgba(0,0,0,.35)] md:absolute md:right-[3%] md:top-[24%] md:w-[46%] md:rotate-3 md:p-7 md:shadow-[12px_16px_0_rgba(0,0,0,.35)]"
-          >
-            <span className="editorial-label text-[#17345f]">02 / ACTION</span>
-            <p className="mt-4 text-xl font-black leading-tight md:text-3xl">BUILD BEFORE THE IDEA GETS COMFORTABLE.</p>
-            <div className="mt-7 flex items-center justify-between border-t border-[#07101e]/20 pt-3">
-              <span className="editorial-label text-[#17345f]">PROTOTYPE</span>
-              <span className="text-3xl">↗</span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 30 }}
-            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: .8, delay: .48 }}
-            className="relative w-full -rotate-1 bg-[#f4a261] p-5 text-[#1a0e06] shadow-[8px_10px_0_rgba(0,0,0,.35)] md:absolute md:bottom-[8%] md:left-[14%] md:right-[8%] md:w-auto md:rotate-0 md:p-7 md:shadow-[12px_16px_0_rgba(0,0,0,.35)]"
-          >
-            <div className="flex items-start justify-between gap-5">
-              <div>
-                <span className="editorial-label text-[#6c3514]">03 / COMMERCIAL JUDGMENT</span>
-                <p className="editorial-display mt-3 text-2xl italic leading-tight md:text-4xl">What deserves to become a real product?</p>
-              </div>
-              <div className="rounded-full border-2 border-[#1a0e06] px-3 py-6 text-center text-xs font-black uppercase tracking-widest">VALUE<br />CHECK</div>
-            </div>
-          </motion.div>
-
-          <div className="absolute bottom-[3%] right-[3%] hidden rotate-6 border-2 border-[#f2efe7]/45 px-4 py-2 text-center text-[#f2efe7]/65 md:block">
-            <span className="editorial-label">{t.hero.location}</span>
-          </div>
-        </div>
-      </div>
-
-      <a href="#open-notes" className="absolute bottom-7 left-5 flex items-center gap-3 text-[#8f9598] hover:text-[#f2efe7] md:left-10 lg:left-[7vw]">
-        <ArrowDown className="h-4 w-4" />
-        <span className="editorial-label">{e.scroll}</span>
-      </a>
-    </section>
-  );
+function Project({ project, proof }: { project: any; proof: string }) {
+  const card = <article className="group grid h-full grid-rows-[auto_1fr] overflow-hidden border border-[#efe9dd]/14 bg-[#0d1012] hover:border-[#9ce3be]/50"><div className="relative aspect-[16/10] overflow-hidden border-b border-[#efe9dd]/10 bg-[#121619]">{project.image ? <Image src={project.image} alt={project.name} fill className="object-cover opacity-75 grayscale-[25%] transition-all duration-700 group-hover:scale-[1.035] group-hover:opacity-100 group-hover:grayscale-0" /> : project.video ? <video src={project.video} autoPlay loop muted playsInline className="h-full w-full object-cover opacity-75 group-hover:opacity-100" /> : null}<div className="absolute inset-x-0 top-0 flex justify-between bg-gradient-to-b from-black/75 to-transparent p-4"><span className="story-label text-white/80">{project.id} / {project.type}</span><span className="rounded-full border border-white/25 bg-black/35 px-2 py-1 font-mono text-[9px] text-white">{project.statLabel}</span></div></div><div className="flex flex-col p-6 md:p-7"><p className="story-label text-[#9ce3be]">PROVES / {proof}</p><h4 className="mt-4 text-2xl font-black tracking-[-.035em]">{project.name}</h4><p className="mt-3 flex-1 text-sm leading-7 text-[#93999c]">{project.desc}</p><div className="mt-7 flex justify-between border-t border-[#efe9dd]/10 pt-4 text-xs font-bold uppercase tracking-[.12em]"><span>{project.cta}</span><ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></div></div></article>;
+  return project.link ? <Link href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} className="block h-full">{card}</Link> : <div className="h-full">{card}</div>;
 }
 
-function HeroSignal({ t, e, lang, reduceMotion }: { t: any; e: any; lang: Lang; reduceMotion: boolean | null }) {
-  return (
-    <section id="top" className="relative z-10 mx-auto grid min-h-screen max-w-[1440px] items-center gap-12 px-5 pb-20 pt-28 md:px-10 lg:grid-cols-[1.12fr_.88fr] lg:gap-4">
-      <div className="relative z-10">
-        <span className="editorial-label text-[#82d8b0]">{e.eyebrow}</span>
-        <h1 className="editorial-display mt-8 max-w-[920px] text-[clamp(3.7rem,8.2vw,8.7rem)] leading-[.84] tracking-[-.055em]">
-          {e.thesis.map((line: string, index: number) => (
-            <motion.span key={line} initial={reduceMotion ? false : { opacity: 0, y: 42 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ duration: .8, delay: index * .1 }} className={`block ${index === 1 ? "italic text-[#82d8b0]" : "text-[#f2efe7]"}`}>{line}</motion.span>
-          ))}
-        </h1>
-        <p className="mt-9 max-w-2xl border-l border-[#f3a85f] pl-5 text-lg leading-8 text-[#c4c5c2] md:text-xl md:leading-9">{e.statement}</p>
-        <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3"><span className="editorial-label text-[#707679]">{t.hero.location}</span><span className="editorial-label text-[#f2efe7]">{t.hero.role}</span></div>
-      </div>
-      <div><ManifestoDiagram lang={lang} /><FactStrip facts={e.facts} /></div>
-    </section>
-  );
-}
-
-function HeroManifesto({ t, e, reduceMotion }: { t: any; e: any; reduceMotion: boolean | null }) {
-  return (
-    <section id="top" className="relative z-10 flex min-h-screen flex-col justify-between overflow-hidden px-5 pb-12 pt-28 md:px-10 lg:px-[7vw]">
-      <div className="absolute inset-x-0 top-[18%] whitespace-nowrap text-[clamp(8rem,24vw,28rem)] font-black leading-none tracking-[-.09em] text-[#f2efe7]/[.035]">MAKE / LEARN / VALUE</div>
-      <div className="relative z-10 flex items-center justify-between"><span className="editorial-label text-[#82d8b0]">{e.eyebrow}</span><span className="editorial-label text-[#707679]">{t.hero.location}</span></div>
-      <div className="relative z-10 mx-auto my-20 max-w-6xl text-center">
-        <motion.p initial={reduceMotion ? false : { opacity: 0, scale: .9 }} animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }} className="editorial-display text-[clamp(3rem,7.8vw,8.5rem)] italic leading-[.94] tracking-[-.04em] text-[#f2efe7]">“{e.statement}”</motion.p>
-        <div className="mx-auto mt-12 inline-flex -rotate-2 items-center gap-4 bg-[#82d8b0] px-6 py-3 text-[#09110d] shadow-[8px_8px_0_#6fa8ff]">
-          <span className="text-sm font-black uppercase tracking-[.14em]">{e.thesis.join(" ")}</span>
-        </div>
-      </div>
-      <FactStrip facts={e.facts} />
-    </section>
-  );
-}
-
-function VariantSwitcher({ variant, onChange }: { variant: HeroVariant; onChange: (variant: HeroVariant) => void }) {
-  const options: Array<[HeroVariant, string]> = [["desk", "DESK"], ["signal", "SIGNAL"], ["manifesto", "TYPE"]];
-  return (
-    <div className="fixed bottom-20 right-4 z-[60] rounded-sm border border-[#f2efe7]/18 bg-[#090b0d]/92 p-1 shadow-2xl backdrop-blur-xl md:bottom-5 md:right-5">
-      <div className="mb-1 px-2 py-1 text-[8px] font-bold uppercase tracking-[.18em] text-[#707679]">Prototype view</div>
-      <div className="flex gap-1">
-        {options.map(([value, label]) => (
-          <button key={value} type="button" onClick={() => onChange(value)} className={`px-3 py-2 text-[9px] font-black tracking-[.16em] transition-colors ${variant === value ? "bg-[#d8ff54] text-[#090b0d]" : "text-[#8f9598] hover:bg-white/5 hover:text-white"}`}>{label}</button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function OpenNotes({ e }: { e: any }) {
-  const colors = ["#d8ff54", "#6fa8ff", "#f4a261"];
-  return (
-    <section id="open-notes" className="scroll-mt-24 py-28 md:py-36">
-      <div className="grid gap-8 lg:grid-cols-[.72fr_1.28fr]">
-        <div>
-          <span className="editorial-label text-[#82d8b0]">00 / CONTENT SLOTS</span>
-          <h2 className="editorial-display mt-5 text-5xl italic leading-none md:text-7xl">{e.notesTitle}</h2>
-          <p className="mt-7 max-w-md text-base leading-8 text-[#a9adaf]">{e.notesIntro}</p>
-        </div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {e.notePrompts.map(([title, prompt]: string[], index: number) => (
-            <article key={title} className="group relative min-h-72 overflow-hidden border border-[#f2efe7]/14 bg-[#0c0f12] p-6 transition-transform hover:-translate-y-2">
-              <div className="absolute inset-x-0 top-0 h-1" style={{ backgroundColor: colors[index] }} />
-              <span className="editorial-label" style={{ color: colors[index] }}>{title}</span>
-              <p className="editorial-display mt-10 text-2xl italic leading-snug text-[#f2efe7]">{prompt}</p>
-              <div className="absolute bottom-5 left-6 right-6 flex items-center justify-between border-t border-dashed border-[#f2efe7]/18 pt-4">
-                <span className="editorial-label text-[#707679]">[ 待补内容 ]</span>
-                <span className="text-xl text-[#707679]">＋</span>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export default function EditorialHome({ content }: EditorialHomeProps) {
+export default function EditorialHome({ content }: Props) {
   const [lang, setLang] = useState<Lang>("CN");
-  const [variant, setVariant] = useState<HeroVariant>("desk");
+  const reduced = useReducedMotion();
   const t = content[lang];
-  const e = editorialCopy[lang];
-  const reduceMotion = useReducedMotion();
+  const s = copy[lang];
+  return <main className="story-shell min-h-screen overflow-hidden bg-[#090b0d] text-[#efe9dd] selection:bg-[#9ce3be] selection:text-[#090b0d]">
+    <TopBar lang={lang} setLang={setLang} s={s} />
 
-  useEffect(() => {
-    const value = new URLSearchParams(window.location.search).get("view");
-    if (value === "desk" || value === "signal" || value === "manifesto") setVariant(value);
-  }, []);
-
-  const changeVariant = (next: HeroVariant) => {
-    setVariant(next);
-    const url = new URL(window.location.href);
-    url.searchParams.set("view", next);
-    window.history.replaceState({}, "", url);
-  };
-
-  return (
-    <main className="editorial-shell min-h-screen overflow-x-hidden bg-[#090b0d] pb-36 text-[#f2efe7] selection:bg-[#82d8b0] selection:text-[#090b0d]">
-      <div className="editorial-noise fixed inset-0 z-0 pointer-events-none" />
-      <div className="fixed inset-y-0 left-[7vw] z-0 hidden w-px bg-[#f2efe7]/8 xl:block" />
-
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-[#f2efe7]/10 bg-[#090b0d]/78 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-5 md:px-10">
-          <a href="#top" className="flex items-baseline gap-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#82d8b0]">
-            <span className="editorial-display text-xl italic">Kesi Zhu</span>
-            <span className="editorial-label hidden text-[#707679] sm:inline">{e.issue}</span>
-          </a>
-
-          <nav className="hidden items-center gap-7 md:flex" aria-label="Main navigation">
-            <a href="#open-notes" className="editorial-label text-[#8f9598] hover:text-[#f2efe7]">{e.notesTitle}</a>
-            <a href="#method" className="editorial-label text-[#8f9598] hover:text-[#f2efe7]">{t.sections.skills}</a>
-            <a href="#experience" className="editorial-label text-[#8f9598] hover:text-[#f2efe7]">{t.sections.experience}</a>
-            <a href="#work" className="editorial-label text-[#8f9598] hover:text-[#f2efe7]">{t.sections.projects}</a>
-          </nav>
-
-          <div className="flex items-center rounded-full border border-[#f2efe7]/12 p-1">
-            {(["CN", "EN"] as Lang[]).map((item) => (
-              <button
-                key={item}
-                type="button"
-                onClick={() => setLang(item)}
-                aria-pressed={lang === item}
-                className={`rounded-full px-3 py-1 text-[10px] font-bold tracking-[.18em] transition-colors focus-visible:outline-2 focus-visible:outline-[#82d8b0] ${lang === item ? "bg-[#f2efe7] text-[#090b0d]" : "text-[#707679] hover:text-[#f2efe7]"}`}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-        </div>
-      </header>
-
-      {variant === "desk" && <HeroDesk t={t} e={e} reduceMotion={reduceMotion} />}
-      {variant === "signal" && <HeroSignal t={t} e={e} lang={lang} reduceMotion={reduceMotion} />}
-      {variant === "manifesto" && <HeroManifesto t={t} e={e} reduceMotion={reduceMotion} />}
-
-      <div className="relative z-10 mx-auto max-w-[1440px] px-5 md:px-10">
-        <OpenNotes e={e} />
-        <section id="method" className="scroll-mt-24 py-28 md:py-36">
-          <SectionTitle number="01 / METHOD" title={t.sections.skills} note={e.methodNote} />
-          <div className="border-b border-[#f2efe7]/14">
-            {t.skills.map((skill: any, index: number) => (
-              <Reveal key={skill.title}>
-                <article className="group grid gap-5 border-t border-[#f2efe7]/14 py-8 md:grid-cols-[90px_1.05fr_1.25fr] md:gap-8 md:py-11">
-                  <span className="editorial-display text-4xl italic text-[#3f4548] transition-colors group-hover:text-[#82d8b0]">0{index + 1}</span>
-                  <div>
-                    <h3 className="editorial-display text-3xl leading-tight text-[#f2efe7] md:text-4xl">{skill.title}</h3>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {skill.tags.map((tag: string) => (
-                        <span key={tag} className="rounded-full border border-[#f2efe7]/14 px-3 py-1 text-[10px] font-semibold tracking-[.08em] text-[#8f9598]">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="max-w-2xl text-base leading-8 text-[#a9adaf] md:text-lg md:leading-9">{skill.desc}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        <section id="experience" className="scroll-mt-24 py-28 md:py-36">
-          <SectionTitle number="02 / JOURNEY" title={t.sections.experience} note={e.experienceNote} />
-          <div className="grid gap-8 lg:grid-cols-[240px_1fr] lg:gap-16">
-            <aside className="hidden lg:block">
-              <div className="sticky top-28 border-l border-[#82d8b0]/35 pl-5">
-                <span className="editorial-label text-[#82d8b0]">{e.current}</span>
-                <div className="editorial-display mt-3 text-3xl italic">{t.hero.role}</div>
-                <p className="mt-4 text-sm leading-6 text-[#707679]">{t.hero.location}</p>
-              </div>
-            </aside>
-
-            <div>
-              {t.experience.map((exp: any, index: number) => (
-                <Reveal key={`${exp.company}-${exp.period}`}>
-                  <article className="group relative border-t border-[#f2efe7]/14 py-9 md:py-12">
-                    <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                      <div>
-                        <span className="editorial-label text-[#82d8b0]">{exp.period}</span>
-                        <h3 className="editorial-display mt-3 text-3xl leading-tight text-[#f2efe7] md:text-5xl">{exp.company}</h3>
-                      </div>
-                      <span className="max-w-xs text-left text-xs font-semibold uppercase leading-5 tracking-[.14em] text-[#8f9598] md:text-right">{exp.role}</span>
-                    </div>
-                    <div className="grid gap-6 md:grid-cols-[1fr_2fr]">
-                      <div className="flex flex-wrap content-start gap-2">
-                        {exp.tags.map((tag: string) => (
-                          <span key={tag} className="editorial-label rounded-sm bg-[#f2efe7]/6 px-2 py-1 text-[#8f9598]">{tag}</span>
-                        ))}
-                      </div>
-                      <p className="text-base leading-8 text-[#a9adaf] md:text-lg md:leading-9">{exp.detail}</p>
-                    </div>
-                    <span className="absolute right-0 top-1/2 hidden -translate-y-1/2 text-[7rem] font-black tracking-tighter text-[#f2efe7]/[.018] md:block">0{index + 1}</span>
-                  </article>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="work" className="scroll-mt-24 py-28 md:py-36">
-          <SectionTitle number="03 / EVIDENCE" title={t.sections.projects} note={e.projectsNote} />
-          <div className="grid gap-px overflow-hidden border border-[#f2efe7]/14 bg-[#f2efe7]/14 md:grid-cols-2">
-            {t.projects.map((project: any, index: number) => {
-              const card = (
-                <article className="group flex h-full flex-col bg-[#090b0d] p-5 transition-colors hover:bg-[#0e1215] md:p-7">
-                  <div className="relative aspect-[16/9] overflow-hidden bg-[#0d1012]">
-                    {project.image ? (
-                      <Image
-                        src={project.image}
-                        alt={project.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover grayscale-[25%] transition duration-700 group-hover:scale-[1.025] group-hover:grayscale-0"
-                      />
-                    ) : project.video ? (
-                      <video src={project.video} autoPlay loop muted playsInline className="h-full w-full object-cover" />
-                    ) : null}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#090b0d]/65 via-transparent to-transparent" />
-                    <span className="editorial-display absolute bottom-3 left-4 text-5xl italic text-[#f2efe7]/90">{project.id}</span>
-                  </div>
-                  <div className="flex flex-1 flex-col pt-6">
-                    <div className="mb-4 flex items-start justify-between gap-5">
-                      <div>
-                        <span className="editorial-label text-[#82d8b0]">{project.type}</span>
-                        <h3 className="editorial-display mt-2 text-3xl text-[#f2efe7] md:text-4xl">{project.name}</h3>
-                      </div>
-                      <div className="text-right">
-                        <div className="editorial-display text-xl italic text-[#f3a85f]">{project.stat}</div>
-                        <div className="editorial-label mt-1 text-[#707679]">{project.statLabel}</div>
-                      </div>
-                    </div>
-                    <p className="mb-7 max-w-xl text-sm leading-7 text-[#a9adaf] md:text-base">{project.desc}</p>
-                    <div className="mt-auto flex items-center justify-between border-t border-[#f2efe7]/10 pt-4">
-                      <span className="editorial-label text-[#8f9598]">{project.cta}</span>
-                      {project.link && <ArrowUpRight className="h-4 w-4 text-[#82d8b0] transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />}
-                    </div>
-                  </div>
-                </article>
-              );
-
-              return project.link ? (
-                <Link
-                  key={project.id}
-                  href={project.link}
-                  target={project.link.startsWith("http") ? "_blank" : undefined}
-                  rel={project.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="block focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#82d8b0]"
-                >
-                  {card}
-                </Link>
-              ) : (
-                <div key={project.id}>{card}</div>
-              );
-            })}
-          </div>
-        </section>
-
-        <footer className="mt-20 grid gap-7 border-t border-[#f2efe7]/14 pb-8 pt-8 text-[#707679] md:grid-cols-3 md:items-end">
-          <div>
-            <div className="editorial-display text-3xl italic text-[#f2efe7]">{t.footer.end}</div>
-            <p className="editorial-label mt-3">{t.footer.status}</p>
-          </div>
-          <div className="editorial-label md:text-center">{t.hero.location}</div>
-          <div className="editorial-label md:text-right">{t.footer.copyright}</div>
-        </footer>
+    <section id="top" className="story-hero relative min-h-[100svh] px-5 pb-16 pt-28 md:px-10 lg:px-[6vw]"><div className="story-noise pointer-events-none absolute inset-0" /><div className="pointer-events-none absolute -right-[5vw] top-[8vh] select-none text-[clamp(16rem,42vw,45rem)] font-black leading-none tracking-[-.1em] text-[#efe9dd]/[.022]">48H</div><div className="relative mx-auto flex min-h-[calc(100svh-11rem)] max-w-[1500px] flex-col">
+      <motion.div initial={reduced ? false : { opacity: 0 }} animate={reduced ? undefined : { opacity: 1 }} className="flex justify-between border-b border-[#efe9dd]/14 pb-4"><span className="story-label text-[#9ce3be]">{s.issue}</span><span className="story-label hidden text-[#71787c] md:block">{t.hero.location}</span></motion.div>
+      <div id="thesis" className="grid flex-1 items-center gap-12 py-14 lg:grid-cols-[1.25fr_.75fr]"><div className="relative z-10"><span className="story-label inline-block border border-[#9ce3be]/35 bg-[#9ce3be]/[.07] px-3 py-2 text-[#9ce3be]">{s.eyebrow}</span><h1 className="mt-7 max-w-[980px] text-[clamp(4rem,9.3vw,9.8rem)] font-black leading-[.82] tracking-[-.072em]">{s.thesis.map((line: string, index: number) => <motion.span key={line} initial={reduced ? false : { y: 46, opacity: 0 }} animate={reduced ? undefined : { y: 0, opacity: 1 }} transition={{ duration: .78, delay: .08 * index }} className={`block ${index === 1 ? "story-serif font-normal italic text-[#9ce3be]" : ""}`}>{line}</motion.span>)}</h1><div className="mt-9 max-w-3xl border-l-2 border-[#f2a15f] pl-5 md:pl-7"><p className="text-base font-semibold leading-8 text-[#c5c2bb] md:text-xl md:leading-9">{s.statement}</p></div></div>
+        <motion.aside initial={reduced ? false : { opacity: 0, rotate: 4, scale: .94 }} animate={reduced ? undefined : { opacity: 1, rotate: 1, scale: 1 }} transition={{ duration: .9, delay: .25 }} className="relative mx-auto aspect-[4/5] w-full max-w-[430px] border border-[#efe9dd]/20 bg-[#101416] p-5 shadow-[18px_22px_0_rgba(156,227,190,.12)]"><div className="flex justify-between"><span className="story-label text-[#71787c]">{s.signature[0]}</span><span className="h-2.5 w-2.5 rounded-full bg-[#f2a15f]" /></div><div className="relative my-6 flex aspect-square items-center justify-center overflow-hidden rounded-full border border-[#efe9dd]/15 bg-[#0b0e10]"><div className="story-orbit absolute inset-[12%] rounded-full border border-dashed border-[#9ce3be]/25" /><span className="story-serif text-[clamp(5rem,10vw,8rem)] italic">KZ</span><span className="story-label absolute left-[10%] top-1/2 -rotate-90 text-[#6fa8ff]">CURIOSITY</span><span className="story-label absolute right-[8%] top-1/2 rotate-90 text-[#f2a15f]">JUDGMENT</span></div><h2 className="text-xl font-black">{s.signature[1]}</h2><p className="mt-2 text-xs leading-6 text-[#7f8689]">{s.signature[2]}</p><div className="absolute -bottom-4 -left-5 -rotate-3 bg-[#d8ff54] px-4 py-3 text-[#101407] shadow-[6px_7px_0_rgba(0,0,0,.45)]"><span className="story-label">NOT A JOB TITLE → A POINT OF VIEW</span></div></motion.aside>
       </div>
+      <div className="grid border-y border-[#efe9dd]/14 sm:grid-cols-2 lg:grid-cols-4">{s.facts.map(([number, label]: string[]) => <div key={label} className="border-b border-r border-[#efe9dd]/10 px-4 py-5 lg:border-b-0"><span className="story-serif text-3xl italic">{number}</span><span className="ml-3 text-[10px] font-bold uppercase tracking-[.12em] text-[#71787c]">{label}</span></div>)}</div><a href="#question" className="story-label mt-6 flex w-fit items-center gap-3 text-[#71787c] hover:text-[#efe9dd]">{s.scroll}<ArrowDown className="h-4 w-4" /></a>
+    </div></section>
 
-      <ContactDock t={t} />
-      <VariantSwitcher variant={variant} onChange={changeVariant} />
-    </main>
-  );
+    <section id="question" className="bg-[#efe9dd] px-5 py-28 text-[#111416] md:px-10 md:py-40 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]"><Reveal><div className="flex items-center gap-5"><span className="story-label text-[#697074]">{s.qLabel}</span><span className="h-px flex-1 bg-[#111416]/20" /></div><h2 className="story-serif mt-14 max-w-[1250px] text-[clamp(3.8rem,8vw,9.5rem)] leading-[.88] tracking-[-.065em]">{s.question.map((line: string, index: number) => <span key={line} className={`block ${index === 2 ? "italic text-[#167b57]" : ""}`}>{line}</span>)}</h2><p className="mt-12 max-w-xl text-base leading-8 text-[#555c60] md:ml-auto md:text-lg md:leading-9">{s.qNote}</p></Reveal><div className="mt-24 grid border-y border-[#111416]/18 md:grid-cols-3">{s.principles.map(([label, title, desc]: string[], index: number) => <Reveal key={label} delay={index * .08} className="border-b border-[#111416]/15 p-7 md:border-b-0 md:border-r md:p-9 md:last:border-r-0"><span className="story-label text-[#697074]">{label}</span><h3 className="story-serif mt-8 text-4xl italic">{title}</h3><p className="mt-4 text-sm leading-7 text-[#555c60] md:text-base">{desc}</p></Reveal>)}</div></div></section>
+
+    <section id="formation" className="border-b border-[#efe9dd]/10 px-5 py-20 md:px-10 md:py-28 lg:px-[6vw]"><Reveal className="mx-auto grid max-w-[1500px] gap-8 md:grid-cols-[1fr_.7fr] md:items-end"><div><span className="story-label text-[#9ce3be]">FORMATION / 03 ACTS</span><h2 className="story-serif mt-5 text-5xl tracking-[-.05em] md:text-8xl">{s.formation}</h2></div><p className="max-w-lg text-base leading-8 text-[#92989b] md:justify-self-end md:text-lg">{s.formationNote}</p></Reveal></section>
+    {s.acts.map((act: any, index: number) => <Act key={act.no} act={act} experiences={t.experience} index={index} />)}
+
+    <section className="bg-[#090b0d] px-5 py-28 md:px-10 md:py-40 lg:px-[6vw]"><Reveal className="mx-auto max-w-[1300px] border border-dashed border-[#f2a15f]/55 bg-[#f2a15f]/[.04] p-6 md:p-12"><div className="flex flex-col gap-6 border-b border-[#efe9dd]/12 pb-8 md:flex-row md:justify-between"><div><span className="story-label text-[#f2a15f]">{s.judgment[0]}</span><h2 className="story-serif mt-5 max-w-3xl text-4xl tracking-[-.045em] md:text-6xl">{s.judgment[1]}</h2></div><span className="h-fit rounded-full border border-[#f2a15f]/40 px-3 py-2 story-label text-[#f2a15f]">CONTENT SLOT 01</span></div><p className="mt-8 max-w-2xl text-base leading-8 text-[#a6abad] md:text-lg">{s.judgment[2]}</p><div className="mt-10 grid gap-px overflow-hidden border border-[#efe9dd]/10 bg-[#efe9dd]/10 md:grid-cols-4">{(s.judgment[3] as string[]).map((prompt: string, index: number) => <div key={prompt} className="min-h-36 bg-[#0b0e10] p-5"><span className="story-label text-[#666d70]">0{index + 1}</span><p className="mt-8 text-sm font-semibold text-[#c6c2ba]">{prompt}</p><span className="mt-5 block h-px bg-[#efe9dd]/10" /></div>)}</div><p className="mt-5 font-mono text-[10px] text-[#666d70]">* {s.judgment[4]}</p></Reveal></section>
+
+    <section id="evidence" className="bg-[#0d1012] px-5 py-24 md:px-10 md:py-32 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]"><Reveal className="grid gap-8 border-t border-[#efe9dd]/15 pt-6 md:grid-cols-[1fr_.7fr]"><div><span className="story-label text-[#9ce3be]">PROFESSIONAL INDEX</span><h2 className="story-serif mt-5 text-5xl tracking-[-.05em] md:text-8xl">{s.evidence}</h2></div><p className="max-w-lg text-base leading-8 text-[#92989b] md:justify-self-end">{s.evidenceNote}</p></Reveal>
+      <div className="mt-24"><div className="flex items-center gap-4 border-b border-[#efe9dd]/15 pb-4"><span className="story-label">01 / {s.skills}</span><span className="h-px flex-1 bg-[#efe9dd]/10" /></div><div className="grid md:grid-cols-2">{t.skills.map((skill: any, index: number) => <Reveal key={skill.title} className="border-b border-[#efe9dd]/12 p-6 md:min-h-[300px] md:border-r md:p-9"><div className="flex justify-between gap-4"><span className="story-serif text-5xl italic text-[#444b4e]">0{index + 1}</span><div className="flex max-w-[70%] flex-wrap justify-end gap-1.5">{skill.tags.map((tag: string) => <span key={tag} className="rounded-full border border-[#efe9dd]/12 px-2.5 py-1 font-mono text-[9px] text-[#777e81]">{tag}</span>)}</div></div><h3 className="mt-10 text-2xl font-black">{skill.title}</h3><p className="mt-4 max-w-xl text-sm leading-7 text-[#92989b] md:text-base">{skill.desc}</p></Reveal>)}</div></div>
+      <div className="mt-28"><div className="flex items-center gap-4 border-b border-[#efe9dd]/15 pb-4"><span className="story-label">02 / {s.projects}</span><span className="h-px flex-1 bg-[#efe9dd]/10" /></div><div className="mt-7 grid gap-5 md:grid-cols-2">{t.projects.map((project: any, index: number) => <Reveal key={project.id}><Project project={project} proof={s.proofs[index]} /></Reveal>)}</div></div>
+    </div></section>
+
+    <section className="story-ending relative bg-[#efe9dd] px-5 py-28 text-[#111416] md:px-10 md:py-44 lg:px-[6vw]"><div className="story-noise pointer-events-none absolute inset-0 opacity-20" /><Reveal className="relative mx-auto max-w-[1300px]"><span className="story-label text-[#167b57]">{s.endingLabel}</span><p className="story-serif mt-8 max-w-[1200px] text-[clamp(3rem,6.8vw,7.8rem)] leading-[.96] tracking-[-.055em]">{s.ending}</p><div className="mt-14 grid gap-8 border-t border-[#111416]/18 pt-7 md:grid-cols-[1fr_auto] md:items-end"><p className="max-w-xl text-sm leading-7 text-[#555c60] md:text-base">{s.endingNote}</p><a href="/CV_simplyfy_KesiZhu.pdf" target="_blank" className="flex w-fit items-center gap-3 border-b border-[#111416] pb-2 text-sm font-black uppercase tracking-[.12em] hover:text-[#167b57]">{s.resume}<ArrowUpRight className="h-4 w-4" /></a></div></Reveal></section>
+    <footer className="px-5 pb-32 pt-10 md:px-10 lg:px-[6vw]"><div className="mx-auto flex max-w-[1500px] flex-col gap-3 border-t border-[#efe9dd]/12 pt-6 story-label text-[#5d6467] md:flex-row md:justify-between"><span>{t.footer.copyright}</span><span>{t.footer.status}</span></div></footer>
+    <Dock t={t} />
+  </main>;
 }
