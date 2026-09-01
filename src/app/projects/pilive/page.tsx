@@ -184,8 +184,8 @@ export default function PiLiveProject() {
                 </div>
                 <div className="p-8 bg-zinc-900/30 border border-white/5 rounded-2xl">
                     <BarChart3 className="w-8 h-8 text-fuchsia-400 mb-6" />
-                    <h3 className="text-xl font-bold text-white mb-3 uppercase tracking-wider">数据驱动的商业闭环</h3>
-                    <p className="text-base text-zinc-400 leading-relaxed">补齐全链路埋点，凭借严谨的转化归因模型，获得微软基金的支持。</p>
+                    <h3 className="text-xl font-bold text-white mb-3 uppercase tracking-wider">可观测的转化闭环</h3>
+                    <p className="text-base text-zinc-400 leading-relaxed">补齐全链路埋点与转化归因，让互动策略的效果能够被持续评估，并为后续产品迭代提供依据。</p>
                 </div>
             </div>
           </section>

@@ -67,7 +67,7 @@ export default function OttersHomeProject() {
               B2B2C SAAS
             </span>
             <span className="px-2 py-1 rounded text-xs font-bold tracking-wider bg-zinc-800 text-zinc-400 border border-white/5 font-mono">
-              2023 - 2024
+              2025.06 - 2026.03
             </span>
           </div>
           

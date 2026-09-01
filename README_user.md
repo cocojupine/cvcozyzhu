@@ -21,9 +21,13 @@ The website follows a "Hub & Spoke" conversion funnel:
     *   **State:** Uses React `useState` for Language Toggling (`CN` / `EN`). Default is `CN`.
 2.  **The Spokes (Detail Pages):**
     *   Immersive standalone pages for specific case studies.
-    *   **Current Pages:** `/projects/otters-home` (Otter's Home).
-    *   **Future Pages:** `/projects/pilive`, etc.
-3.  **Navigation:**
+    *   **Current Pages:** `/projects/otters-home` (Otter's Home), `/projects/pilive` (PiLive).
+    *   **Future Pages:** Additional selected projects as needed.
+3.  **Interview View (`/src/app/interview`):**
+    *   A hidden, evidence-led presentation route for interview conversations.
+    *   It is intentionally absent from the public homepage navigation and carries `noindex, nofollow` metadata.
+    *   The default surface supports a concise self-introduction; project evidence and the full experience archive open only as on-demand drawers.
+4.  **Navigation:**
     *   **Dock:** A fixed bottom floating dock for quick contact actions (Phone, Email, LinkedIn, Resume).
     *   **Navbar:** Top fixed glass navbar for internal page navigation.
 
@@ -67,6 +71,7 @@ The website follows a "Hub & Spoke" conversion funnel:
  ┃ ┃ ┣ 📄 globals.css        # Tailwind v4 theme & utilities
  ┃ ┃ ┣ 📄 layout.tsx         # Root layout with Fonts (Inter/JetBrains Mono)
  ┃ ┃ ┣ � page.tsx           # MAIN HUB: Landing Page (Contains 'content' object)
+ ┃ ┃ ┣ 📂 interview/         # HIDDEN INTERVIEW VIEW: Intro + on-demand evidence
  ┃ ┃ ┗ 📂 projects/          # DETAIL SPOKES
  ┃ ┃   ┗ 📂 otters-home/     # Otter's Home Case Study
  ┃ ┃     ┗ 📄 page.tsx
