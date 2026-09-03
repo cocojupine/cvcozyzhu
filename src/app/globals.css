@@ -145,28 +145,6 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
 }
 
-.story-hero {
-  background-color: #090b0d;
-  background-image:
-    linear-gradient(rgba(239, 233, 221, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(239, 233, 221, 0.035) 1px, transparent 1px),
-    radial-gradient(circle at 80% 38%, rgba(111, 168, 255, 0.1), transparent 30%);
-  background-size: 30px 30px, 30px 30px, 100% 100%;
-}
-
-.story-signature::before,
-.story-signature::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  border: 1px solid rgba(239, 233, 221, 0.1);
-}
-
-.story-signature::before { inset: 10px -10px -10px 10px; }
-.story-signature::after { inset: 20px -20px -20px 20px; }
-
-.story-orbit { animation: story-spin 24s linear infinite; }
-
 .story-act-blue {
   background-color: #c6d5e6;
   background-image: linear-gradient(110deg, rgba(255,255,255,.3), transparent 42%);
@@ -192,8 +170,100 @@ body {
   background-image: linear-gradient(135deg, rgba(156,227,190,.24), transparent 36%);
 }
 
-@keyframes story-spin {
-  to { transform: rotate(360deg); }
+.envelope-intro {
+  font-family: "Segoe UI Variable Text", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+}
+
+.envelope-label {
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: clamp(0.46rem, 0.68vw, 0.64rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.envelope-serif {
+  font-family: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+}
+
+.envelope-paper {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.58'/%3E%3C/svg%3E");
+}
+
+.envelope-stage {
+  width: min(94vw, 1320px);
+  transform-style: preserve-3d;
+}
+
+.envelope-dossier {
+  left: 30%;
+  top: 7%;
+  width: 54%;
+  height: 84%;
+}
+
+.envelope-flap {
+  background-image: url("/assets/idea-folder-unfastened.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 400% 100%;
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+  box-shadow: -2px 0 10px rgba(83, 54, 18, 0.12);
+}
+
+.envelope-cord {
+  filter: drop-shadow(0 0.35px 0.35px rgba(76, 47, 15, 0.8)) drop-shadow(0 1.2px 1px rgba(42, 24, 7, 0.32));
+}
+
+@media (max-width: 640px) {
+  .envelope-stage {
+    left: -36vw;
+    width: 176vw;
+  }
+
+  .envelope-dossier {
+    left: 43%;
+    top: 6%;
+    width: 52%;
+    height: 88%;
+  }
+
+  .envelope-trigger {
+    min-width: 5.25rem;
+    min-height: 5.25rem;
+  }
+
+  .envelope-devbar {
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    width: calc(100vw - 1rem);
+    justify-content: center;
+    overflow-x: auto;
+  }
+
+  .envelope-devbar > button {
+    flex: 0 0 auto;
+    padding-inline: 0.65rem;
+  }
+
+  .envelope-devstate {
+    display: none;
+  }
+}
+
+.envelope-trigger {
+  cursor: pointer;
+  filter: drop-shadow(0 8px 18px rgba(69, 40, 8, 0.32));
+}
+
+.envelope-trigger > span:first-child {
+  animation: envelope-ring 2.1s ease-out infinite;
+}
+
+@keyframes envelope-ring {
+  0%, 100% { transform: scale(0.82); opacity: 0.25; }
+  50% { transform: scale(1.08); opacity: 0.95; }
 }
 
 @keyframes editorial-spin {
@@ -208,7 +278,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .editorial-orbit,
   .editorial-orbit-dot,
-  .story-orbit {
+  .envelope-trigger > span:first-child {
     animation: none;
   }
 }

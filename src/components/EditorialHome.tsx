@@ -4,7 +4,9 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, FileText, Linkedin, Mail, Smartphone } from "lucide-react";
+import { ArrowUpRight, FileText, Linkedin, Mail, Smartphone } from "lucide-react";
+import FolderIntroPrototype from "@/components/FolderIntroPrototype";
+import PaperHero from "@/components/PaperHero";
 
 type Lang = "EN" | "CN";
 type Props = { content: Record<Lang, any> };
@@ -121,19 +123,13 @@ function Project({ project, proof }: { project: any; proof: string }) {
 
 export default function EditorialHome({ content }: Props) {
   const [lang, setLang] = useState<Lang>("CN");
-  const reduced = useReducedMotion();
   const t = content[lang];
   const s = copy[lang];
   return <main className="story-shell min-h-screen overflow-hidden bg-[#090b0d] text-[#efe9dd] selection:bg-[#9ce3be] selection:text-[#090b0d]">
+    <FolderIntroPrototype eyebrow={s.eyebrow} lang={lang} location={t.hero.location} issue={s.issue} scroll={s.scroll} statement={s.statement} thesis={s.thesis} facts={s.facts} />
     <TopBar lang={lang} setLang={setLang} s={s} />
 
-    <section id="top" className="story-hero relative min-h-[100svh] px-5 pb-16 pt-28 md:px-10 lg:px-[6vw]"><div className="story-noise pointer-events-none absolute inset-0" /><div className="pointer-events-none absolute -right-[5vw] top-[8vh] select-none text-[clamp(16rem,42vw,45rem)] font-black leading-none tracking-[-.1em] text-[#efe9dd]/[.022]">48H</div><div className="relative mx-auto flex min-h-[calc(100svh-11rem)] max-w-[1500px] flex-col">
-      <motion.div initial={reduced ? false : { opacity: 0 }} animate={reduced ? undefined : { opacity: 1 }} className="flex justify-between border-b border-[#efe9dd]/14 pb-4"><span className="story-label text-[#9ce3be]">{s.issue}</span><span className="story-label hidden text-[#71787c] md:block">{t.hero.location}</span></motion.div>
-      <div id="thesis" className="grid flex-1 items-center gap-12 py-14 lg:grid-cols-[1.25fr_.75fr]"><div className="relative z-10"><span className="story-label inline-block border border-[#9ce3be]/35 bg-[#9ce3be]/[.07] px-3 py-2 text-[#9ce3be]">{s.eyebrow}</span><h1 className="mt-7 max-w-[980px] text-[clamp(4rem,9.3vw,9.8rem)] font-black leading-[.82] tracking-[-.072em]">{s.thesis.map((line: string, index: number) => <motion.span key={line} initial={reduced ? false : { y: 46, opacity: 0 }} animate={reduced ? undefined : { y: 0, opacity: 1 }} transition={{ duration: .78, delay: .08 * index }} className={`block ${index === 1 ? "story-serif font-normal italic text-[#9ce3be]" : ""}`}>{line}</motion.span>)}</h1><div className="mt-9 max-w-3xl border-l-2 border-[#f2a15f] pl-5 md:pl-7"><p className="text-base font-semibold leading-8 text-[#c5c2bb] md:text-xl md:leading-9">{s.statement}</p></div></div>
-        <motion.aside initial={reduced ? false : { opacity: 0, rotate: 4, scale: .94 }} animate={reduced ? undefined : { opacity: 1, rotate: 1, scale: 1 }} transition={{ duration: .9, delay: .25 }} className="relative mx-auto aspect-[4/5] w-full max-w-[430px] border border-[#efe9dd]/20 bg-[#101416] p-5 shadow-[18px_22px_0_rgba(156,227,190,.12)]"><div className="flex justify-between"><span className="story-label text-[#71787c]">{s.signature[0]}</span><span className="h-2.5 w-2.5 rounded-full bg-[#f2a15f]" /></div><div className="relative my-6 flex aspect-square items-center justify-center overflow-hidden rounded-full border border-[#efe9dd]/15 bg-[#0b0e10]"><div className="story-orbit absolute inset-[12%] rounded-full border border-dashed border-[#9ce3be]/25" /><span className="story-serif text-[clamp(5rem,10vw,8rem)] italic">KZ</span><span className="story-label absolute left-[10%] top-1/2 -rotate-90 text-[#6fa8ff]">CURIOSITY</span><span className="story-label absolute right-[8%] top-1/2 rotate-90 text-[#f2a15f]">JUDGMENT</span></div><h2 className="text-xl font-black">{s.signature[1]}</h2><p className="mt-2 text-xs leading-6 text-[#7f8689]">{s.signature[2]}</p><div className="absolute -bottom-4 -left-5 -rotate-3 bg-[#d8ff54] px-4 py-3 text-[#101407] shadow-[6px_7px_0_rgba(0,0,0,.45)]"><span className="story-label">NOT A JOB TITLE → A POINT OF VIEW</span></div></motion.aside>
-      </div>
-      <div className="grid border-y border-[#efe9dd]/14 sm:grid-cols-2 lg:grid-cols-4">{s.facts.map(([number, label]: string[]) => <div key={label} className="border-b border-r border-[#efe9dd]/10 px-4 py-5 lg:border-b-0"><span className="story-serif text-3xl italic">{number}</span><span className="ml-3 text-[10px] font-bold uppercase tracking-[.12em] text-[#71787c]">{label}</span></div>)}</div><a href="#question" className="story-label mt-6 flex w-fit items-center gap-3 text-[#71787c] hover:text-[#efe9dd]">{s.scroll}<ArrowDown className="h-4 w-4" /></a>
-    </div></section>
+    <section id="top"><PaperHero eyebrow={s.eyebrow} facts={s.facts} issue={s.issue} location={t.hero.location} scroll={s.scroll} statement={s.statement} thesis={s.thesis} /></section>
 
     <section id="question" className="bg-[#efe9dd] px-5 py-28 text-[#111416] md:px-10 md:py-40 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]"><Reveal><div className="flex items-center gap-5"><span className="story-label text-[#697074]">{s.qLabel}</span><span className="h-px flex-1 bg-[#111416]/20" /></div><h2 className="story-serif mt-14 max-w-[1250px] text-[clamp(3.8rem,8vw,9.5rem)] leading-[.88] tracking-[-.065em]">{s.question.map((line: string, index: number) => <span key={line} className={`block ${index === 2 ? "italic text-[#167b57]" : ""}`}>{line}</span>)}</h2><p className="mt-12 max-w-xl text-base leading-8 text-[#555c60] md:ml-auto md:text-lg md:leading-9">{s.qNote}</p></Reveal><div className="mt-24 grid border-y border-[#111416]/18 md:grid-cols-3">{s.principles.map(([label, title, desc]: string[], index: number) => <Reveal key={label} delay={index * .08} className="border-b border-[#111416]/15 p-7 md:border-b-0 md:border-r md:p-9 md:last:border-r-0"><span className="story-label text-[#697074]">{label}</span><h3 className="story-serif mt-8 text-4xl italic">{title}</h3><p className="mt-4 text-sm leading-7 text-[#555c60] md:text-base">{desc}</p></Reveal>)}</div></div></section>
 
