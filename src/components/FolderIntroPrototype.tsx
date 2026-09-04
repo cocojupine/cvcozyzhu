@@ -159,10 +159,40 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
 
           <motion.div
             className="envelope-arrival relative"
-            initial={reducedMotion ? false : { x: "-46vw", opacity: 0, rotate: -1.8, scale: 0.94 }}
-            animate={{ x: 0, opacity: 1, rotate: 0, scale: 1 }}
-            transition={{ duration: 0.68, ease: [0.16, 1, 0.3, 1] }}
+            initial={reducedMotion ? false : {
+              x: isCompact ? "-88vw" : "-62vw",
+              y: isCompact ? "5vh" : "9vh",
+              opacity: 0,
+              rotate: isCompact ? -5.5 : -7.5,
+              scale: 0.9,
+              filter: "blur(3px)",
+            }}
+            animate={{
+              x: [isCompact ? "-88vw" : "-62vw", "3vw", "-0.8vw", 0],
+              y: [isCompact ? "5vh" : "9vh", "-1.2vh", "0.35vh", 0],
+              opacity: [0, 1, 1, 1],
+              rotate: [isCompact ? -5.5 : -7.5, 1.15, -0.28, 0],
+              scale: [0.9, 1.012, 0.997, 1],
+              filter: ["blur(3px)", "blur(0px)", "blur(0px)", "blur(0px)"],
+            }}
+            transition={{ duration: isCompact ? 0.78 : 0.88, times: [0, 0.7, 0.88, 1], ease: [0.22, 0.74, 0.24, 1] }}
           >
+            {!reducedMotion && (
+              <motion.div
+                aria-hidden="true"
+                className="envelope-arrival-trail"
+                initial={{ opacity: 0, scaleX: 0.45 }}
+                animate={{ opacity: [0, 0.62, 0], scaleX: [0.45, 1, 0.72] }}
+                transition={{ duration: isCompact ? 0.68 : 0.78, times: [0, 0.45, 1], ease: "easeOut" }}
+              />
+            )}
+            <motion.div
+              aria-hidden="true"
+              className="envelope-arrival-shadow"
+              initial={reducedMotion ? false : { opacity: 0, scaleX: 0.62, x: "-8%" }}
+              animate={{ opacity: 1, scaleX: 1, x: 0 }}
+              transition={{ duration: isCompact ? 0.76 : 0.86, ease: [0.22, 1, 0.36, 1] }}
+            />
             <motion.div
               className="envelope-stage relative aspect-[3/2] shadow-[0_38px_100px_rgba(71,43,11,.32)]"
               animate={mode === "closeup" && phase === "closed"

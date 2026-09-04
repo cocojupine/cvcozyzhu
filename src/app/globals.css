@@ -222,6 +222,33 @@ body {
   will-change: opacity, transform;
 }
 
+.envelope-arrival-trail {
+  position: absolute;
+  right: calc(100% + 1.35rem);
+  top: 48%;
+  width: min(30vw, 28rem);
+  height: 3.75rem;
+  border-top: 1px solid rgba(91, 57, 18, 0.28);
+  border-bottom: 1px solid rgba(255, 235, 189, 0.22);
+  background: linear-gradient(90deg, transparent, rgba(89, 54, 14, 0.08));
+  pointer-events: none;
+  transform-origin: right center;
+}
+
+.envelope-arrival-shadow {
+  position: absolute;
+  z-index: -1;
+  right: 2%;
+  bottom: -4.5%;
+  left: 8%;
+  height: 8%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(60, 35, 8, 0.46), rgba(60, 35, 8, 0) 72%);
+  filter: blur(14px);
+  pointer-events: none;
+  transform-origin: center;
+}
+
 .envelope-arrival::before {
   position: absolute;
   inset: -0.7rem;
@@ -271,6 +298,12 @@ body {
 
   .envelope-arrival::before {
     inset: -0.45rem;
+  }
+
+  .envelope-arrival-trail {
+    right: calc(100% + 0.7rem);
+    width: 42vw;
+    height: 2.5rem;
   }
 
   .envelope-caption {
