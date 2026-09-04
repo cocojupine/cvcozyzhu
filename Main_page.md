@@ -81,8 +81,9 @@
 ### 项目 2：Grill Me Light
 * **类型:** 开源 AI Skill
 * **状态:** MIT / 开源
-* **描述:** 基于 Matt Pocock 的 Grill Me 进行独立轻量化改造：保留决策树与 frontier 推进逻辑，每轮只聚焦最关键的未决问题。
+* **描述:** 一套可安装、可复用的 AI Skill。受 Matt Pocock 的 Grill Me 启发，通过每轮聚焦最关键的未决问题，把模糊需求推进为可执行判断。
 * **链接:** https://github.com/cocojupine/grill-me-light
+* **封面:** `/assets/grill-me-light-xhs-cover.png`
 
 ### 项目 3：PiLive
 * **类型:** 直播 AI AGENT
