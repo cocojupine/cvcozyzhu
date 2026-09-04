@@ -25,7 +25,7 @@ export default function PaperHero({ eyebrow, facts, issue, location, scroll, sta
         <div id="thesis" className="grid flex-1 items-center gap-10 py-10 lg:grid-cols-[1.35fr_.65fr] lg:gap-16">
           <div>
             <span className="envelope-label inline-block border border-[#956821]/35 bg-[#cba96c]/18 px-3 py-2 text-[#805b26]">{eyebrow}</span>
-            <h1 className="mt-7 max-w-[980px] text-[clamp(4rem,9.3vw,9.8rem)] font-black leading-[.82] tracking-[-.072em]">
+            <h1 className="mt-7 max-w-[980px] text-[clamp(3.3rem,9.3vw,9.8rem)] font-black leading-[.82] tracking-[-.072em]">
               {thesis.map((line, index) => <span key={line} className={`block ${index === 1 ? "envelope-serif font-normal italic text-[#956821]" : ""}`}>{line}</span>)}
             </h1>
           </div>
