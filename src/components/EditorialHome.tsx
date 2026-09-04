@@ -26,7 +26,7 @@ const copy = {
     projectsLabel: "SELECTED WORK / PROOF",
     projectsTitle: "项目与可验证成果",
     projectsNote: "用真实产品、原型与结果说明能力，而不是依赖自我评价。",
-    proofs: ["产品架构 / 商业验证", "AI Flow / 跨文化协作", "主动学习 / AI Engineering", "创意原型 / 独立实现"],
+    proofs: ["产品架构 / 商业验证", "决策设计 / AI 工作流", "AI Flow / 跨文化协作", "主动学习 / AI Engineering", "创意原型 / 独立实现"],
     approachLabel: "HOW I WORK / ONE SYSTEM",
     approachTitle: "把不确定性，变成可验证的产品路径",
     approachNote: "一套贯穿需求、原型、评估与交付的工作方法。",
@@ -58,7 +58,7 @@ const copy = {
     projectsLabel: "SELECTED WORK / PROOF",
     projectsTitle: "Projects with verifiable outcomes",
     projectsNote: "Real products, prototypes, and results make the case—not self-description.",
-    proofs: ["Product architecture / business validation", "AI flow / cross-cultural teamwork", "Active learning / AI engineering", "Creative prototyping / independent build"],
+    proofs: ["Product architecture / business validation", "Decision design / AI workflow", "AI flow / cross-cultural teamwork", "Active learning / AI engineering", "Creative prototyping / independent build"],
     approachLabel: "HOW I WORK / ONE SYSTEM",
     approachTitle: "Turn uncertainty into a testable product path",
     approachNote: "One operating method across discovery, prototyping, evaluation, and delivery.",
@@ -116,7 +116,14 @@ function Experience({ exp, index }: { exp: any; index: number }) {
 }
 
 function Project({ project, proof }: { project: any; proof: string }) {
-  const card = <article className="group grid h-full grid-rows-[auto_1fr] overflow-hidden border border-[#efe9dd]/14 bg-[#0d1012] transition-colors hover:border-[#9ce3be]/50"><div className="relative aspect-[16/9] overflow-hidden border-b border-[#efe9dd]/10 bg-[#121619]">{project.image ? <Image src={project.image} alt={project.name} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover opacity-75 grayscale-[20%] transition-all duration-700 group-hover:scale-[1.035] group-hover:opacity-100 group-hover:grayscale-0" /> : project.video ? <video src={project.video} autoPlay loop muted playsInline className="h-full w-full object-cover opacity-80 group-hover:opacity-100" /> : null}<div className="absolute inset-x-0 top-0 flex justify-between bg-gradient-to-b from-black/75 to-transparent p-4"><span className="story-label text-white/80">{project.id} / {project.type}</span><span className="rounded-full border border-white/25 bg-black/35 px-2 py-1 font-mono text-[9px] text-white">{project.statLabel}</span></div></div><div className="flex flex-col p-6"><p className="story-label text-[#9ce3be]">PROVES / {proof}</p><h3 className="mt-4 text-2xl font-black tracking-[-.035em]">{project.name}</h3><p className="mt-3 flex-1 text-sm leading-7 text-[#93999c]">{project.desc}</p><div className="mt-6 flex justify-between border-t border-[#efe9dd]/10 pt-4 text-xs font-bold uppercase tracking-[.12em]"><span>{project.cta}</span><ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></div></div></article>;
+  const visual = project.visual === "decision-tree" ? <div className="absolute inset-0 bg-[#efe9dd] text-[#111416]">
+    <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(17,20,22,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(17,20,22,.1)_1px,transparent_1px)] [background-size:32px_32px]" />
+    <div className="absolute left-1/2 top-[24%] -translate-x-1/2 rounded-full border border-[#111416]/25 bg-[#f2a15f] px-5 py-3 text-center shadow-[6px_7px_0_rgba(17,20,22,.16)]"><span className="story-label block">QUESTION FRONTIER</span><strong className="mt-1 block text-lg tracking-[-.03em]">GRILL ME / LIGHT</strong></div>
+    <div className="absolute left-1/2 top-[51%] h-[18%] w-px -translate-x-1/2 bg-[#111416]/30" />
+    <div className="absolute left-[18%] right-[18%] top-[69%] h-px bg-[#111416]/30" />
+    <div className="absolute inset-x-[9%] bottom-[9%] grid grid-cols-3 gap-2">{["DECIDE", "PARK", "PRUNE"].map(item => <span key={item} className="border border-[#111416]/25 bg-[#efe9dd] px-2 py-2 text-center font-mono text-[9px] font-bold tracking-[.12em]">{item}</span>)}</div>
+  </div> : project.image ? <Image src={project.image} alt={project.name} fill sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover opacity-75 grayscale-[20%] transition-all duration-700 group-hover:scale-[1.035] group-hover:opacity-100 group-hover:grayscale-0" /> : project.video ? <video src={project.video} autoPlay loop muted playsInline className="h-full w-full object-cover opacity-80 group-hover:opacity-100" /> : null;
+  const card = <article className="group grid h-full grid-rows-[auto_1fr] overflow-hidden border border-[#efe9dd]/14 bg-[#0d1012] transition-colors hover:border-[#9ce3be]/50"><div className="relative aspect-[16/9] overflow-hidden border-b border-[#efe9dd]/10 bg-[#121619]">{visual}<div className="absolute inset-x-0 top-0 flex justify-between bg-gradient-to-b from-black/75 to-transparent p-4"><span className="story-label text-white/80">{project.id} / {project.type}</span><span className="rounded-full border border-white/25 bg-black/35 px-2 py-1 font-mono text-[9px] text-white">{project.statLabel}</span></div></div><div className="flex flex-col p-6"><p className="story-label text-[#9ce3be]">PROVES / {proof}</p><h3 className="mt-4 text-2xl font-black tracking-[-.035em]">{project.name}</h3><p className="mt-3 flex-1 text-sm leading-7 text-[#93999c]">{project.desc}</p><div className="mt-6 flex justify-between border-t border-[#efe9dd]/10 pt-4 text-xs font-bold uppercase tracking-[.12em]"><span>{project.cta}</span><ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></div></div></article>;
   return project.link ? <Link href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} className="block h-full">{card}</Link> : <div className="h-full">{card}</div>;
 }
 
@@ -137,7 +144,7 @@ export default function EditorialHome({ content }: Props) {
 
     <section id="projects" className="bg-[#0d1012] px-5 py-20 md:px-10 md:py-28 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]">
       <Reveal className="grid gap-7 border-t border-[#efe9dd]/15 pt-6 md:grid-cols-[1fr_.65fr] md:items-end"><div><span className="story-label text-[#9ce3be]">{s.projectsLabel}</span><h2 className="story-serif mt-5 max-w-4xl text-5xl tracking-[-.05em] md:text-7xl">{s.projectsTitle}</h2></div><p className="max-w-lg text-sm leading-7 text-[#92989b] md:justify-self-end md:text-base">{s.projectsNote}</p></Reveal>
-      <div className="mt-14 grid gap-5 md:grid-cols-2">{t.projects.map((project: any, index: number) => <Reveal key={project.id}><Project project={project} proof={s.proofs[index]} /></Reveal>)}</div>
+      <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-6">{t.projects.map((project: any, index: number) => <Reveal key={project.id} className={index < 2 ? "xl:col-span-3" : "xl:col-span-2"}><Project project={project} proof={s.proofs[index]} /></Reveal>)}</div>
     </div></section>
 
     <section id="approach" className="bg-[#f2a15f] px-5 py-20 text-[#111416] md:px-10 md:py-28 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]">

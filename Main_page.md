@@ -78,21 +78,27 @@
 * **链接:** `/projects/otters-home`
 * **封面:** `/assets/tatadajia_cover.png`
 
-### 项目 2：PiLive
+### 项目 2：Grill Me Light
+* **类型:** 开源 AI Skill
+* **状态:** MIT / 开源
+* **描述:** 基于 Matt Pocock 的 Grill Me 进行独立轻量化改造：保留决策树与 frontier 推进逻辑，每轮只聚焦最关键的未决问题。
+* **链接:** https://github.com/cocojupine/grill-me-light
+
+### 项目 3：PiLive
 * **类型:** 直播 AI AGENT
 * **状态:** 最具潜力奖
 * **描述:** 跨境直播实时商品识别与互动增长工具。
 * **链接:** `/projects/pilive`
 * **封面:** `/assets/Pilive_cover.png`
 
-### 项目 3：Learning Agent
+### 项目 4：Learning Agent
 * **类型:** Gitub开源
 * **状态:** BUILDING
 * **描述:** 整合全站信息的效率智能体。目前正在开发中。
 * **链接:** https://github.com/bohemiaer/PWA-stairt
 * **封面:** `/assets/LearningAgent_cover.png`
 
-### 项目 4：Focus Timer
+### 项目 5：Focus Timer
 * **类型:** CODING WITH UNITY
 * **状态:** Gitub开源
 * **描述:** 基于 Unity 引擎开发的游戏化番茄钟。

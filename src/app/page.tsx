@@ -126,6 +126,17 @@ const content = {
       },
       {
         id: "02",
+        name: "GRILL ME LIGHT",
+        type: "OPEN-SOURCE AI SKILL",
+        stat: "MIT",
+        statLabel: "OPEN SOURCE",
+        desc: "An independent lightweight adaptation inspired by Matt Pocock's Grill Me. It keeps the decision-tree and frontier model, while focusing each round on the highest-value unresolved questions.",
+        link: "https://github.com/cocojupine/grill-me-light",
+        cta: "VIEW ON GITHUB",
+        visual: "decision-tree",
+      },
+      {
+        id: "03",
         name: "PILIVE",
         type: "LIVESTREAM AI AGENT",
         stat: "TOP 3",
@@ -136,7 +147,7 @@ const content = {
         image: "/assets/Pilive_cover.png",
       },
       {
-        id: "03",
+        id: "04",
         name: "LEARNING AGENT",
         type: "OPEN SOURCE",
         stat: "BUILDING",
@@ -147,7 +158,7 @@ const content = {
         image: "/assets/LearningAgent_cover.png",
       },
       {
-        id: "04",
+        id: "05",
         name: "FOCUS TIMER",
         type: "CODING WITH UNITY",
         stat: "OPEN SOURCE",
@@ -265,6 +276,17 @@ const content = {
       },
       {
         id: "02",
+        name: "Grill Me Light",
+        type: "开源 AI SKILL",
+        stat: "MIT",
+        statLabel: "MIT / 开源",
+        desc: "基于 Matt Pocock 的 Grill Me 进行独立轻量化改造：保留决策树与 frontier 推进逻辑，每轮只聚焦最关键的未决问题。",
+        link: "https://github.com/cocojupine/grill-me-light",
+        cta: "查看 GitHub",
+        visual: "decision-tree",
+      },
+      {
+        id: "03",
         name: "PiLive",
         type: "直播 AI AGENT",
         stat: "TOP 3",
@@ -275,7 +297,7 @@ const content = {
         image: "/assets/Pilive_cover.png",
       },
       {
-        id: "03",
+        id: "04",
         name: "Learning Agent",
         type: "Gitub开源",
         stat: "开发中",
@@ -286,7 +308,7 @@ const content = {
         image: "/assets/LearningAgent_cover.png",
       },
       {
-        id: "04",
+        id: "05",
         name: "Focus Timer",
         type: "CODING WITH UNITY",
         stat: "Gitub开源",
