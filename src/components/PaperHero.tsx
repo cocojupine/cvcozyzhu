@@ -37,12 +37,12 @@ export default function PaperHero({ eyebrow, facts, issue, location, scroll, sta
               </div>
               <div>
                 <span className="envelope-label text-[#805b26]">PERSONAL FILE</span>
-                <p className="mt-2 text-xs leading-6 text-[#78664e]">CURIOSITY / ACTION / JUDGMENT</p>
+                <p className="mt-2 text-xs leading-6 text-[#78664e]">AI PRODUCT / 0→1 / EVALUATION</p>
               </div>
             </div>
             <p className="max-w-xl text-base font-semibold leading-8 text-[#554634] md:text-lg md:leading-9">{statement}</p>
             <div className="mt-8 h-px bg-[#2c1a0c]/16" />
-            <p className="envelope-label mt-4 text-[#8c744f]">NOT A JOB TITLE → A POINT OF VIEW</p>
+            <p className="envelope-label mt-4 text-[#8c744f]">PROBLEM → EVIDENCE → DELIVERY</p>
           </aside>
         </div>
 
@@ -55,7 +55,7 @@ export default function PaperHero({ eyebrow, facts, issue, location, scroll, sta
           ))}
         </div>
 
-        {scroll && <a href="#question" className="envelope-label mt-5 flex w-fit items-center gap-3 text-[#806e56] transition-colors hover:text-[#25190e]">{scroll}<span aria-hidden="true">↓</span></a>}
+        {scroll && <a href="#experience" className="envelope-label mt-5 flex w-fit items-center gap-3 text-[#806e56] transition-colors hover:text-[#25190e]">{scroll}<span aria-hidden="true">↓</span></a>}
       </div>
     </div>
   );
