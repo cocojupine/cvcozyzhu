@@ -172,6 +172,27 @@ body {
 
 .envelope-intro {
   font-family: "Segoe UI Variable Text", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  background:
+    radial-gradient(circle at 16% 48%, rgba(255, 238, 190, 0.34), transparent 31%),
+    radial-gradient(circle at 84% 18%, rgba(106, 67, 18, 0.14), transparent 34%),
+    linear-gradient(115deg, #d5af6b 0%, #c99d56 58%, #b88643 100%);
+}
+
+.envelope-intro::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(74, 43, 11, 0.1) 1px, transparent 1px);
+  background-size: clamp(5rem, 10vw, 10rem) 100%;
+  content: "";
+  mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+  opacity: 0.24;
+  pointer-events: none;
+}
+
+.envelope-grid {
+  background:
+    linear-gradient(rgba(89, 54, 14, 0.12), rgba(89, 54, 14, 0.12)) 2rem 4.5rem / calc(100% - 4rem) 1px no-repeat,
+    linear-gradient(90deg, rgba(89, 54, 14, 0.12), rgba(89, 54, 14, 0.12)) 50% 0 / 1px 100% no-repeat;
 }
 
 .envelope-label {
@@ -192,8 +213,26 @@ body {
 }
 
 .envelope-stage {
-  width: min(94vw, 1320px);
+  width: min(88vw, 1320px, 124vh);
   transform-style: preserve-3d;
+}
+
+.envelope-arrival,
+.envelope-stage {
+  will-change: opacity, transform;
+}
+
+.envelope-arrival::before {
+  position: absolute;
+  inset: -0.7rem;
+  border: 1px solid rgba(92, 59, 20, 0.2);
+  content: "";
+  pointer-events: none;
+}
+
+.envelope-caption {
+  border-top: 1px solid rgba(96, 64, 25, 0.28);
+  padding-top: 0.65rem;
 }
 
 .envelope-dossier {
@@ -219,24 +258,39 @@ body {
 
 @media (max-width: 640px) {
   .envelope-stage {
-    left: -8vw;
-    width: 140vw;
+    left: -2vw;
+    width: 120vw;
   }
 
   .envelope-dossier {
-    left: 35%;
+    left: 31%;
     top: 6%;
-    width: 58%;
+    width: 62%;
     height: 88%;
   }
 
+  .envelope-arrival::before {
+    inset: -0.45rem;
+  }
+
+  .envelope-caption {
+    left: 4vw;
+    right: 4vw;
+  }
+
+  .envelope-intro-copy {
+    right: 1.25rem;
+    max-width: none;
+  }
+
   .envelope-trigger {
+    left: 82%;
     min-width: 5.25rem;
     min-height: 5.25rem;
   }
 
   .envelope-trigger .envelope-label {
-    font-size: 0.56rem;
+    font-size: 0.52rem;
     white-space: nowrap;
   }
 
@@ -270,6 +324,17 @@ body {
   }
 
   .envelope-devstate {
+    display: none;
+  }
+}
+
+@media (max-height: 660px) and (min-width: 641px) {
+  .envelope-stage {
+    width: min(82vw, 126vh);
+  }
+
+  .envelope-caption,
+  .envelope-intro-copy {
     display: none;
   }
 }

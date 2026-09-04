@@ -24,18 +24,24 @@ const modes: IntroMode[] = ["auto", "pull", "closeup"];
 
 const words = {
   CN: {
-    open: "点击解开绕绳",
+    open: "解开，查看档案",
     pull: "抽出档案",
-    skip: "直接进入",
+    skip: "跳过开场",
     file: "朱可思 / 个人档案",
+    lead: "一份关于好奇、行动与判断的个人档案",
+    hint: "点击扣件开启 · 约 2 秒",
+    archive: "产品思考与实践记录",
     modes: ["A 自动拆封", "B 手动抽取", "C 扣件特写"],
     state: { closed: "等待拆封", unfastening: "正在解绳", opening: "从左向右翻开", open: "文件夹已打开", extracting: "正在读取档案" },
   },
   EN: {
-    open: "Release the string",
+    open: "Open the archive",
     pull: "Pull out the file",
-    skip: "Enter directly",
+    skip: "Skip intro",
     file: "KESI ZHU / PERSONAL FILE",
+    lead: "A personal file on curiosity, action, and judgment",
+    hint: "Tap the fastener · About 2 seconds",
+    archive: "Product thinking and field notes",
     modes: ["A AUTO", "B MANUAL PULL", "C CLOSE-UP"],
     state: { closed: "SEALED", unfastening: "UNFASTENING", opening: "OPENING LEFT TO RIGHT", open: "FOLDER OPEN", extracting: "READING FILE" },
   },
@@ -109,7 +115,7 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
 
   const finish = () => {
     setPhase("extracting");
-    later(() => setVisible(false), isCompact ? 820 : mode === "closeup" ? 1100 : 900);
+    later(() => setVisible(false), isCompact ? 440 : mode === "closeup" ? 620 : 480);
   };
 
   const start = () => {
@@ -119,9 +125,9 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
       return;
     }
     setPhase("unfastening");
-    const releaseDuration = isCompact ? 560 : mode === "closeup" ? 1000 : 680;
-    const openingDuration = isCompact ? 620 : mode === "closeup" ? 900 : 720;
-    const openHold = isCompact ? 360 : mode === "closeup" ? 650 : 460;
+    const releaseDuration = isCompact ? 280 : mode === "closeup" ? 560 : 320;
+    const openingDuration = isCompact ? 360 : mode === "closeup" ? 540 : 400;
+    const openHold = isCompact ? 120 : mode === "closeup" ? 240 : 150;
     later(() => setPhase("opening"), releaseDuration);
     later(() => setPhase("open"), releaseDuration + openingDuration);
     if (mode !== "pull") later(finish, releaseDuration + openingDuration + openHold);
@@ -138,26 +144,33 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
           className="envelope-intro fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#c89e58] text-[#2c1a0c]"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           aria-label={l.file}
           aria-modal="true"
           role="dialog"
         >
-          <div className="envelope-paper absolute inset-0 opacity-40" />
+          <div className="envelope-paper absolute inset-0 opacity-30" />
+          <div className="envelope-grid pointer-events-none absolute inset-0" />
 
           <motion.div animate={{ opacity: extracting ? 0 : 1 }} className="envelope-topbar absolute inset-x-5 top-5 z-[80] flex items-center justify-between md:inset-x-8 md:top-7">
-            <span className="envelope-label text-[#604019]">IDEA ARCHIVE / KZ</span>
+            <span className="envelope-label flex items-center gap-2 text-[#604019]"><i className="h-1.5 w-1.5 rounded-full bg-[#604019]" /> IDEA ARCHIVE / KZ</span>
             <button type="button" onClick={dismiss} className="envelope-label border-b border-[#604019]/40 pb-1 text-[#604019] hover:border-[#604019] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#604019]">{l.skip}</button>
           </motion.div>
 
           <motion.div
-            className="envelope-stage relative aspect-[3/2] shadow-[0_35px_95px_rgba(71,43,11,.35)]"
-            animate={mode === "closeup" && phase === "closed"
-              ? { scale: isCompact ? 1.12 : 1.48, x: isCompact ? "-4%" : "-20%", opacity: 1 }
-              : { scale: extracting ? (isCompact ? 0.96 : 0.88) : 1, x: 0, y: extracting ? "3%" : 0, opacity: extracting ? 0 : 1 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            style={{ perspective: "1700px" }}
+            className="envelope-arrival relative"
+            initial={reducedMotion ? false : { x: "-46vw", opacity: 0, rotate: -1.8, scale: 0.94 }}
+            animate={{ x: 0, opacity: 1, rotate: 0, scale: 1 }}
+            transition={{ duration: 0.68, ease: [0.16, 1, 0.3, 1] }}
           >
+            <motion.div
+              className="envelope-stage relative aspect-[3/2] shadow-[0_38px_100px_rgba(71,43,11,.32)]"
+              animate={mode === "closeup" && phase === "closed"
+                ? { scale: isCompact ? 1.06 : 1.34, x: isCompact ? "-2%" : "-14%", opacity: 1 }
+                : { scale: extracting ? (isCompact ? 0.98 : 0.92) : 1, x: 0, y: extracting ? "2%" : 0, opacity: extracting ? 0 : 1 }}
+              transition={{ duration: extracting ? 0.46 : 0.44, ease: [0.22, 1, 0.36, 1] }}
+              style={{ perspective: "1700px" }}
+            >
             <div className="absolute inset-0 overflow-hidden bg-[#ddb875]">
               <div className="envelope-paper absolute inset-0 opacity-55" />
               <div className="absolute bottom-0 right-0 top-0 w-[25%] border-l border-[#8c662f]/25 bg-[#c89e58]">
@@ -170,7 +183,7 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
               className={`envelope-dossier absolute overflow-hidden border border-[#b29b74] bg-[#f2ead9] p-[clamp(1rem,2.5vw,2.8rem)] shadow-[16px_24px_48px_rgba(71,43,11,.28)] ${extracting ? "z-50" : "z-20"}`}
               initial={false}
               animate={extracting ? { x: "-23%", y: "-8%", rotate: 0, scale: 1.18, opacity: 0 } : { x: 0, y: 0, rotate: 0.8, scale: 1, opacity: flapIsOpen ? 1 : 0.88 }}
-              transition={{ duration: 1.08, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: extracting ? 0.48 : 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="flex items-center justify-between border-b border-[#2c1a0c]/18 pb-3">
                 <span className="envelope-label text-[#735426]">{l.file}</span>
@@ -185,14 +198,14 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
               </div>
             </motion.article>
 
-            <motion.div className="absolute inset-0 z-30" animate={{ opacity: hasReleasedCord ? 1 : 0 }} transition={{ duration: 0.22 }}>
+            <motion.div className="absolute inset-0 z-30" animate={{ opacity: hasReleasedCord ? 1 : 0, x: flapIsOpen ? "-16%" : 0 }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
               <Image src="/assets/idea-folder-unfastened.png" alt="" fill sizes="(max-width: 640px) 176vw, 94vw" className="object-cover" style={{ clipPath: "inset(0 25% 0 0)" }} />
             </motion.div>
 
             <motion.div
               className="envelope-flap absolute bottom-0 left-[75%] top-0 z-40 w-[25%]"
               animate={flapIsOpen ? { rotateY: 112, x: "2%", filter: "brightness(.78)" } : { rotateY: 0, x: 0, filter: "brightness(1)" }}
-              transition={{ duration: mode === "closeup" ? 1.05 : 0.8, ease: [0.65, 0, 0.2, 1] }}
+              transition={{ duration: mode === "closeup" ? 0.54 : 0.4, ease: [0.65, 0, 0.2, 1] }}
               style={{ transformOrigin: "right center", transformStyle: "preserve-3d" }}
             />
 
@@ -214,7 +227,7 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
                     scale: [1, 1, 1.02, 0.98, 0.9],
                   }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: mode === "closeup" ? 1.1 : 0.76, times: [0, .13, .4, .78, 1], ease: [0.4, 0, 0.2, 1] }}
+                  transition={{ duration: mode === "closeup" ? 0.56 : 0.3, times: [0, .13, .4, .78, 1], ease: [0.4, 0, 0.2, 1] }}
                   style={{ transformOrigin: "86% 49%" }}
                 >
                   <motion.path
@@ -227,7 +240,7 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
                       "M61 46 C66 43 72 49 77 46 S84 43 87 47 C89 51 86 54 82 53 C76 51 70 45 64 49 C62 50 61 51 61 52",
                       "M61 49 C66 53 72 60 77 62 S84 61 87 65 C89 69 86 72 82 71 C76 68 70 60 64 57 C62 56 61 55 61 54",
                     ] }}
-                    transition={{ duration: mode === "closeup" ? 0.9 : 0.62, ease: [0.4, 0, 0.2, 1] }}
+                    transition={{ duration: mode === "closeup" ? 0.52 : 0.28, ease: [0.4, 0, 0.2, 1] }}
                   />
                   <motion.path
                     fill="none"
@@ -239,7 +252,7 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
                       "M62 51 C67 46 72 52 78 49 C82 47 85 48 88 52",
                       "M62 53 C67 57 72 64 78 66 C82 67 85 68 88 71",
                     ] }}
-                    transition={{ duration: mode === "closeup" ? 0.98 : 0.68, delay: 0.04, ease: [0.4, 0, 0.2, 1] }}
+                    transition={{ duration: mode === "closeup" ? 0.54 : 0.3, delay: 0.02, ease: [0.4, 0, 0.2, 1] }}
                   />
                   <motion.path
                     fill="none"
@@ -248,7 +261,7 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
                     strokeWidth=".42"
                     d="M87 48 C90 51 89 55 88 59"
                     animate={{ d: ["M87 48 C90 51 89 55 88 59", "M88 53 C91 59 90 68 89 77"] }}
-                    transition={{ duration: mode === "closeup" ? 1.02 : 0.72, delay: 0.08, ease: [0.4, 0, 0.2, 1] }}
+                    transition={{ duration: mode === "closeup" ? 0.56 : 0.32, delay: 0.03, ease: [0.4, 0, 0.2, 1] }}
                   />
                 </motion.svg>
               )}
@@ -257,13 +270,18 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
             {phase === "closed" && (
               <button type="button" onClick={start} className="envelope-trigger absolute left-[86%] top-[51%] z-[70] flex h-[clamp(4.5rem,9vw,8rem)] w-[clamp(4.5rem,9vw,8rem)] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-[#fff8e6]" aria-label={l.open}>
                 <span className="absolute inset-0 rounded-full border border-[#fff8e6]/80" />
-                <span className="envelope-label rounded-full bg-[#382111]/78 px-3 py-2 text-center text-[#fff8e6] shadow-lg backdrop-blur-sm">{l.open}</span>
+                <span className="envelope-label rounded-full bg-[#382111]/88 px-3 py-2 text-center text-[#fff8e6] shadow-lg backdrop-blur-sm">{l.open}<b className="ml-1 font-normal">→</b></span>
               </button>
             )}
 
             {mode === "pull" && phase === "open" && (
               <motion.button type="button" onClick={finish} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} className="envelope-pull absolute right-[8%] top-1/2 z-[70] -translate-y-1/2 rounded-full bg-[#2c1a0c] px-5 py-3 envelope-label text-[#f4ead4] shadow-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2c1a0c]">{l.pull} →</motion.button>
             )}
+            </motion.div>
+            <motion.div animate={{ opacity: extracting ? 0 : 1 }} className="envelope-caption absolute -bottom-12 left-0 right-0 flex items-center justify-between text-[#604019]">
+              <span className="envelope-label">01 / {l.archive}</span>
+              <span className="envelope-label hidden sm:block">{l.hint}</span>
+            </motion.div>
           </motion.div>
 
           {phase !== "closed" && !extracting && <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="envelope-status envelope-label absolute bottom-6 left-1/2 z-[80] -translate-x-1/2 whitespace-nowrap rounded-full border border-[#604019]/20 bg-[#f1d89f]/80 px-4 py-2 text-[#604019] backdrop-blur-sm">{l.state[phase]}</motion.div>}
@@ -274,7 +292,7 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
                 className="fixed inset-0 z-[75] overflow-hidden bg-[#f2ead9]"
                 initial={{ clipPath: "inset(10% 20% 10% 20% round 2px)", opacity: 0.5, scale: 0.92 }}
                 animate={{ clipPath: "inset(0% 0% 0% 0% round 0px)", opacity: 1, scale: 1 }}
-                transition={{ duration: 1.12, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
                 <PaperHero eyebrow={eyebrow} facts={facts} issue={issue} location={location} scroll={scroll} statement={statement} thesis={thesis} />
               </motion.div>
@@ -289,6 +307,11 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
               <span className="envelope-devstate ml-1 rounded-full border border-[#5f421c]/15 px-3 py-1.5 envelope-label text-[#795725]">STATE / {l.state[phase]}</span>
             </div>
           )}
+
+          <motion.div animate={{ opacity: phase === "closed" ? 1 : 0 }} className="envelope-intro-copy pointer-events-none absolute bottom-6 left-5 z-[79] max-w-xs sm:hidden">
+            <p className="envelope-serif text-xl italic leading-tight text-[#4b3012] md:text-2xl">{l.lead}</p>
+            <p className="envelope-label mt-3 text-[#704d20] sm:hidden">{l.hint}</p>
+          </motion.div>
 
           <span className="sr-only" aria-live="polite">{l.state[phase]}</span>
         </motion.section>
