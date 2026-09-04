@@ -219,20 +219,42 @@ body {
 
 @media (max-width: 640px) {
   .envelope-stage {
-    left: -36vw;
-    width: 176vw;
+    left: -8vw;
+    width: 140vw;
   }
 
   .envelope-dossier {
-    left: 43%;
+    left: 35%;
     top: 6%;
-    width: 52%;
+    width: 58%;
     height: 88%;
   }
 
   .envelope-trigger {
     min-width: 5.25rem;
     min-height: 5.25rem;
+  }
+
+  .envelope-trigger .envelope-label {
+    font-size: 0.56rem;
+    white-space: nowrap;
+  }
+
+  .envelope-pull {
+    position: fixed;
+    bottom: max(2.75rem, env(safe-area-inset-bottom));
+    left: 50%;
+    right: auto;
+    top: auto;
+    transform: translateX(-50%);
+  }
+
+  .envelope-topbar {
+    top: max(1.25rem, env(safe-area-inset-top));
+  }
+
+  .envelope-status {
+    bottom: max(1.25rem, env(safe-area-inset-bottom));
   }
 
   .envelope-devbar {

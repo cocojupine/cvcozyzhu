@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, FileText, Linkedin, Mail, Smartphone } from "lucide-react";
+import { ArrowUpRight, FileText, Linkedin, Mail, Menu, Smartphone, X } from "lucide-react";
 import FolderIntroPrototype from "@/components/FolderIntroPrototype";
 import PaperHero from "@/components/PaperHero";
 
@@ -14,7 +14,7 @@ type Props = { content: Record<Lang, any> };
 const copy = {
   CN: {
     issue: "个人网站 / 叙事原型 02",
-    nav: [["命题", "#thesis"], ["形成", "#formation"], ["证据", "#evidence"]],
+    nav: [["命题", "#question"], ["形成", "#formation"], ["证据", "#evidence"]],
     eyebrow: "HACKATHON SPIRIT / PRODUCT JUDGMENT",
     thesis: ["一个带着", "黑客松精神", "做产品的人。"],
     statement: "兴趣把我带向新的问题，行动让我把想法做出来，而商业化思维让我判断，什么值得成为真正的产品。",
@@ -49,7 +49,7 @@ const copy = {
   },
   EN: {
     issue: "PERSONAL SITE / NARRATIVE PROTOTYPE 02",
-    nav: [["THESIS", "#thesis"], ["FORMATION", "#formation"], ["EVIDENCE", "#evidence"]],
+    nav: [["THESIS", "#question"], ["FORMATION", "#formation"], ["EVIDENCE", "#evidence"]],
     eyebrow: "HACKATHON SPIRIT / PRODUCT JUDGMENT",
     thesis: ["A product person", "with a hackathon", "state of mind."],
     statement: "Curiosity leads me to new questions. Action turns ideas into things, and commercial judgment tells me what deserves to become a real product.",
@@ -90,11 +90,22 @@ function Reveal({ children, className = "", delay = 0 }: { children: React.React
 }
 
 function TopBar({ lang, setLang, s }: { lang: Lang; setLang: (value: Lang) => void; s: any }) {
-  return <header className="fixed inset-x-0 top-0 z-50 border-b border-[#efe9dd]/10 bg-[#090b0d]/80 backdrop-blur-xl"><div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 md:px-10 lg:px-[6vw]">
-    <a href="#top" className="story-label text-[#efe9dd]">KZ / 2026</a>
-    <nav className="hidden gap-8 md:flex">{s.nav.map(([label, href]: string[]) => <a key={href} href={href} className="story-label text-[#71787c] hover:text-[#efe9dd]">{label}</a>)}</nav>
-    <div className="flex gap-1 rounded-full border border-[#efe9dd]/15 p-1">{(["CN", "EN"] as Lang[]).map(item => <button key={item} onClick={() => setLang(item)} className={`rounded-full px-3 py-1 text-[10px] font-bold tracking-[.16em] ${lang === item ? "bg-[#efe9dd] text-[#090b0d]" : "text-[#71787c]"}`}>{item}</button>)}</div>
-  </div></header>;
+  const [mobileOpen, setMobileOpen] = useState(false);
+  return <header className="fixed inset-x-0 top-0 z-50 border-b border-[#efe9dd]/10 bg-[#090b0d]/88 backdrop-blur-xl">
+    <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-5 md:px-10 lg:px-[6vw]">
+      <a href="#top" onClick={() => setMobileOpen(false)} className="story-label text-[#efe9dd]">KZ / 2026</a>
+      <nav aria-label={lang === "CN" ? "页面章节" : "Page sections"} className="hidden gap-8 md:flex">{s.nav.map(([label, href]: string[]) => <a key={href} href={href} className="story-label text-[#71787c] hover:text-[#efe9dd]">{label}</a>)}</nav>
+      <div className="flex items-center gap-2">
+        <div className="flex gap-1 rounded-full border border-[#efe9dd]/15 p-1">{(["CN", "EN"] as Lang[]).map(item => <button type="button" key={item} onClick={() => setLang(item)} aria-pressed={lang === item} className={`rounded-full px-3 py-1 text-[10px] font-bold tracking-[.16em] ${lang === item ? "bg-[#efe9dd] text-[#090b0d]" : "text-[#71787c]"}`}>{item}</button>)}</div>
+        <button type="button" aria-controls="mobile-section-nav" aria-expanded={mobileOpen} aria-label={mobileOpen ? (lang === "CN" ? "关闭章节导航" : "Close section navigation") : (lang === "CN" ? "打开章节导航" : "Open section navigation")} onClick={() => setMobileOpen(value => !value)} className="flex h-9 w-9 items-center justify-center rounded-full border border-[#efe9dd]/15 text-[#efe9dd] md:hidden">
+          {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+        </button>
+      </div>
+    </div>
+    {mobileOpen && <motion.nav id="mobile-section-nav" aria-label={lang === "CN" ? "页面章节" : "Page sections"} initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="border-t border-[#efe9dd]/10 bg-[#090b0d]/96 px-5 py-3 md:hidden">
+      <div className="mx-auto grid max-w-[1600px] grid-cols-3 gap-2">{s.nav.map(([label, href]: string[]) => <a key={href} href={href} onClick={() => setMobileOpen(false)} className="rounded-lg border border-[#efe9dd]/10 px-3 py-3 text-center story-label text-[#b8b5ae] active:bg-[#efe9dd] active:text-[#090b0d]">{label}</a>)}</div>
+    </motion.nav>}
+  </header>;
 }
 
 function Dock({ t }: { t: any }) {

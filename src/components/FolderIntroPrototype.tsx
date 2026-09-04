@@ -72,6 +72,12 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        timers.current.forEach(window.clearTimeout);
+        timers.current = [];
+        setVisible(false);
+        return;
+      }
       if (phase !== "closed" || !["ArrowLeft", "ArrowRight"].includes(event.key)) return;
       const target = event.target as HTMLElement;
       if (target.matches("input, textarea, [contenteditable='true']")) return;
@@ -87,6 +93,12 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
     timers.current.push(window.setTimeout(callback, delay));
   };
 
+  const dismiss = () => {
+    timers.current.forEach(window.clearTimeout);
+    timers.current = [];
+    setVisible(false);
+  };
+
   const chooseMode = (next: IntroMode) => {
     if (phase !== "closed") return;
     setMode(next);
@@ -97,7 +109,7 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
 
   const finish = () => {
     setPhase("extracting");
-    later(() => setVisible(false), mode === "closeup" ? 1750 : 1450);
+    later(() => setVisible(false), isCompact ? 820 : mode === "closeup" ? 1100 : 900);
   };
 
   const start = () => {
@@ -107,9 +119,9 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
       return;
     }
     setPhase("unfastening");
-    const releaseDuration = mode === "closeup" ? 1150 : 760;
-    const openingDuration = mode === "closeup" ? 1080 : 820;
-    const openHold = mode === "closeup" ? 980 : 720;
+    const releaseDuration = isCompact ? 560 : mode === "closeup" ? 1000 : 680;
+    const openingDuration = isCompact ? 620 : mode === "closeup" ? 900 : 720;
+    const openHold = isCompact ? 360 : mode === "closeup" ? 650 : 460;
     later(() => setPhase("opening"), releaseDuration);
     later(() => setPhase("open"), releaseDuration + openingDuration);
     if (mode !== "pull") later(finish, releaseDuration + openingDuration + openHold);
@@ -128,12 +140,14 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
           exit={{ opacity: 0 }}
           transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
           aria-label={l.file}
+          aria-modal="true"
+          role="dialog"
         >
           <div className="envelope-paper absolute inset-0 opacity-40" />
 
-          <motion.div animate={{ opacity: extracting ? 0 : 1 }} className="absolute inset-x-5 top-5 z-[80] flex items-center justify-between md:inset-x-8 md:top-7">
+          <motion.div animate={{ opacity: extracting ? 0 : 1 }} className="envelope-topbar absolute inset-x-5 top-5 z-[80] flex items-center justify-between md:inset-x-8 md:top-7">
             <span className="envelope-label text-[#604019]">IDEA ARCHIVE / KZ</span>
-            <button type="button" onClick={() => setVisible(false)} className="envelope-label border-b border-[#604019]/40 pb-1 text-[#604019] hover:border-[#604019] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#604019]">{l.skip}</button>
+            <button type="button" onClick={dismiss} className="envelope-label border-b border-[#604019]/40 pb-1 text-[#604019] hover:border-[#604019] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#604019]">{l.skip}</button>
           </motion.div>
 
           <motion.div
@@ -248,9 +262,11 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
             )}
 
             {mode === "pull" && phase === "open" && (
-              <motion.button type="button" onClick={finish} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} className="absolute right-[8%] top-1/2 z-[70] -translate-y-1/2 rounded-full bg-[#2c1a0c] px-5 py-3 envelope-label text-[#f4ead4] shadow-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2c1a0c]">{l.pull} →</motion.button>
+              <motion.button type="button" onClick={finish} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} className="envelope-pull absolute right-[8%] top-1/2 z-[70] -translate-y-1/2 rounded-full bg-[#2c1a0c] px-5 py-3 envelope-label text-[#f4ead4] shadow-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2c1a0c]">{l.pull} →</motion.button>
             )}
           </motion.div>
+
+          {phase !== "closed" && !extracting && <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="envelope-status envelope-label absolute bottom-6 left-1/2 z-[80] -translate-x-1/2 whitespace-nowrap rounded-full border border-[#604019]/20 bg-[#f1d89f]/80 px-4 py-2 text-[#604019] backdrop-blur-sm">{l.state[phase]}</motion.div>}
 
           <AnimatePresence>
             {extracting && (
