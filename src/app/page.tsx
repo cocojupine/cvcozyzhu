@@ -33,8 +33,8 @@ type Lang = "EN" | "CN";
 const content = {
   EN: {
     hero: {
-      name: "COZY ZHU",
-      firstName: "COZY",
+      name: "Kesi Zhu",
+      firstName: "Kesi",
       lastName: "ZHU",
       role: "AI PRODUCT MANAGER",
       subRole: "INNOVATION & COMMERCIALIZATION",
@@ -87,7 +87,7 @@ const content = {
         company: "SINGULARITY LEAP · START-UP",
         role: "CO-FOUNDER",
         period: "2025.06-2026.03",
-        tags: ["0-1 OWNER", "AIGC", "SAAS"],
+        tags: ["0-1 OWNER", "AIGC", "SaaS"],
         detail: "Otter's Home AIGC Interior Design SaaS. 1-min generation. Built B2B2C model & asset mgmt system. Microsoft Fund supported.",
       },
       {
@@ -116,7 +116,7 @@ const content = {
       {
         id: "01",
         name: "OTTER'S HOME",
-        type: "AI INTERIOR SAAS",
+        type: "AI INTERIOR SaaS",
         stat: "MS FUND",
         statLabel: "SUPPORTED",
         desc: "AI-driven interior design generation platform. 1-minute rendering workflow.",
@@ -132,9 +132,10 @@ const content = {
         statLabel: "OPEN SOURCE",
         desc: "An installable, reusable AI Skill inspired by Matt Pocock's Grill Me. It turns fuzzy requests into decisions by focusing each round on the highest-value unresolved questions.",
         link: "https://github.com/cocojupine/grill-me-light",
-        cta: "VIEW ON GITHUB",
+        cta: "VIEW ON GitHub",
         image: "/assets/grill-me-light-xhs-cover.png",
         imagePosition: "top",
+        imagePresentation: "mounted-print",
       },
       {
         id: "03",
@@ -172,7 +173,7 @@ const content = {
     footer: {
       end: "END OF LINE.",
       status: "SYSTEM STATUS: NORMAL • LATENCY: 12ms",
-      copyright: "© 2025 COZY ZHU • ALL SYSTEMS OPERATIONAL",
+      copyright: "© 2026 Kesi Zhu • ALL SYSTEMS OPERATIONAL",
     },
     dock: {
       phone: "PHONE",
@@ -184,7 +185,7 @@ const content = {
   },
   CN: {
     hero: {
-      name: "朱可思",
+      name: "祝可思",
       firstName: "KESI",
       lastName: "ZHU",
       role: "AI 工程与商业化的创新型 | 产品经理",
@@ -238,7 +239,7 @@ const content = {
         company: "奇点跃迁 · Start—up",
         role: "联合创始人",
         period: "2025.06-2026.03",
-        tags: ["从0到1", "AIGC", "SAAS"],
+        tags: ["从0到1", "AIGC", "SaaS"],
         detail: "獭獭搭家 AIGC 室内设计 SaaS。1分钟生成方案。构建 B2B2C 模式与资产系统。获微软创业基金支持。",
       },
       {
@@ -246,7 +247,7 @@ const content = {
         role: "联合创始人",
         period: "2025.03-2026.06",
         tags: ["AGENT", "AI FLOW", "互动策略"],
-        detail: "PiLive 跨境直播 AI 互动工具。作为产品和Ai Engineer。与港理 NVIDIA 实验室合著论文。获字节 AI 平台支持。",
+        detail: "PiLive 跨境直播 AI 互动工具。作为产品和 AI Engineer。与港理 NVIDIA 实验室合著论文。获字节 AI 平台支持。",
       },
       {
         company: "科大讯飞 · iFLYTEK",
@@ -267,7 +268,7 @@ const content = {
       {
         id: "01",
         name: "獭獭搭家",
-        type: "AI 家装 SAAS",
+        type: "AI 家装 SaaS",
         stat: "微软基金",
         statLabel: "创业支持",
         desc: "AI 驱动的家装设计生成平台，1分钟极速渲染工作流。",
@@ -286,6 +287,7 @@ const content = {
         cta: "查看 GitHub",
         image: "/assets/grill-me-light-xhs-cover.png",
         imagePosition: "top",
+        imagePresentation: "mounted-print",
       },
       {
         id: "03",
@@ -301,7 +303,7 @@ const content = {
       {
         id: "04",
         name: "Learning Agent",
-        type: "Gitub开源",
+        type: "GitHub开源",
         stat: "开发中",
         statLabel: "BUILDING",
         desc: "整合全站信息的效率智能体。目前正在开发中。",
@@ -313,8 +315,8 @@ const content = {
         id: "05",
         name: "Focus Timer",
         type: "CODING WITH UNITY",
-        stat: "Gitub开源",
-        statLabel: "Gitub开源",
+        stat: "GitHub开源",
+        statLabel: "GitHub开源",
         desc: "基于 Unity 引擎开发的游戏化番茄钟。",
         cta: "仅展示概念",
         video: "/assets/Unity.webm",
@@ -323,7 +325,7 @@ const content = {
     footer: {
       end: "END OF LINE.",
       status: "系统状态：正常 • 延迟：12ms",
-      copyright: "© 2025 COZY ZHU • 所有系统运行正常",
+      copyright: "© 2026 Kesi Zhu • 所有系统运行正常",
     },
     dock: {
       phone: "电话",

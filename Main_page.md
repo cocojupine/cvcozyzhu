@@ -12,8 +12,12 @@
 ---
 
 ## 1. 首屏介绍 (Hero Section)
-* **名字:** 朱可思 (KESI ZHU)
-* **主标题 (H1):** AI 工程与商业化的创新型 | 产品经理
+* **名字:** 祝可思 (Kesi Zhu)
+* **主标题 (H1):** 祝可思 / 英文版 Kesi Zhu
+* **头像:** `/assets/kesi-avatar.png`（来源 `kesi1.jpg`，透明底，已去掉右上角蓝色按钮）
+* **首屏数据:** 5个 AI个人项目 / 3篇 EI / IEEE 论文 / 20+ 奖项与认可 / 5次 产品实践经历
+* **头像旁便签:** 最近在折腾：黑客松 / 兴趣：Jpop、音乐剧、旅游
+* **英文便签:** Lately: Hackathons / Interests: J-pop, musicals & travel
 * **副标题 (H2):** 创新产品与商业化落地
 * **身份标签:** 浙江大学 · 工业设计工程硕士 · 27届
 * **个人简介:** 微软 PowerPoint AI 产品经理实习生，2家 AI 创业公司联合创始人。曾在科大讯飞与哈啰出行担任 PM；发表 3 篇 EI/IEEE 论文，获 20+ 奖项。
@@ -42,7 +46,7 @@
 * **标签:** 商业数据分析 / 跨国协作
 * **落地场景:** 发表 3 篇 EI/IEEE 国际论文；南洋理工 AI 商业分析训练营，瑞典皇家理工交换生。
 
-## 3. 工作经验 (Experience)
+## 3. 工作经历 (Work Experience)
 
 ### 经历 1：微软 · Microsoft (2026.05-至今)
 * **角色:** 产品经理实习生 (PowerPoint AI)
@@ -51,13 +55,13 @@
 
 ### 经历 2：奇点跃迁 · Start up(2025.06-2026.03)
 * **角色:** 联合创始人
-* **标签:** 从0到1 / AIGC / SAAS
+* **标签:** 从0到1 / AIGC / SaaS
 * **详情:** 獭獭搭家 AIGC 室内设计 SaaS。1分钟生成方案。构建 B2B2C 模式与资产系统。获微软创业基金支持。
 
 ### 经历 3：Acuispire · 香港产学研公司(2025.03-2026.06)
 * **角色:** 联合创始人
 * **标签:** AGENT / AI FLOW / 互动策略
-* **详情:** PiLive 跨境直播 AI 互动工具。作为产品和Ai Engineer。与港理 NVIDIA 实验室合著论文。获字节 AI 平台支持。
+* **详情:** PiLive 跨境直播 AI 互动工具。作为产品和 AI Engineer。与港理 NVIDIA 实验室合著论文。获字节 AI 平台支持。
 
 ### 经历 4：科大讯飞 · iFLYTEK (2023.12-2024.02)
 * **角色:** PM 实习生 (AI 医疗)
@@ -72,7 +76,7 @@
 ## 4. 商业落地项目 (Projects Cards)
 
 ### 项目 1：獭獭搭家 (Otter's Home)
-* **类型:** AI 家装 SAAS
+* **类型:** AI 家装 SaaS
 * **状态:** 微软基金 | 创业支持
 * **描述:** AI 驱动的家装设计生成平台，1分钟极速渲染工作流。
 * **链接:** `/projects/otters-home`
@@ -84,6 +88,7 @@
 * **描述:** 一套可安装、可复用的 AI Skill。受 Matt Pocock 的 Grill Me 启发，通过每轮聚焦最关键的未决问题，把模糊需求推进为可执行判断。
 * **链接:** https://github.com/cocojupine/grill-me-light
 * **封面:** `/assets/grill-me-light-xhs-cover.png`
+* **封面呈现:** 原图不变，置于深色档案板，留边、纸张阴影与编号纸夹。
 
 ### 项目 3：PiLive
 * **类型:** 直播 AI AGENT
@@ -93,7 +98,7 @@
 * **封面:** `/assets/Pilive_cover.png`
 
 ### 项目 4：Learning Agent
-* **类型:** Gitub开源
+* **类型:** GitHub开源
 * **状态:** BUILDING
 * **描述:** 整合全站信息的效率智能体。目前正在开发中。
 * **链接:** https://github.com/bohemiaer/PWA-stairt
@@ -101,14 +106,14 @@
 
 ### 项目 5：Focus Timer
 * **类型:** CODING WITH UNITY
-* **状态:** Gitub开源
+* **状态:** GitHub开源
 * **描述:** 基于 Unity 引擎开发的游戏化番茄钟。
 * **链接:** 
 * **视频:** `/assets/Unity.webm`
 
 ## 5. 页脚 (Footer)
 * **Slogan:** END OF LINE.
-* **版权:** © 2025 COZY ZHU • 所有系统运行正常
+* **版权:** © 2026 Kesi Zhu • 所有系统运行正常
 
 ## 暂时隐藏不要出现
 * **提问:** 想了解更多从工业设计到 AI 工程化的心路历程？

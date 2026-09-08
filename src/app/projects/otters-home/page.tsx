@@ -64,7 +64,7 @@ export default function OttersHomeProject() {
         >
           <div className="flex items-center gap-2 mb-6">
             <span className="px-2 py-1 rounded text-xs font-bold tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">
-              B2B2C SAAS
+              B2B2C SaaS
             </span>
             <span className="px-2 py-1 rounded text-xs font-bold tracking-wider bg-zinc-800 text-zinc-400 border border-white/5 font-mono">
               2023 - 2024

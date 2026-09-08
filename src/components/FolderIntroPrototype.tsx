@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import PaperHero from "@/components/PaperHero";
+import PaperHero, { type PersonalNoteContent } from "@/components/PaperHero";
 
 type Lang = "CN" | "EN";
 type IntroMode = "auto" | "pull" | "closeup";
@@ -16,7 +16,8 @@ type FolderIntroProps = {
   issue: string;
   scroll: string;
   statement: string;
-  thesis: string[];
+  name: string;
+  personalNote: PersonalNoteContent;
   facts: string[][];
 };
 
@@ -27,7 +28,7 @@ const words = {
     open: "解开，查看档案",
     pull: "抽出档案",
     skip: "跳过开场",
-    file: "朱可思 / 个人档案",
+    file: "祝可思 / 个人档案",
     lead: "一份关于好奇、行动与判断的个人档案",
     hint: "点击扣件开启 · 约 2 秒",
     archive: "产品思考与实践记录",
@@ -38,7 +39,7 @@ const words = {
     open: "Open the archive",
     pull: "Pull out the file",
     skip: "Skip intro",
-    file: "KESI ZHU / PERSONAL FILE",
+    file: "Kesi Zhu / PERSONAL FILE",
     lead: "A personal file on curiosity, action, and judgment",
     hint: "Tap the fastener · About 2 seconds",
     archive: "Product thinking and field notes",
@@ -47,7 +48,7 @@ const words = {
   },
 };
 
-export default function FolderIntroPrototype({ eyebrow, lang, location, issue, scroll, statement, thesis, facts }: FolderIntroProps) {
+export default function FolderIntroPrototype({ eyebrow, lang, location, issue, scroll, statement, name, personalNote, facts }: FolderIntroProps) {
   const reducedMotion = useReducedMotion();
   const timers = useRef<number[]>([]);
   const [visible, setVisible] = useState(true);
@@ -219,12 +220,13 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
                 <span className="envelope-label text-[#735426]">{l.file}</span>
                 <span className="envelope-label text-[#9a7540]">FILE / 2026</span>
               </div>
-              <h1 className="envelope-serif mt-[clamp(1rem,3vw,3rem)] text-[clamp(2.1rem,5.5vw,6rem)] leading-[.86] tracking-[-.065em]">
-                {thesis.map((line, index) => <span key={line} className={`block ${index === 1 ? "italic text-[#956821]" : ""}`}>{line}</span>)}
+              <h1 className="mt-[clamp(1rem,3vw,3rem)] text-[clamp(2.1rem,5.5vw,6rem)] font-black leading-[1.1] tracking-[-.065em]">
+                {name}
               </h1>
-              <p className="mt-[clamp(1rem,2vw,2rem)] max-w-[85%] text-[clamp(.68rem,1.2vw,1.05rem)] font-semibold leading-[1.75] text-[#5d4b34]">{statement}</p>
-              <div className="absolute inset-x-[clamp(1rem,2.5vw,2.8rem)] bottom-[clamp(1rem,2.3vw,2.3rem)] grid grid-cols-3 border-t border-[#2c1a0c]/15 pt-3">
-                {facts.slice(0, 3).map(([number, label]) => <div key={label} className="border-r border-[#2c1a0c]/15 px-3 first:pl-0 last:border-r-0"><strong className="envelope-serif text-[clamp(1.25rem,2.5vw,2.7rem)] italic">{number}</strong><span className="ml-2 text-[clamp(.4rem,.65vw,.58rem)] font-bold uppercase tracking-[.08em] text-[#775f40]">{label}</span></div>)}
+              <p className="mt-[clamp(1rem,2vw,2rem)] max-w-[62%] text-[clamp(.68rem,1.2vw,1.05rem)] font-semibold leading-[1.75] text-[#5d4b34]">{statement}</p>
+              <Image src="/assets/kesi-avatar.png" alt={name} width={835} height={864} sizes="28vw" className="absolute bottom-[24%] right-[4%] h-auto w-[30%]" />
+              <div className="absolute inset-x-[clamp(1rem,2.5vw,2.8rem)] bottom-[clamp(1rem,2.3vw,2.3rem)] grid grid-cols-4 border-t border-[#2c1a0c]/15 pt-3">
+                {facts.map(([number, label]) => <div key={label} className="border-r border-[#2c1a0c]/15 px-2 first:pl-0 last:border-r-0"><strong className="envelope-serif text-[clamp(1.1rem,2.1vw,2.4rem)] italic">{number}</strong><span className="mt-1 block text-[clamp(.4rem,.65vw,.58rem)] font-bold uppercase tracking-[.08em] text-[#775f40]">{label}</span></div>)}
               </div>
             </motion.article>
 
@@ -324,7 +326,7 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
                 animate={{ clipPath: "inset(0% 0% 0% 0% round 0px)", opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
-                <PaperHero eyebrow={eyebrow} facts={facts} issue={issue} location={location} scroll={scroll} statement={statement} thesis={thesis} />
+                <PaperHero eyebrow={eyebrow} facts={facts} issue={issue} location={location} scroll={scroll} statement={statement} name={name} personalNote={personalNote} />
               </motion.div>
             )}
           </AnimatePresence>

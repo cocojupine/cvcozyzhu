@@ -16,12 +16,13 @@ const copy = {
     issue: "个人网站 / 精简版 03",
     nav: [["经历", "#experience"], ["项目", "#projects"], ["方法", "#approach"]],
     eyebrow: "AI PRODUCT / 0→1 / EVALUATION",
-    thesis: ["AI 可以", "惊艳一次，", "产品必须", "稳定交付。"],
+    name: "祝可思",
+    personalNote: { title: "一点日常", nowLabel: "最近在折腾：", now: "黑客松", interestsLabel: "兴趣：", interests: "Jpop、音乐剧、旅游" },
     statement: "AI 产品经理，做过企业级生成评估、0→1 创业产品与复杂 B 端系统。我擅长把模型能力变成可衡量、可迭代、能落地的产品。",
-    facts: [["02", "AI 创业项目"], ["03", "EI / IEEE 论文"], ["20+", "奖项与认可"], ["05", "产品实践经历"]],
+    facts: [["5个", "AI个人项目"], ["3篇", "EI / IEEE 论文"], ["20+", "奖项与认可"], ["5次", "产品实践经历"]],
     scroll: "查看经历与项目",
     experienceLabel: "EXPERIENCE / IMPACT",
-    experienceTitle: "从医院、硬件，到生成式 AI。",
+    experienceTitle: "工作经历",
     experienceNote: "五段实践让我先看见真实业务的约束，再决定技术如何创造价值。",
     projectsLabel: "SELECTED WORK / PROOF",
     projectsTitle: "项目与可验证成果",
@@ -48,12 +49,13 @@ const copy = {
     issue: "PERSONAL SITE / EDITED 03",
     nav: [["EXPERIENCE", "#experience"], ["WORK", "#projects"], ["METHOD", "#approach"]],
     eyebrow: "AI PRODUCT / 0→1 / EVALUATION",
-    thesis: ["AI can wow.", "Products must", "deliver."],
+    name: "Kesi Zhu",
+    personalNote: { title: "A personal note", nowLabel: "Lately: ", now: "Hackathons", interestsLabel: "Interests: ", interests: "J-pop, musicals & travel" },
     statement: "AI product manager with experience across enterprise generation evaluation, zero-to-one ventures, and complex B2B systems. I turn model capabilities into measurable, iterative products that work in practice.",
-    facts: [["02", "AI ventures"], ["03", "EI / IEEE papers"], ["20+", "awards & recognition"], ["05", "product experiences"]],
+    facts: [["5", "personal AI projects"], ["3", "EI / IEEE papers"], ["20+", "awards & recognition"], ["5", "product experiences"]],
     scroll: "View experience and work",
     experienceLabel: "EXPERIENCE / IMPACT",
-    experienceTitle: "From hospitals and hardware to generative AI.",
+    experienceTitle: "Work Experience",
     experienceNote: "Five roles taught me to see real-world constraints first, then decide where technology creates value.",
     projectsLabel: "SELECTED WORK / PROOF",
     projectsTitle: "Projects with verifiable outcomes",
@@ -116,8 +118,17 @@ function Experience({ exp, index }: { exp: any; index: number }) {
 }
 
 function Project({ project, proof }: { project: any; proof: string }) {
-  const visual = project.image ? <Image src={project.image} alt={project.name} fill sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw" className={`object-cover opacity-80 transition-all duration-700 group-hover:scale-[1.025] group-hover:opacity-100 ${project.imagePosition === "top" ? "object-top" : ""}`} /> : project.video ? <video src={project.video} autoPlay loop muted playsInline className="h-full w-full object-cover opacity-80 group-hover:opacity-100" /> : null;
-  const card = <article className="group grid h-full grid-rows-[auto_1fr] overflow-hidden border border-[#efe9dd]/14 bg-[#0d1012] transition-colors hover:border-[#9ce3be]/50"><div className="relative aspect-[16/9] overflow-hidden border-b border-[#efe9dd]/10 bg-[#121619]">{visual}<div className="absolute inset-x-0 top-0 flex justify-between bg-gradient-to-b from-black/75 to-transparent p-4"><span className="story-label text-white/80">{project.id} / {project.type}</span><span className="rounded-full border border-white/25 bg-black/35 px-2 py-1 font-mono text-[9px] text-white">{project.statLabel}</span></div></div><div className="flex flex-col p-6"><p className="story-label text-[#9ce3be]">PROVES / {proof}</p><h3 className="mt-4 text-2xl font-black tracking-[-.035em]">{project.name}</h3><p className="mt-3 flex-1 text-sm leading-7 text-[#93999c]">{project.desc}</p><div className="mt-6 flex justify-between border-t border-[#efe9dd]/10 pt-4 text-xs font-bold uppercase tracking-[.12em]"><span>{project.cta}</span><ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></div></div></article>;
+  const mountedPrint = project.imagePresentation === "mounted-print";
+  const visual = mountedPrint ? (
+    <div className="project-print-board absolute inset-0">
+      <div className="project-print-sheet">
+        <Image src={project.image} alt={project.name} fill sizes="(min-width: 768px) 35vw, 75vw" className="object-cover object-top" />
+        <span aria-hidden="true" className="project-print-clip" />
+      </div>
+      <span aria-hidden="true" className="project-print-index">FILE / {project.id}</span>
+    </div>
+  ) : project.image ? <Image src={project.image} alt={project.name} fill sizes="(min-width: 768px) 50vw, 100vw" className={`object-cover opacity-80 transition-all duration-700 group-hover:scale-[1.025] group-hover:opacity-100 ${project.imagePosition === "top" ? "object-top" : ""}`} /> : project.video ? <video src={project.video} autoPlay loop muted playsInline className="h-full w-full object-cover opacity-80 group-hover:opacity-100" /> : null;
+  const card = <article className="group grid h-full grid-rows-[auto_1fr] overflow-hidden border border-[#efe9dd]/14 bg-[#0d1012] transition-colors hover:border-[#9ce3be]/50"><div className="relative aspect-[16/9] overflow-hidden border-b border-[#efe9dd]/10 bg-[#121619]">{visual}<div className="absolute inset-x-0 top-0 flex justify-between bg-gradient-to-b from-black/75 to-transparent p-4"><span className="story-label text-white/80" style={{ textTransform: "none" }}>{project.id} / {project.type}</span><span className="rounded-full border border-white/25 bg-black/35 px-2 py-1 font-mono text-[9px] text-white">{project.statLabel}</span></div></div><div className="flex flex-col p-6"><p className="story-label text-[#9ce3be]">PROVES / {proof}</p><h3 className="mt-4 text-2xl font-black tracking-[-.035em]">{project.name}</h3><p className="mt-3 flex-1 text-sm leading-7 text-[#93999c]">{project.desc}</p><div className="mt-6 flex justify-between border-t border-[#efe9dd]/10 pt-4 text-xs font-bold uppercase tracking-[.12em]"><span style={{ textTransform: "none" }}>{project.cta}</span><ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></div></div></article>;
   return project.link ? <Link href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} className="block h-full">{card}</Link> : <div className="h-full">{card}</div>;
 }
 
@@ -126,10 +137,10 @@ export default function EditorialHome({ content }: Props) {
   const t = content[lang];
   const s = copy[lang];
   return <main className="story-shell min-h-screen overflow-hidden bg-[#090b0d] text-[#efe9dd] selection:bg-[#9ce3be] selection:text-[#090b0d]">
-    <FolderIntroPrototype eyebrow={s.eyebrow} lang={lang} location={t.hero.location} issue={s.issue} scroll={s.scroll} statement={s.statement} thesis={s.thesis} facts={s.facts} />
+    <FolderIntroPrototype eyebrow={s.eyebrow} lang={lang} location={t.hero.location} issue={s.issue} scroll={s.scroll} statement={s.statement} name={s.name} personalNote={s.personalNote} facts={s.facts} />
     <TopBar lang={lang} setLang={setLang} s={s} />
 
-    <section id="top"><PaperHero eyebrow={s.eyebrow} facts={s.facts} issue={s.issue} location={t.hero.location} scroll={s.scroll} statement={s.statement} thesis={s.thesis} /></section>
+    <section id="top"><PaperHero eyebrow={s.eyebrow} facts={s.facts} issue={s.issue} location={t.hero.location} scroll={s.scroll} statement={s.statement} name={s.name} personalNote={s.personalNote} /></section>
 
     <section id="experience" className="bg-[#efe9dd] px-5 py-20 text-[#111416] md:px-10 md:py-28 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]">
       <Reveal className="grid gap-7 border-t border-[#111416]/20 pt-6 md:grid-cols-[1fr_.65fr] md:items-end"><div><span className="story-label text-[#167b57]">{s.experienceLabel}</span><h2 className="story-serif mt-5 max-w-4xl text-5xl tracking-[-.05em] md:text-7xl">{s.experienceTitle}</h2></div><p className="max-w-lg text-sm leading-7 text-[#596064] md:justify-self-end md:text-base">{s.experienceNote}</p></Reveal>

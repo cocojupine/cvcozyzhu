@@ -178,6 +178,47 @@ body {
     linear-gradient(115deg, #d5af6b 0%, #c99d56 58%, #b88643 100%);
 }
 
+.project-print-board {
+  background-color: #1a2224;
+  background-image: linear-gradient(rgba(239,233,221,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(239,233,221,.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.project-print-sheet {
+  position: absolute;
+  inset: 20% 13% 7%;
+  background: #fafaf8;
+  border: 5px solid #fafaf8;
+  box-shadow: 1px 2px 0 #ada99d, 7px 12px 0 rgba(0,0,0,.15), 0 18px 28px rgba(0,0,0,.35);
+  transform: rotate(-2deg);
+}
+
+.project-print-clip {
+  position: absolute;
+  z-index: 1;
+  top: -14px;
+  left: 50%;
+  width: 28px;
+  height: 15px;
+  transform: translateX(-50%);
+  border: 1px solid #737d7b;
+  border-radius: 3px 3px 1px 1px;
+  background: linear-gradient(#798582, #394542 48%, #222d2b 49%);
+  box-shadow: 0 2px 3px rgba(0,0,0,.3);
+}
+
+.project-print-index {
+  position: absolute;
+  left: 4%;
+  bottom: 8%;
+  color: #87938b;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: .14em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
 .envelope-intro::before {
   position: absolute;
   inset: 0;
