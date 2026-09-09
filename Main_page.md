@@ -7,7 +7,7 @@
   2. 技能: 平滑滚动至核心技能区块 (`/#skills`)
   3. 经历与项目: 平滑滚动至经历区块 (`/#experience`)
   4. 关于我: 路由跳转至独立详情页 (`/about`)
-  5. 下载简历: 醒目按钮，新标签页打开 (`/assets/CV_simplyfy_KesiZhu.pdf`)
+  5. 下载简历: 中文版打开 `/Kesi_AI_PM_CN.pdf`，英文版打开 `/Kesi_Zhu_AI_Product_CV_EN.pdf`
 
 ---
 
@@ -26,7 +26,7 @@
     * 电话: 13568009560 (点击复制)
     * 邮箱: SWEcozyzhu@gmail.com (点击复制)
     * 领英: https://www.linkedin.com/in/kesi-zhu (点击跳转)
-    * 简历: /assets/CV_simplyfy_KesiZhu.pdf (点击打开)
+    * 简历: 随语言切换至中文版或英文版 PDF（点击打开）
 
 ## 2. 核心技能 (Skills Bento Box)
 

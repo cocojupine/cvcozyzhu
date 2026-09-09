@@ -49,7 +49,7 @@ export default function OttersHomeProject() {
 
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-8 h-16 bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
-        <Link href="/" className="pointer-events-auto group flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/50 backdrop-blur-md border border-white/10 hover:border-white/30 transition-all relative z-50">
+        <Link href="/?skipIntro=1#projects" className="pointer-events-auto group flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/50 backdrop-blur-md border border-white/10 hover:border-white/30 transition-all relative z-50">
           <ArrowLeft className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors" />
           <span className="text-xs font-bold tracking-widest text-zinc-400 group-hover:text-white transition-colors">返回首页</span>
         </Link>
@@ -233,7 +233,7 @@ export default function OttersHomeProject() {
       {/* Footer Nav */}
       <footer className="border-t border-white/5 py-16 relative z-10">
         <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
-          <Link href="/" className="text-xs font-bold text-zinc-600 hover:text-white transition-colors tracking-widest uppercase">
+          <Link href="/?skipIntro=1#projects" className="text-xs font-bold text-zinc-600 hover:text-white transition-colors tracking-widest uppercase">
             ← 返回首页
           </Link>
           <div className="flex items-center gap-4">

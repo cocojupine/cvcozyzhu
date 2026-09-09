@@ -58,7 +58,19 @@ export default function FolderIntroPrototype({ eyebrow, lang, location, issue, s
   const l = words[lang];
 
   useEffect(() => {
-    const requested = new URLSearchParams(window.location.search).get("intro") as IntroMode | null;
+    const params = new URLSearchParams(window.location.search);
+    const skipRequested = params.get("skipIntro") === "1" || window.sessionStorage.getItem("portfolioSkipIntro") === "1";
+    if (skipRequested) {
+      window.sessionStorage.removeItem("portfolioSkipIntro");
+      setVisible(false);
+      if (params.has("skipIntro")) {
+        params.delete("skipIntro");
+        const query = params.toString();
+        window.history.replaceState({}, "", `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`);
+      }
+    }
+
+    const requested = params.get("intro") as IntroMode | null;
     if (requested && modes.includes(requested)) setMode(requested);
 
     const media = window.matchMedia("(max-width: 640px)");

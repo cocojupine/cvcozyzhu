@@ -42,6 +42,7 @@ const copy = {
     contactTitle: "寻找 AI 产品、0→1 与生成质量方向的下一段实践。",
     contactNote: "完整经历、项目背景与联系方式见简历。",
     resume: "查看完整简历",
+    resumeHref: "/Kesi_AI_PM_CN.pdf",
     email: "邮件联系",
     footer: "AI PRODUCT / 0→1 / EVALUATION",
   },
@@ -75,6 +76,7 @@ const copy = {
     contactTitle: "Looking for the next challenge in AI product, zero-to-one, and generation quality.",
     contactNote: "See the full résumé for experience, project context, and contact details.",
     resume: "View full résumé",
+    resumeHref: "/Kesi_Zhu_AI_Product_CV_EN.pdf",
     email: "Email me",
     footer: "AI PRODUCT / 0→1 / EVALUATION",
   },
@@ -104,8 +106,8 @@ function TopBar({ lang, setLang, s }: { lang: Lang; setLang: (value: Lang) => vo
   </header>;
 }
 
-function Dock({ t }: { t: any }) {
-  const items = [{ label: t.dock.phone, icon: Smartphone, href: "tel:13568009560" }, { label: t.dock.email, icon: Mail, href: "mailto:1162135252@qq.com" }, { label: t.dock.linkedin, icon: Linkedin, href: "https://www.linkedin.com/in/kesi-zhu" }, { label: t.dock.resume, icon: FileText, href: "/CV_simplyfy_KesiZhu.pdf" }];
+function Dock({ t, resumeHref }: { t: any; resumeHref: string }) {
+  const items = [{ label: t.dock.phone, icon: Smartphone, href: "tel:13568009560" }, { label: t.dock.email, icon: Mail, href: "mailto:1162135252@qq.com" }, { label: t.dock.linkedin, icon: Linkedin, href: "https://www.linkedin.com/in/kesi-zhu" }, { label: t.dock.resume, icon: FileText, href: resumeHref }];
   return <div className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2"><div className="flex gap-1 rounded-full border border-[#efe9dd]/20 bg-[#0a0c0e]/90 p-1.5 shadow-2xl backdrop-blur-xl">{items.map(({ label, icon: Icon, href }) => <a key={label} href={href} target={href.startsWith("http") || href.endsWith(".pdf") ? "_blank" : undefined} rel="noopener noreferrer" aria-label={label} className="group relative flex h-11 w-11 items-center justify-center rounded-full text-[#92989b] hover:bg-[#efe9dd] hover:text-[#090b0d]"><Icon className="h-[18px] w-[18px]" /><span className="pointer-events-none absolute -top-9 whitespace-nowrap rounded bg-[#efe9dd] px-2 py-1 text-[10px] font-bold text-[#090b0d] opacity-0 group-hover:opacity-100">{label}</span></a>)}</div></div>;
 }
 
@@ -129,7 +131,11 @@ function Project({ project, proof }: { project: any; proof: string }) {
     </div>
   ) : project.image ? <Image src={project.image} alt={project.name} fill sizes="(min-width: 768px) 50vw, 100vw" className={`object-cover opacity-80 transition-all duration-700 group-hover:scale-[1.025] group-hover:opacity-100 ${project.imagePosition === "top" ? "object-top" : ""}`} /> : project.video ? <video src={project.video} autoPlay loop muted playsInline className="h-full w-full object-cover opacity-80 group-hover:opacity-100" /> : null;
   const card = <article className="group grid h-full grid-rows-[auto_1fr] overflow-hidden border border-[#efe9dd]/14 bg-[#0d1012] transition-colors hover:border-[#9ce3be]/50"><div className="relative aspect-[16/9] overflow-hidden border-b border-[#efe9dd]/10 bg-[#121619]">{visual}<div className="absolute inset-x-0 top-0 flex justify-between bg-gradient-to-b from-black/75 to-transparent p-4"><span className="story-label text-white/80" style={{ textTransform: "none" }}>{project.id} / {project.type}</span><span className="rounded-full border border-white/25 bg-black/35 px-2 py-1 font-mono text-[9px] text-white">{project.statLabel}</span></div></div><div className="flex flex-col p-6"><p className="story-label text-[#9ce3be]">PROVES / {proof}</p><h3 className="mt-4 text-2xl font-black tracking-[-.035em]">{project.name}</h3><p className="mt-3 flex-1 text-sm leading-7 text-[#93999c]">{project.desc}</p><div className="mt-6 flex justify-between border-t border-[#efe9dd]/10 pt-4 text-xs font-bold uppercase tracking-[.12em]"><span style={{ textTransform: "none" }}>{project.cta}</span><ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></div></div></article>;
-  return project.link ? <Link href={project.link} target={project.link.startsWith("http") ? "_blank" : undefined} className="block h-full">{card}</Link> : <div className="h-full">{card}</div>;
+  const external = project.link?.startsWith("http");
+  const rememberIntroSkip = () => {
+    if (!external) window.sessionStorage.setItem("portfolioSkipIntro", "1");
+  };
+  return project.link ? <Link href={project.link} target={external ? "_blank" : undefined} onClick={rememberIntroSkip} className="block h-full">{card}</Link> : <div className="h-full">{card}</div>;
 }
 
 export default function EditorialHome({ content }: Props) {
@@ -159,9 +165,9 @@ export default function EditorialHome({ content }: Props) {
       </Reveal>
     </div></section>
 
-    <section className="story-ending relative bg-[#efe9dd] px-5 py-20 text-[#111416] md:px-10 md:py-28 lg:px-[6vw]"><div className="story-noise pointer-events-none absolute inset-0 opacity-20" /><Reveal className="relative mx-auto max-w-[1300px]"><span className="story-label text-[#167b57]">{s.contactLabel}</span><h2 className="story-serif mt-7 max-w-5xl text-[clamp(2.8rem,5.8vw,6.5rem)] leading-[.96] tracking-[-.05em]">{s.contactTitle}</h2><div className="mt-10 flex flex-col gap-6 border-t border-[#111416]/18 pt-7 md:flex-row md:items-end md:justify-between"><p className="max-w-xl text-sm leading-7 text-[#555c60] md:text-base">{s.contactNote}</p><div className="flex flex-wrap gap-5"><a href="mailto:1162135252@qq.com" className="flex items-center gap-2 border-b border-[#111416] pb-2 text-sm font-black uppercase tracking-[.1em] hover:text-[#167b57]">{s.email}<Mail className="h-4 w-4" /></a><a href="/CV_simplyfy_KesiZhu.pdf" target="_blank" className="flex items-center gap-2 border-b border-[#111416] pb-2 text-sm font-black uppercase tracking-[.1em] hover:text-[#167b57]">{s.resume}<ArrowUpRight className="h-4 w-4" /></a></div></div></Reveal></section>
+    <section className="story-ending relative bg-[#efe9dd] px-5 py-20 text-[#111416] md:px-10 md:py-28 lg:px-[6vw]"><div className="story-noise pointer-events-none absolute inset-0 opacity-20" /><Reveal className="relative mx-auto max-w-[1300px]"><span className="story-label text-[#167b57]">{s.contactLabel}</span><h2 className="story-serif mt-7 max-w-5xl text-[clamp(2.8rem,5.8vw,6.5rem)] leading-[.96] tracking-[-.05em]">{s.contactTitle}</h2><div className="mt-10 flex flex-col gap-6 border-t border-[#111416]/18 pt-7 md:flex-row md:items-end md:justify-between"><p className="max-w-xl text-sm leading-7 text-[#555c60] md:text-base">{s.contactNote}</p><div className="flex flex-wrap gap-5"><a href="mailto:1162135252@qq.com" className="flex items-center gap-2 border-b border-[#111416] pb-2 text-sm font-black uppercase tracking-[.1em] hover:text-[#167b57]">{s.email}<Mail className="h-4 w-4" /></a><a href={s.resumeHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 border-b border-[#111416] pb-2 text-sm font-black uppercase tracking-[.1em] hover:text-[#167b57]">{s.resume}<ArrowUpRight className="h-4 w-4" /></a></div></div></Reveal></section>
 
     <footer className="px-5 pb-32 pt-9 md:px-10 lg:px-[6vw]"><div className="mx-auto flex max-w-[1500px] flex-col gap-3 border-t border-[#efe9dd]/12 pt-6 story-label text-[#5d6467] md:flex-row md:justify-between"><span>{t.footer.copyright}</span><span>{s.footer}</span></div></footer>
-    <Dock t={t} />
+    <Dock t={t} resumeHref={s.resumeHref} />
   </main>;
 }
