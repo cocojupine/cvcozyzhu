@@ -2,18 +2,16 @@
 
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
 import { ArrowUpRight, FileText, Linkedin, Mail, Menu, Smartphone, X } from "lucide-react";
 import FolderIntroPrototype from "@/components/FolderIntroPrototype";
-import PaperHero from "@/components/PaperHero";
+import ProjectShelf from "./ProjectShelf";
 
 type Lang = "EN" | "CN";
 type Props = { content: Record<Lang, any> };
 
 const copy = {
   CN: {
-    issue: "个人网站 / 精简版 03",
+    issue: "个人网站",
     nav: [["经历", "#experience"], ["项目", "#projects"], ["方法", "#approach"]],
     eyebrow: "AI PRODUCT / 0→1 / EVALUATION",
     name: "祝可思",
@@ -25,8 +23,7 @@ const copy = {
     experienceTitle: "工作经历",
     experienceNote: "五段实践让我先看见真实业务的约束，再决定技术如何创造价值。",
     projectsLabel: "SELECTED WORK / PROOF",
-    projectsTitle: "项目与可验证成果",
-    projectsNote: "用真实产品、原型与结果说明能力，而不是依赖自我评价。",
+    projectsTitle: "项目书库",
     proofs: ["产品架构 / 商业验证", "决策设计 / AI 工作流", "AI Flow / 跨文化协作", "主动学习 / AI Engineering", "创意原型 / 独立实现"],
     approachLabel: "HOW I WORK / ONE SYSTEM",
     approachTitle: "把不确定性，变成可验证的产品路径",
@@ -39,7 +36,7 @@ const copy = {
     ],
     toolkit: "能力工具箱",
     contactLabel: "AVAILABLE FOR PRODUCT WORK",
-    contactTitle: "寻找 AI 产品、0→1 与生成质量方向的下一段实践。",
+    contactTitle: "寻找 AI 产品经理的下一段机会和合作",
     contactNote: "完整经历、项目背景与联系方式见简历。",
     resume: "查看完整简历",
     resumeHref: "/Kesi_AI_PM_CN.pdf",
@@ -47,7 +44,7 @@ const copy = {
     footer: "AI PRODUCT / 0→1 / EVALUATION",
   },
   EN: {
-    issue: "PERSONAL SITE / EDITED 03",
+    issue: "PERSONAL SITE",
     nav: [["EXPERIENCE", "#experience"], ["WORK", "#projects"], ["METHOD", "#approach"]],
     eyebrow: "AI PRODUCT / 0→1 / EVALUATION",
     name: "Kesi Zhu",
@@ -60,7 +57,6 @@ const copy = {
     experienceNote: "Five roles taught me to see real-world constraints first, then decide where technology creates value.",
     projectsLabel: "SELECTED WORK / PROOF",
     projectsTitle: "Projects with verifiable outcomes",
-    projectsNote: "Real products, prototypes, and results make the case—not self-description.",
     proofs: ["Product architecture / business validation", "Decision design / AI workflow", "AI flow / cross-cultural teamwork", "Active learning / AI engineering", "Creative prototyping / independent build"],
     approachLabel: "HOW I WORK / ONE SYSTEM",
     approachTitle: "Turn uncertainty into a testable product path",
@@ -112,30 +108,11 @@ function Dock({ t, resumeHref }: { t: any; resumeHref: string }) {
 }
 
 function Experience({ exp, index }: { exp: any; index: number }) {
-  return <article className="grid gap-5 border-t border-[#141719]/15 py-7 md:grid-cols-[72px_190px_1fr] md:gap-7 md:py-8">
+  return <article className="grid gap-5 border-t border-white/15 py-7 md:grid-cols-[72px_190px_1fr] md:gap-7 md:py-8">
     <span className="story-serif text-4xl italic text-[#a19a8d]">{String(index + 1).padStart(2, "0")}</span>
-    <div><p className="font-mono text-[11px] text-[#6c706f]">{exp.period}</p><h3 className="mt-3 text-lg font-black tracking-[-.02em] md:text-xl">{exp.company}</h3><p className="mt-1 text-xs font-semibold text-[#596064]">{exp.role}</p></div>
-    <div className="md:pt-1"><p className="max-w-3xl text-sm leading-7 text-[#4d5458] md:text-[15px]">{exp.detail}</p><div className="mt-4 flex flex-wrap gap-1.5">{exp.tags.map((tag: string) => <span key={tag} className="rounded-full border border-[#15191b]/15 px-2.5 py-1 font-mono text-[9px] text-[#555c60]">{tag}</span>)}</div></div>
+    <div><p className="font-mono text-[11px] text-[#babbb5]">{exp.period}</p><h3 className="mt-3 text-lg font-black tracking-[-.02em] md:text-xl">{exp.company}</h3><p className="mt-1 text-xs font-semibold text-[#babbb5]">{exp.role}</p></div>
+    <div className="md:pt-1"><p className="max-w-3xl text-sm leading-7 text-[#babbb5] md:text-[15px]">{exp.detail}</p><div className="mt-4 flex flex-wrap gap-1.5">{exp.tags.map((tag: string) => <span key={tag} className="rounded-full border border-white/20 px-2.5 py-1 font-mono text-[9px] text-[#babbb5]">{tag}</span>)}</div></div>
   </article>;
-}
-
-function Project({ project, proof }: { project: any; proof: string }) {
-  const mountedPrint = project.imagePresentation === "mounted-print";
-  const visual = mountedPrint ? (
-    <div className="project-print-board absolute inset-0">
-      <div className="project-print-sheet">
-        <Image src={project.image} alt={project.name} fill sizes="(min-width: 768px) 35vw, 75vw" className="object-cover object-top" />
-        <span aria-hidden="true" className="project-print-clip" />
-      </div>
-      <span aria-hidden="true" className="project-print-index">FILE / {project.id}</span>
-    </div>
-  ) : project.image ? <Image src={project.image} alt={project.name} fill sizes="(min-width: 768px) 50vw, 100vw" className={`object-cover opacity-80 transition-all duration-700 group-hover:scale-[1.025] group-hover:opacity-100 ${project.imagePosition === "top" ? "object-top" : ""}`} /> : project.video ? <video src={project.video} autoPlay loop muted playsInline className="h-full w-full object-cover opacity-80 group-hover:opacity-100" /> : null;
-  const card = <article className="group grid h-full grid-rows-[auto_1fr] overflow-hidden border border-[#efe9dd]/14 bg-[#0d1012] transition-colors hover:border-[#9ce3be]/50"><div className="relative aspect-[16/9] overflow-hidden border-b border-[#efe9dd]/10 bg-[#121619]">{visual}<div className="absolute inset-x-0 top-0 flex justify-between bg-gradient-to-b from-black/75 to-transparent p-4"><span className="story-label text-white/80" style={{ textTransform: "none" }}>{project.id} / {project.type}</span><span className="rounded-full border border-white/25 bg-black/35 px-2 py-1 font-mono text-[9px] text-white">{project.statLabel}</span></div></div><div className="flex flex-col p-6"><p className="story-label text-[#9ce3be]">PROVES / {proof}</p><h3 className="mt-4 text-2xl font-black tracking-[-.035em]">{project.name}</h3><p className="mt-3 flex-1 text-sm leading-7 text-[#93999c]">{project.desc}</p><div className="mt-6 flex justify-between border-t border-[#efe9dd]/10 pt-4 text-xs font-bold uppercase tracking-[.12em]"><span style={{ textTransform: "none" }}>{project.cta}</span><ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></div></div></article>;
-  const external = project.link?.startsWith("http");
-  const rememberIntroSkip = () => {
-    if (!external) window.sessionStorage.setItem("portfolioSkipIntro", "1");
-  };
-  return project.link ? <Link href={project.link} target={external ? "_blank" : undefined} onClick={rememberIntroSkip} className="block h-full">{card}</Link> : <div className="h-full">{card}</div>;
 }
 
 export default function EditorialHome({ content }: Props) {
@@ -143,19 +120,18 @@ export default function EditorialHome({ content }: Props) {
   const t = content[lang];
   const s = copy[lang];
   return <main className="story-shell min-h-screen overflow-hidden bg-[#090b0d] text-[#efe9dd] selection:bg-[#9ce3be] selection:text-[#090b0d]">
-    <FolderIntroPrototype eyebrow={s.eyebrow} lang={lang} location={t.hero.location} issue={s.issue} scroll={s.scroll} statement={s.statement} name={s.name} personalNote={s.personalNote} facts={s.facts} />
     <TopBar lang={lang} setLang={setLang} s={s} />
 
-    <section id="top"><PaperHero eyebrow={s.eyebrow} facts={s.facts} issue={s.issue} location={t.hero.location} scroll={s.scroll} statement={s.statement} name={s.name} personalNote={s.personalNote} /></section>
+    <FolderIntroPrototype eyebrow={s.eyebrow} lang={lang} location={t.hero.location} issue={s.issue} scroll={s.scroll} statement={s.statement} name={s.name} personalNote={s.personalNote} facts={s.facts} />
 
-    <section id="experience" className="bg-[#efe9dd] px-5 py-20 text-[#111416] md:px-10 md:py-28 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]">
-      <Reveal className="grid gap-7 border-t border-[#111416]/20 pt-6 md:grid-cols-[1fr_.65fr] md:items-end"><div><span className="story-label text-[#167b57]">{s.experienceLabel}</span><h2 className="story-serif mt-5 max-w-4xl text-5xl tracking-[-.05em] md:text-7xl">{s.experienceTitle}</h2></div><p className="max-w-lg text-sm leading-7 text-[#596064] md:justify-self-end md:text-base">{s.experienceNote}</p></Reveal>
-      <div className="mt-14 border-b border-[#141719]/15">{t.experience.map((exp: any, index: number) => <Reveal key={`${exp.company}-${exp.period}`}><Experience exp={exp} index={index} /></Reveal>)}</div>
+    <section id="experience" className="bg-black px-5 py-20 text-[#efe9dd] md:px-10 md:py-28 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]">
+      <Reveal className="grid gap-7 border-t border-white/20 pt-6 md:grid-cols-[1fr_.65fr] md:items-end"><div><span className="story-label text-[#9ce3be]">{s.experienceLabel}</span><h2 className="story-serif mt-5 max-w-4xl text-5xl tracking-[-.05em] md:text-7xl">{s.experienceTitle}</h2></div><p className="max-w-lg text-sm leading-7 text-[#babbb5] md:justify-self-end md:text-base">{s.experienceNote}</p></Reveal>
+      <div className="mt-14 border-b border-white/15">{t.experience.map((exp: any, index: number) => <Reveal key={`${exp.company}-${exp.period}`}><Experience exp={exp} index={index} /></Reveal>)}</div>
     </div></section>
 
-    <section id="projects" className="bg-[#0d1012] px-5 py-20 md:px-10 md:py-28 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]">
-      <Reveal className="grid gap-7 border-t border-[#efe9dd]/15 pt-6 md:grid-cols-[1fr_.65fr] md:items-end"><div><span className="story-label text-[#9ce3be]">{s.projectsLabel}</span><h2 className="story-serif mt-5 max-w-4xl text-5xl tracking-[-.05em] md:text-7xl">{s.projectsTitle}</h2></div><p className="max-w-lg text-sm leading-7 text-[#92989b] md:justify-self-end md:text-base">{s.projectsNote}</p></Reveal>
-      <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-6">{t.projects.map((project: any, index: number) => <Reveal key={project.id} className={index < 2 ? "xl:col-span-3" : "xl:col-span-2"}><Project project={project} proof={s.proofs[index]} /></Reveal>)}</div>
+    <section id="projects" className="bg-[#e9e1d2] text-[#252e26] px-5 py-20 md:px-10 md:py-28 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]">
+      <Reveal className="pt-6"><span className="story-label text-[#345a49]">{s.projectsLabel}</span><h2 className="story-serif mt-5 max-w-4xl text-5xl tracking-[-.05em] md:text-7xl">{s.projectsTitle}</h2></Reveal>
+      <ProjectShelf projects={t.projects} english={lang === "EN"} />
     </div></section>
 
     <section id="approach" className="bg-[#f2a15f] px-5 py-20 text-[#111416] md:px-10 md:py-28 lg:px-[6vw]"><div className="mx-auto max-w-[1500px]">
@@ -165,7 +141,7 @@ export default function EditorialHome({ content }: Props) {
       </Reveal>
     </div></section>
 
-    <section className="story-ending relative bg-[#efe9dd] px-5 py-20 text-[#111416] md:px-10 md:py-28 lg:px-[6vw]"><div className="story-noise pointer-events-none absolute inset-0 opacity-20" /><Reveal className="relative mx-auto max-w-[1300px]"><span className="story-label text-[#167b57]">{s.contactLabel}</span><h2 className="story-serif mt-7 max-w-5xl text-[clamp(2.8rem,5.8vw,6.5rem)] leading-[.96] tracking-[-.05em]">{s.contactTitle}</h2><div className="mt-10 flex flex-col gap-6 border-t border-[#111416]/18 pt-7 md:flex-row md:items-end md:justify-between"><p className="max-w-xl text-sm leading-7 text-[#555c60] md:text-base">{s.contactNote}</p><div className="flex flex-wrap gap-5"><a href="mailto:1162135252@qq.com" className="flex items-center gap-2 border-b border-[#111416] pb-2 text-sm font-black uppercase tracking-[.1em] hover:text-[#167b57]">{s.email}<Mail className="h-4 w-4" /></a><a href={s.resumeHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 border-b border-[#111416] pb-2 text-sm font-black uppercase tracking-[.1em] hover:text-[#167b57]">{s.resume}<ArrowUpRight className="h-4 w-4" /></a></div></div></Reveal></section>
+    <section className="story-ending relative bg-[#efe9dd] px-5 py-20 text-[#111416] md:px-10 md:py-28 lg:px-[6vw]"><div className="story-noise pointer-events-none absolute inset-0 opacity-20" /><Reveal className="relative mx-auto max-w-[1300px]"><span className="story-label text-[#167b57]">{s.contactLabel}</span><h2 className={`${lang === "CN" ? "contact-title-cn" : "story-serif max-w-5xl text-[clamp(2.8rem,5.8vw,6.5rem)] leading-[.96] tracking-[-.05em]"} mt-7`}>{s.contactTitle}</h2><div className="mt-10 flex flex-col gap-6 border-t border-[#111416]/18 pt-7 md:flex-row md:items-end md:justify-between"><p className="max-w-xl text-sm leading-7 text-[#555c60] md:text-base">{s.contactNote}</p><div className="flex flex-wrap gap-5"><a href="mailto:1162135252@qq.com" className="flex items-center gap-2 border-b border-[#111416] pb-2 text-sm font-black uppercase tracking-[.1em] hover:text-[#167b57]">{s.email}<Mail className="h-4 w-4" /></a><a href={s.resumeHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 border-b border-[#111416] pb-2 text-sm font-black uppercase tracking-[.1em] hover:text-[#167b57]">{s.resume}<ArrowUpRight className="h-4 w-4" /></a></div></div></Reveal></section>
 
     <footer className="px-5 pb-32 pt-9 md:px-10 lg:px-[6vw]"><div className="mx-auto flex max-w-[1500px] flex-col gap-3 border-t border-[#efe9dd]/12 pt-6 story-label text-[#5d6467] md:flex-row md:justify-between"><span>{t.footer.copyright}</span><span>{s.footer}</span></div></footer>
     <Dock t={t} resumeHref={s.resumeHref} />

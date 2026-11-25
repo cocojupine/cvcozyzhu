@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { useId, useLayoutEffect, useRef } from "react";
 
 export type PersonalNoteContent = {
   title: string;
@@ -11,6 +11,7 @@ export type PersonalNoteContent = {
 };
 
 type PaperHeroProps = {
+  reveal?: "waiting" | "running" | "complete";
   eyebrow: string;
   facts: string[][];
   issue: string;
@@ -21,32 +22,61 @@ type PaperHeroProps = {
   personalNote: PersonalNoteContent;
 };
 
-export default function PaperHero({ eyebrow, facts, issue, location, scroll, statement, name, personalNote }: PaperHeroProps) {
+export default function PaperHero({ reveal = "complete", eyebrow, facts, issue, location, scroll, statement, name, personalNote }: PaperHeroProps) {
+  const root = useRef<HTMLDivElement>(null);
+  const id = useId().replace(/:/g, "");
+  useLayoutEffect(() => {
+    if (!root.current || reveal !== "running" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const lines = Array.from(root.current.querySelectorAll("[data-resume-line]"));
+    const animations = lines.map((line, index) => line.animate(
+      [{ transform: "translateY(110%)" }, { transform: "translateY(0)" }],
+      { duration: 900, delay: 620 + 75 * index, easing: "cubic-bezier(.2,.8,.2,1)", fill: "backwards" }
+    ));
+    const circles = root.current.querySelectorAll(".resume-ink circle");
+    circles.forEach((circle, index) => {
+      animations.push(circle.animate([{ r: "0px" }, { r: "1450px" }], {
+        duration: 1250, delay: 520 + [0, 120, 220, 300, 360, 420, 180][index],
+        easing: "cubic-bezier(.33,1,.68,1)", fill: "backwards",
+      }));
+    });
+    return () => animations.forEach(animation => animation.cancel());
+  }, [reveal]);
   return (
-    <div className="paper-hero relative min-h-[100svh] overflow-hidden bg-[#f2ead9] px-5 pb-12 pt-24 text-[#25190e] md:px-10 md:pb-16 md:pt-28 lg:px-[6vw]">
+    <div ref={root} data-resume-reveal={reveal} className="paper-hero relative min-h-[100svh] overflow-hidden bg-[#f2ead9] px-5 pb-12 pt-24 text-[#25190e] md:px-10 md:pb-16 md:pt-28 lg:px-[6vw]">
       <div className="envelope-paper pointer-events-none absolute inset-0 opacity-25" />
       <div className="pointer-events-none absolute -right-[4vw] top-[4vh] select-none font-black text-[clamp(12rem,35vw,36rem)] leading-none tracking-[-.1em] text-[#805b26]/[.045]">KZ</div>
 
       <div className="relative mx-auto flex min-h-[calc(100svh-9rem)] max-w-[1500px] flex-col">
         <div className="flex items-center justify-between border-b border-[#2c1a0c]/18 pb-4">
           <span className="envelope-label text-[#805b26]">{issue}</span>
-          <span className="envelope-label hidden text-[#78664e] md:block">{location}</span>
         </div>
 
         <div className="grid flex-1 items-center gap-6 py-9 md:grid-cols-[1.2fr_.8fr] md:gap-10 md:py-12">
           <div>
-            <span className="envelope-label inline-block border border-[#956821]/35 bg-[#cba96c]/18 px-3 py-2 text-[#805b26]">{eyebrow}</span>
-            <h1 className="mt-6 whitespace-nowrap text-[clamp(4rem,10vw,10rem)] font-black leading-[1.15] tracking-[-.065em]">
-              {name}
-            </h1>
-            <p className="mt-7 max-w-xl text-base font-semibold leading-8 text-[#554634] md:text-lg md:leading-9">{statement}</p>
-            <p className="envelope-label mt-7 text-[#8c744f]">PROBLEM → EVIDENCE → DELIVERY</p>
+            <div className="overflow-hidden"><span data-resume-line className="envelope-label inline-block border border-[#956821]/35 bg-[#cba96c]/18 px-3 py-2 text-[#805b26]">{eyebrow}</span></div>
+            <h1 className="mt-6 overflow-hidden whitespace-nowrap text-[clamp(4rem,10vw,10rem)] font-black leading-[1.15] tracking-[-.065em]"><span data-resume-line className="block">{name}</span></h1>
+            <p className="mt-3 overflow-hidden text-lg font-bold leading-snug text-[#43301e] md:text-2xl"><span data-resume-line className="block">{location}</span></p>
+            <p className="mt-7 max-w-xl overflow-hidden text-base font-semibold leading-8 text-[#554634] md:text-lg md:leading-9"><span data-resume-line className="block">{statement}</span></p>
+            <p className="envelope-label mt-7 overflow-hidden text-[#8c744f]"><span data-resume-line className="block">PROBLEM → EVIDENCE → DELIVERY</span></p>
           </div>
 
           <div className="relative mx-auto w-full max-w-[260px] md:max-w-[390px]">
             <figure className="relative">
               <div className="pointer-events-none absolute inset-x-[12%] bottom-[9%] top-[17%] rounded-full border border-[#805b26]/15" />
-              <Image src="/assets/kesi-avatar.png" alt={name} width={835} height={864} priority sizes="(min-width: 768px) 34vw, 260px" className="relative h-auto w-full drop-shadow-[0_18px_16px_rgba(71,43,11,.12)]" />
+              <svg viewBox="0 0 835 864" role="img" aria-label={name} className="relative h-auto w-full drop-shadow-[0_18px_16px_rgba(71,43,11,.12)]">
+                <defs>
+                  <filter id={id + "-grain"} filterUnits="userSpaceOnUse" x="-64" y="-64" width="963" height="992">
+                    <feTurbulence type="fractalNoise" baseFrequency=".011" numOctaves="3" seed="7" />
+                    <feDisplacementMap in="SourceGraphic" scale="120" xChannelSelector="R" yChannelSelector="G" />
+                  </filter>
+                  <mask id={id + "-ink"} maskUnits="userSpaceOnUse" x="0" y="0" width="835" height="864">
+                    <g className="resume-ink" fill="white" filter={`url(#${id}-grain)`}>
+                      {[[265,317],[600,576],[440,115],[159,730],[705,240],[458,825],[405,451]].map(([cx,cy]) => <circle key={cx} cx={cx} cy={cy} r="1450" />)}
+                    </g>
+                  </mask>
+                </defs>
+                <image href="/assets/kesi-avatar.png" width="835" height="864" mask={reveal === "complete" ? undefined : `url(#${id}-ink)`} />
+              </svg>
               <figcaption className="envelope-label mt-2 flex items-center justify-between border-t border-[#2c1a0c]/18 pt-3 text-[#805b26]"><span>PERSONAL FILE</span><span>KZ / 2026</span></figcaption>
             </figure>
             <aside aria-label={personalNote.title} className="relative ml-auto mt-6 w-[256px] max-w-full rotate-[2deg] border border-[#67725e]/15 bg-[#e0ead8] px-4 py-4 text-[#394435] shadow-[2px_4px_0_rgba(75,67,41,.05),0_8px_18px_rgba(75,67,41,.1)]">

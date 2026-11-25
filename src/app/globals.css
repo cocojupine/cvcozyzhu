@@ -171,11 +171,10 @@ body {
 }
 
 .envelope-intro {
-  font-family: "Segoe UI Variable Text", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   background:
     radial-gradient(circle at 16% 48%, rgba(255, 238, 190, 0.34), transparent 31%),
     radial-gradient(circle at 84% 18%, rgba(106, 67, 18, 0.14), transparent 34%),
-    linear-gradient(115deg, #d5af6b 0%, #c99d56 58%, #b88643 100%);
+    linear-gradient(115deg, #ebe5d8 0%, #dfd7c6 58%, #cbc0ab 100%);
 }
 
 .project-print-board {
@@ -254,26 +253,13 @@ body {
 }
 
 .envelope-stage {
-  width: min(88vw, 1320px, 124vh);
+  width: min(82vw, 1000px, 106svh);
   transform-style: preserve-3d;
 }
 
 .envelope-arrival,
 .envelope-stage {
   will-change: opacity, transform;
-}
-
-.envelope-arrival-trail {
-  position: absolute;
-  right: calc(100% + 1.35rem);
-  top: 48%;
-  width: min(30vw, 28rem);
-  height: 3.75rem;
-  border-top: 1px solid rgba(91, 57, 18, 0.28);
-  border-bottom: 1px solid rgba(255, 235, 189, 0.22);
-  background: linear-gradient(90deg, transparent, rgba(89, 54, 14, 0.08));
-  pointer-events: none;
-  transform-origin: right center;
 }
 
 .envelope-arrival-shadow {
@@ -290,17 +276,37 @@ body {
   transform-origin: center;
 }
 
-.envelope-arrival::before {
-  position: absolute;
-  inset: -0.7rem;
-  border: 1px solid rgba(92, 59, 20, 0.2);
-  content: "";
-  pointer-events: none;
+[data-resume-reveal="waiting"] [data-resume-line] {
+  transform: translateY(110%);
 }
 
-.envelope-caption {
-  border-top: 1px solid rgba(96, 64, 25, 0.28);
-  padding-top: 0.65rem;
+[data-resume-reveal="waiting"] .resume-ink circle {
+  r: 0;
+}
+
+.envelope-tap {
+  position: absolute;
+  left: 88%;
+  top: 50%;
+  width: clamp(42px, 8%, 76px);
+  aspect-ratio: 338 / 346;
+  margin: 0;
+  background: url("/assets/folder-tap.svg") center / contain no-repeat;
+  pointer-events: none;
+  transform-origin: 24% 32%;
+  translate: -24% -32%;
+  filter: drop-shadow(0 1px 2px #493720a6);
+  animation: envelope-tap 3.2s ease-in-out infinite;
+}
+
+@keyframes envelope-tap {
+  0%, 82%, 100% { opacity: 0; transform: translate(5px, 6px); }
+  20%, 48% { opacity: .9; transform: translate(3px, 4px); }
+  35%, 60% { opacity: .95; transform: translate(0, 0) scale(.93); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .envelope-tap { animation: none; opacity: .85; }
 }
 
 .envelope-dossier {
@@ -310,8 +316,17 @@ body {
   height: 84%;
 }
 
+.resume-pocket-lining {
+  background: #c9ae77 url("/assets/idea-folder-unfastened.webp") 44% 13% / 650% 650%;
+}
+
+.resume-pocket-face {
+  background: url("/assets/idea-folder-unfastened.webp") left center / 133.333333% 100% no-repeat;
+  box-shadow: 3px 0 5px -2px rgb(79 51 24 / 42%);
+}
+
 .envelope-flap {
-  background-image: url("/assets/idea-folder-unfastened.png");
+  background-image: url("/assets/idea-folder-unfastened.webp");
   background-repeat: no-repeat;
   background-position: right center;
   background-size: 400% 100%;
@@ -320,14 +335,18 @@ body {
   box-shadow: -2px 0 10px rgba(83, 54, 18, 0.12);
 }
 
-.envelope-cord {
-  filter: drop-shadow(0 0.35px 0.35px rgba(76, 47, 15, 0.8)) drop-shadow(0 1.2px 1px rgba(42, 24, 7, 0.32));
+.envelope-thread {
+  background: url("/assets/idea-folder-start.webp") center / 100% 100%;
+  clip-path: polygon(68.6% 44%, 80.8% 44%, 80.8% 46%, 69% 46%,
+    80.8% 51%, 80.8% 52.5%, 69% 47%, 69% 50.8%, 80.8% 46.3%,
+    80.8% 47.6%, 69% 52.6%, 69% 54.8%, 81% 54.8%, 81% 56.4%, 68.6% 56.4%);
+  transform-origin: 68.6% 50%;
+  pointer-events: none;
 }
 
 @media (max-width: 640px) {
   .envelope-stage {
-    left: -2vw;
-    width: 120vw;
+    width: min(90vw, 102svh);
   }
 
   .envelope-dossier {
@@ -335,37 +354,6 @@ body {
     top: 6%;
     width: 62%;
     height: 88%;
-  }
-
-  .envelope-arrival::before {
-    inset: -0.45rem;
-  }
-
-  .envelope-arrival-trail {
-    right: calc(100% + 0.7rem);
-    width: 42vw;
-    height: 2.5rem;
-  }
-
-  .envelope-caption {
-    left: 4vw;
-    right: 4vw;
-  }
-
-  .envelope-intro-copy {
-    right: 1.25rem;
-    max-width: none;
-  }
-
-  .envelope-trigger {
-    left: 82%;
-    min-width: 5.25rem;
-    min-height: 5.25rem;
-  }
-
-  .envelope-trigger .envelope-label {
-    font-size: 0.52rem;
-    white-space: nowrap;
   }
 
   .envelope-pull {
@@ -385,46 +373,8 @@ body {
     bottom: max(1.25rem, env(safe-area-inset-bottom));
   }
 
-  .envelope-devbar {
-    bottom: max(0.75rem, env(safe-area-inset-bottom));
-    width: calc(100vw - 1rem);
-    justify-content: center;
-    overflow-x: auto;
-  }
 
-  .envelope-devbar > button {
-    flex: 0 0 auto;
-    padding-inline: 0.65rem;
-  }
 
-  .envelope-devstate {
-    display: none;
-  }
-}
-
-@media (max-height: 660px) and (min-width: 641px) {
-  .envelope-stage {
-    width: min(82vw, 126vh);
-  }
-
-  .envelope-caption,
-  .envelope-intro-copy {
-    display: none;
-  }
-}
-
-.envelope-trigger {
-  cursor: pointer;
-  filter: drop-shadow(0 8px 18px rgba(69, 40, 8, 0.32));
-}
-
-.envelope-trigger > span:first-child {
-  animation: envelope-ring 2.1s ease-out infinite;
-}
-
-@keyframes envelope-ring {
-  0%, 100% { transform: scale(0.82); opacity: 0.25; }
-  50% { transform: scale(1.08); opacity: 0.95; }
 }
 
 @keyframes editorial-spin {
@@ -438,8 +388,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .editorial-orbit,
-  .editorial-orbit-dot,
-  .envelope-trigger > span:first-child {
+  .editorial-orbit-dot {
     animation: none;
   }
 }
@@ -451,4 +400,13 @@ body {
 ::selection {
   background: rgba(6, 182, 212, 0.25);
   color: #fff;
+}
+
+.contact-title-cn {
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: min(4.9vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -.018em;
+  white-space: nowrap;
 }
