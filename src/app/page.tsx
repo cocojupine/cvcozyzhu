@@ -81,7 +81,7 @@ const content = {
         role: "PRODUCT MANAGER INTERN",
         period: "2026.05-PRESENT",
         tags: ["POWERPOINT AGENT", "BRAND GUIDELINES", "AI EVALUATION"],
-        detail: "I led product development for an internal PowerPoint prototype that turns a company’s PDF brand guide into reusable design rules and assets. The agent used them to generate slides and passed about 90% of cases on our regular slide-generation test set. I also built a tool that groups evaluation findings by issue and links each finding to its source, so reviewers could work through a summary of roughly 26,000 Chinese characters of feedback in about 15 minutes.",
+        detail: "Led product definition, generation workflow design, and quality evaluation for an enterprise brand assistant in Microsoft PowerPoint. Contributed to Copilot growth experiments and refined task recommendation strategies.",
       },
       {
         company: "SINGULARITY LEAP · START-UP",
@@ -233,7 +233,7 @@ const content = {
         role: "产品经理实习生 (PowerPoint AI)",
         period: "2026.05-至今",
         tags: ["PowerPoint Agent", "品牌规范", "AI 评测"],
-        detail: "我负责企业品牌 PPT 助手的产品设计，把企业的 PDF 品牌手册拆成可复用的设计规则和素材，让助手生成幻灯片时能直接调用。产品进入微软内部试用，在常用测试集上，最终生成环节约 90% 的用例通过。为了看清哪些问题反复出现，我还独立开发了评测分析工具，把约 2.6 万字评估记录按问题归类，支持回看原始证据，约 15 分钟就能审阅主要发现。",
+        detail: "负责微软 PowerPoint 企业品牌 PPT 助手的产品定义、生成方案设计与质量评估。参与 Copilot 增长实验，优化任务推荐策略。",
       },
       {
         company: "奇点跃迁 · Start—up",
