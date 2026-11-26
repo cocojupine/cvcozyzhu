@@ -61,6 +61,6 @@
 .page { position: absolute; inset: 0; z-index: 3; overflow: hidden; background: #f2ead9; pointer-events: none; }
 @media (orientation: portrait) {
   .desk { --scene: url("/assets/workbench-mobile.webp"); }
-  .scene { width: min(100%, calc(100dvh * 941 / 1672)); aspect-ratio: 941 / 1672; }
-  .bag { left: 5.84%; top: 24.4%; width: 89.05%; height: 34%; }
+  .scene { width: min(100%, calc(100dvh * 941 / 2090)); aspect-ratio: 941 / 2090; }
+  .bag { left: 5.84%; top: 39.52%; width: 89.05%; height: 27.2%; }
 }
