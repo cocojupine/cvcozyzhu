@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import PaperHero, { type PersonalNoteContent } from "@/components/PaperHero";
+import styles from "./FolderIntro.module.css";
+import PaperHero, { introPlaybackRate, type PersonalNoteContent } from "@/components/PaperHero";
 
 type Lang = "CN" | "EN";
-type IntroMode = "auto" | "pull" | "closeup";
-type Phase = "closed" | "unfastening" | "opening" | "open" | "extracting";
+
+
 
 type FolderIntroProps = {
   eyebrow: string;
@@ -20,194 +21,110 @@ type FolderIntroProps = {
   facts: string[][];
 };
 
-const modes: IntroMode[] = ["auto", "pull", "closeup"];
+// Identical cubic segments keep the loose end continuous as each wrap clears a disc.
+const wraps = [
+  "M1030 532 C1150 529 1350 533 1480 532 C1550 532 1550 640 1480 657 C1330 657 1160 656 1030 656 C945 656 944 534 1030 535 C1180 553 1350 634 1480 650 C1550 655 1550 710 1555 744",
+  "M1030 532 C1150 529 1350 533 1480 532 C1550 532 1550 640 1480 657 C1330 657 1160 656 1030 656 C945 656 944 534 1030 535 C1180 553 1390 738 1510 746 C1560 750 1610 702 1625 662",
+  "M1030 532 C1150 529 1350 533 1480 532 C1550 532 1550 640 1480 657 C1330 657 1160 656 1030 656 C936 656 890 608 907 551 C929 484 996 468 1085 492 C1160 508 1210 519 1282 496",
+  "M1030 532 C1150 529 1350 533 1480 532 C1550 532 1575 581 1582 626 C1591 685 1550 713 1506 718 C1450 724 1408 759 1360 780 C1312 801 1250 791 1210 782 C1160 766 1140 763 1110 771",
+  "M1030 532 C1060 542 1114 582 1128 627 C1140 664 1140 696 1134 728 C1128 759 1110 786 1101 805 C1092 827 1095 847 1105 860 C1116 875 1135 880 1145 884 C1156 889 1160 894 1162 900",
+];
 
-const words = {
-  CN: {
-    open: "打开简历",
-    pull: "抽出档案",
-    skip: "跳过开场",
-    file: "祝可思 / 个人档案",
-    state: { closed: "等待拆封", unfastening: "正在解绳", opening: "从左向右翻开", open: "文件夹已打开", extracting: "正在读取档案" },
-  },
-  EN: {
-    open: "Open résumé",
-    pull: "Pull out the file",
-    skip: "Skip intro",
-    file: "Kesi Zhu / PERSONAL FILE",
-    state: { closed: "SEALED", unfastening: "UNFASTENING", opening: "OPENING LEFT TO RIGHT", open: "FOLDER OPEN", extracting: "READING FILE" },
-  },
-};
-
-export default function FolderIntroPrototype({ eyebrow, lang, location, issue, scroll, statement, name, personalNote, facts }: FolderIntroProps) {
-  const reducedMotion = useReducedMotion();
-  const film = useRef<HTMLVideoElement>(null);
-  const heldForPull = useRef(false);
+export default function FolderIntroPrototype(props: FolderIntroProps) {
+  const reduced = useReducedMotion();
   const [visible, setVisible] = useState(true);
-  const [phase, setPhase] = useState<Phase>("closed");
-  const [mode, setMode] = useState<IntroMode>("auto");
-  const [isCompact, setIsCompact] = useState(false);
-  const stage = useRef<HTMLDivElement>(null);
-  const [sheetInset, setSheetInset] = useState("inset(50% 50% 50% 50% round 3px)");
-  useLayoutEffect(() => {
-    const folder = stage.current;
-    if (!visible || !folder) return;
-    const measure = () => {
-      // The right edge starts just inside the mouth at 75% of the folder.
-      const widthRatio = folder.clientWidth / document.documentElement.clientWidth;
-      const left = 50 - 44 * widthRatio;
-      const right = 50 - 21 * widthRatio;
-      const top = 50 - 43 * folder.clientHeight / window.innerHeight;
-      setSheetInset(`inset(${top}% ${right}% ${top}% ${left}% round 3px)`);
-    };
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(folder);
-    window.addEventListener("resize", measure);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", measure);
-    };
-  }, [visible]);
-  const l = words[lang];
+  const [opening, setOpening] = useState(false);
+  const [revealing, setRevealing] = useState(false);
+  useEffect(() => {
+    if (!opening || !visible) return;
+    // Start the homepage choreography when the sheet begins to unfold.
+    const timer = window.setTimeout(() => setRevealing(true), 1680 / introPlaybackRate);
+    return () => window.clearTimeout(timer);
+  }, [opening, visible]);
+  const closedClip = "inset(50% 15% 50% 85%)";
+  const fullClip = "inset(0% 0% 0% 0%)";
+  const [pull, setPull] = useState({ start: closedClip, peek: closedClip, distance: 0, pivot: "50% 50%" });
+  function openBag(button: HTMLButtonElement) {
+    if (opening) return;
+    if (reduced) { setVisible(false); return; }
+    const bag = button.getBoundingClientRect();
+    const edge = ((bag.left + bag.width * .755) / window.innerWidth) * 100;
+    const top = ((bag.top + bag.height * .08) / window.innerHeight) * 100;
+    const bottom = 100 - ((bag.bottom - bag.height * .08) / window.innerHeight) * 100;
+    const distance = Math.min(104, bag.width * .125);
+    const travel = distance / window.innerWidth * 100;
+    // Offset the mask against the moving page so its left edge stays at the pocket.
+    setPull({
+      start: `inset(${top}% ${100 - edge}% ${bottom}% ${edge}%)`,
+      peek: `inset(${top}% ${100 - edge}% ${bottom}% ${edge - travel}%)`,
+      distance, pivot: `${edge}% ${(100 + top - bottom) / 2}%`,
+    });
+    setOpening(true);
+  }
+  const cn = props.lang === "CN";
+  const openLabel = cn ? "打开个人档案" : "Open personal file";
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const skipRequested = params.get("skipIntro") === "1" || window.sessionStorage.getItem("portfolioSkipIntro") === "1";
-    if (skipRequested) {
-      window.sessionStorage.removeItem("portfolioSkipIntro");
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("skipIntro") === "1" || sessionStorage.getItem("portfolioSkipIntro") === "1") {
       setVisible(false);
-      if (params.has("skipIntro")) {
-        params.delete("skipIntro");
-        const query = params.toString();
-        window.history.replaceState({}, "", `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`);
-      }
+      sessionStorage.removeItem("portfolioSkipIntro");
+      url.searchParams.delete("skipIntro");
+      window.history.replaceState({}, "", url);
     }
-
-    const requested = params.get("intro") as IntroMode | null;
-    if (requested && modes.includes(requested)) setMode(requested);
-
-    const media = window.matchMedia("(max-width: 640px)");
-    const updateCompact = () => setIsCompact(media.matches);
-    updateCompact();
-    media.addEventListener("change", updateCompact);
-    return () => media.removeEventListener("change", updateCompact);
   }, []);
 
   useEffect(() => {
     if (!visible) return;
-    const previousOverflow = document.body.style.overflow;
+    const before = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = previousOverflow; };
-  }, [visible]);
-
-  useEffect(() => {
-    if (!visible) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") { setPhase("closed"); setVisible(false); }
+    const dismiss = (e: KeyboardEvent) => { if (e.key === "Escape") setVisible(false); };
+    window.addEventListener("keydown", dismiss);
+    return () => {
+      document.body.style.overflow = before;
+      window.removeEventListener("keydown", dismiss);
     };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
   }, [visible]);
 
-  const openResume = () => {
-    const video = film.current;
-    if (!video || reducedMotion || video.error) {
-      setVisible(false);
-      return;
-    }
-    setPhase(heldForPull.current ? "opening" : "unfastening");
-    video.playbackRate = mode === "closeup" ? 0.85 : 1;
-    void video.play().catch(() => setVisible(false));
-  };
-
-  const followFilm = () => {
-    const video = film.current;
-    if (!video || phase === "closed" || phase === "extracting" || video.paused) return;
-    if (video.currentTime >= 1.36 && mode === "pull" && !heldForPull.current) {
-      video.pause();
-      video.currentTime = 1.36;
-      heldForPull.current = true;
-      setPhase("open");
-    } else if (video.currentTime >= 1.42) {
-      setPhase("extracting");
-    } else if (video.currentTime >= 0.56) {
-      setPhase("opening");
-    }
-  };
-
-  const flapIsOpen = phase === "opening" || phase === "open";
-  const extracting = phase === "extracting";
-
-  const pocketOpen = flapIsOpen || extracting;
-  const folderPose = {
-    x: extracting ? "-118vw" : flapIsOpen ? "-19vw" : "0vw",
-    y: phase === "closed" ? 0 : -5,
-    scale: mode === "closeup" && !pocketOpen ? (isCompact ? 1.04 : 1.15) : 1,
-  };
-  const folderTransition = {
-    duration: reducedMotion ? 0 : extracting ? 0.72 : 0.56,
-    ease: [0.42, 0, 0.2, 1] as const,
-  };
-  const folderClass = "envelope-stage relative aspect-[1684/1190]";
-  return (
-    <section id="top" className="min-h-[100svh]">
-      <div className={visible ? "envelope-intro fixed inset-0 z-[100] overflow-hidden" : undefined}
-        role={visible ? "dialog" : undefined} aria-modal={visible || undefined} aria-label={visible ? l.file : undefined}>
-        {visible && <div aria-hidden="true" className="envelope-paper absolute inset-0 opacity-30" />}
-        {visible && <div aria-hidden="true" className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <motion.div className={folderClass} initial={false} animate={folderPose} transition={folderTransition}
-            style={{ perspective: "1500px" }}>
-            <div className="resume-pocket-lining absolute inset-0" />
-            <motion.div className="envelope-flap absolute inset-y-0 right-0 w-1/4"
-              style={{ transformOrigin: "right center" }}
-              initial={false} animate={{ rotateY: pocketOpen ? -150 : 0 }}
-              transition={{ duration: reducedMotion ? 0 : 0.48, ease: [0.4, 0, 0.2, 1] }} />
-          </motion.div>
-        </div>}
-        <motion.div
-          onAnimationComplete={() => {
-            if (visible && extracting) setVisible(false);
-          }}
-          inert={visible}
-          className={visible ? "absolute inset-0 overflow-hidden bg-[#f2ead9] shadow-2xl" : undefined}
-          initial={false}
-          animate={{
-            clipPath: visible && !extracting ? sheetInset : "inset(0% 0% 0% 0% round 0px)",
-            x: visible && flapIsOpen ? "14vw" : "0vw",
-            rotate: visible && !extracting ? -4.5 : 0,
-          }}
-          transition={{ duration: !visible ? 0 : extracting ? 1.05 : flapIsOpen ? 0.48 : 0, ease: [0.76, 0, 0.18, 1] }}
-        >
-          <PaperHero reveal={extracting ? "running" : visible ? "waiting" : "complete"} eyebrow={eyebrow} facts={facts} issue={issue} location={location} scroll={scroll} statement={statement} name={name} personalNote={personalNote} />
-        </motion.div>
-
-        {visible && <>
-          <div className="envelope-topbar absolute inset-x-5 top-5 z-[80] flex items-center justify-between text-[#604019] md:inset-x-8 md:top-7">
-            <span className="envelope-label">IDEA ARCHIVE / KZ</span>
-            <button type="button" onClick={() => { setPhase("closed"); setVisible(false); }} className="envelope-label border-b border-current py-2">{l.skip}</button>
+  return <section id="top" className="min-h-[100svh]">
+    <div className={visible ? styles.desk : undefined} role={visible ? "dialog" : undefined}
+      aria-modal={visible || undefined} aria-label={visible ? openLabel : undefined}>
+      {visible && <>
+        <div className={styles.scene}><div className={styles.bag}>
+          <div aria-hidden="true" className={styles.layers}>
+          <div className={styles.lining}/>
+          <div className={styles.face}/>
+          <motion.div className={styles.flap} animate={{rotateY: opening ? 154 : 0}}
+            transition={{delay: .76 / introPlaybackRate, duration: .38 / introPlaybackRate, ease: "easeInOut"}}/>
+          <svg className={styles.cord} viewBox="0 0 1684 1190" preserveAspectRatio="none" aria-hidden="true">
+            <defs><mask id="cord-discs"><rect width="1684" height="1190" fill="white"/><ellipse cx="1030" cy="590" rx="135" ry="134"/><ellipse cx="1480" cy="590" rx="135" ry="134"/></mask></defs>
+            <g mask="url(#cord-discs)"><motion.path initial={{d: wraps[0]}} animate={{d: opening ? wraps : wraps[0]}}
+              transition={{duration: .78 / introPlaybackRate, times: [0, .31, .51, .71, 1], ease: ["easeIn", "linear", "linear", "easeOut"]}} fill="none" stroke="#f3eee1" strokeWidth="7" strokeLinecap="round"/></g>
+          </svg>
           </div>
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <motion.div ref={stage} initial={false}
-              className={`${folderClass} pointer-events-auto`}
-              animate={folderPose} transition={folderTransition}>
-              <div aria-hidden="true" className="resume-pocket-face absolute inset-y-0 left-0 w-3/4" />
-              <video ref={film} muted playsInline preload="auto" aria-hidden="true"
-                className={`absolute inset-0 h-full w-full object-fill ${pocketOpen ? "invisible" : ""}`}
-                poster="/assets/idea-folder-start.webp" src="/assets/folder-reveal.webm"
-                onTimeUpdate={followFilm} onEnded={() => setPhase("extracting")}
-                onError={() => { if (phase !== "closed") setVisible(false); }} />
-              {phase === "closed" && <button type="button" onClick={openResume} aria-label={l.open}
-                className="envelope-trigger absolute inset-0 z-10 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4">
-                <span className="envelope-tap" aria-hidden="true" />
-              </button>}
-            </motion.div>
-          </div>
-          {mode === "pull" && phase === "open" && <button type="button" onClick={openResume}
-            className="absolute right-[6%] top-1/2 rounded-full bg-[#392916] px-5 py-3 text-sm text-[#fff8e6]">{l.pull} →</button>}
-          <span className="sr-only" aria-live="polite">{l.state[phase]}</span>
-        </>}
-      </div>
-    </section>
-  );
+          <button className={styles.hit} aria-label={openLabel} onClick={(event) => openBag(event.currentTarget)} aria-disabled={opening}/>
+          {!opening && <span className={styles.tap} aria-hidden="true">
+            <img src="/assets/folder-tap.svg" alt="" />
+            <span lang="en">OPEN</span>
+          </span>}
+        </div></div>
+      </>}
+      <motion.div className={visible ? styles.page : undefined} inert={visible}
+        style={{ transformOrigin: pull.pivot }}
+        initial={false}
+        animate={visible && opening ? {
+          rotate: [0, -1.8, -1.8, 0],
+          x: [0, pull.distance, pull.distance, 0],
+          clipPath: [pull.start, pull.peek, pull.peek, fullClip],
+        } : { x: 0, rotate: 0, clipPath: visible ? closedClip : fullClip }}
+        transition={visible && opening ? {
+          delay: 1.14 / introPlaybackRate, duration: 1.56 / introPlaybackRate,
+          times: [0, .23, .35, 1],
+          ease: ["easeInOut", "linear", [.65, 0, .22, 1]],
+        } : { duration: 0 }}
+        onAnimationComplete={() => { if (opening && visible) setVisible(false); }}>
+        <PaperHero {...props} reveal={revealing ? "running" : visible ? "waiting" : "complete"}/>
+      </motion.div>
+    </div>
+  </section>;
 }

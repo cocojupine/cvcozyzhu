@@ -22,6 +22,16 @@ type PaperHeroProps = {
   personalNote: PersonalNoteContent;
 };
 
+export const introPlaybackRate = 0.75;
+
+const confettiColors = ["#ed286b", "#2469cc", "#ffac27", "#e5ef28", "#8039be"];
+// Endpoints in the portrait's own coordinate system, relative to the horn tip.
+const confettiFlights = [
+  [98,-175], [240,-106], [144,-38], [284,24], [105,72], [178,-136],
+  [202,85], [74,-91], [264,-46], [128,18], [168,105], [83,-14],
+  [225,-164], [154,47], [62,36],
+];
+
 export default function PaperHero({ reveal = "complete", eyebrow, facts, issue, location, scroll, statement, name, personalNote }: PaperHeroProps) {
   const root = useRef<HTMLDivElement>(null);
   const id = useId().replace(/:/g, "");
@@ -30,16 +40,43 @@ export default function PaperHero({ reveal = "complete", eyebrow, facts, issue, 
     const lines = Array.from(root.current.querySelectorAll("[data-resume-line]"));
     const animations = lines.map((line, index) => line.animate(
       [{ transform: "translateY(110%)" }, { transform: "translateY(0)" }],
-      { duration: 900, delay: 620 + 75 * index, easing: "cubic-bezier(.2,.8,.2,1)", fill: "backwards" }
+      { duration: 900 / introPlaybackRate, delay: (620 + 75 * index) / introPlaybackRate, easing: "cubic-bezier(.2,.8,.2,1)", fill: "backwards" }
     ));
     const circles = root.current.querySelectorAll(".resume-ink circle");
     circles.forEach((circle, index) => {
       animations.push(circle.animate([{ r: "0px" }, { r: "1450px" }], {
-        duration: 1250, delay: 520 + [0, 120, 220, 300, 360, 420, 180][index],
+        duration: 1250 / introPlaybackRate, delay: (520 + [0, 120, 220, 300, 360, 420, 180][index]) / introPlaybackRate,
         easing: "cubic-bezier(.33,1,.68,1)", fill: "backwards",
       }));
     });
-    return () => animations.forEach(animation => animation.cancel());
+    const horn = root.current.querySelector<SVGGElement>("[data-horn]");
+    if (!horn) return () => animations.forEach(animation => animation.cancel());
+    const earliestBurst = performance.now() + 930 / introPlaybackRate;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      horn.querySelectorAll<SVGGElement>("[data-confetti]").forEach((piece, i) => {
+        const [x, y] = confettiFlights[i];
+        const pose = (dx: number, dy: number, spin: number, width: number) =>
+          `translate(${dx}px, ${dy}px) rotate(${spin}deg) scale(${width}, 1)`;
+        const spin = i % 2 ? 120 : -145;
+        animations.push(piece.animate([
+          { transform: pose(0, 0, 0, .2), opacity: 0, offset: 0 },
+          { transform: pose(x*.28, y*.36-6, spin*.22, 1), opacity: 1, offset: .055 },
+          { transform: pose(x*.70, y*.89-18, spin*.70, .86), opacity: 1, offset: .23 },
+          { transform: pose(x*.88, y-12, spin, .36), opacity: .92, offset: .51 },
+          { transform: pose(x, y+42, spin*1.55, .74), opacity: 0, offset: 1 },
+        ], {
+          delay: Math.max(0, earliestBurst - performance.now()) + (i % 4)*13 / introPlaybackRate,
+          duration: (1050 + (i % 5)*95) / introPlaybackRate, fill: "both",
+        }));
+      });
+    });
+    observer.observe(horn);
+    return () => {
+      observer.disconnect();
+      animations.forEach(animation => animation.cancel());
+    };
   }, [reveal]);
   return (
     <div ref={root} data-resume-reveal={reveal} className="paper-hero relative min-h-[100svh] overflow-hidden bg-[#f2ead9] px-5 pb-12 pt-24 text-[#25190e] md:px-10 md:pb-16 md:pt-28 lg:px-[6vw]">
@@ -63,7 +100,7 @@ export default function PaperHero({ reveal = "complete", eyebrow, facts, issue, 
           <div className="relative mx-auto w-full max-w-[260px] md:max-w-[390px]">
             <figure className="relative">
               <div className="pointer-events-none absolute inset-x-[12%] bottom-[9%] top-[17%] rounded-full border border-[#805b26]/15" />
-              <svg viewBox="0 0 835 864" role="img" aria-label={name} className="relative h-auto w-full drop-shadow-[0_18px_16px_rgba(71,43,11,.12)]">
+              <svg viewBox="0 0 835 864" role="img" aria-label={name} className="relative h-auto w-full overflow-visible drop-shadow-[0_18px_16px_rgba(71,43,11,.12)]">
                 <defs>
                   <filter id={id + "-grain"} filterUnits="userSpaceOnUse" x="-64" y="-64" width="963" height="992">
                     <feTurbulence type="fractalNoise" baseFrequency=".011" numOctaves="3" seed="7" />
@@ -76,6 +113,16 @@ export default function PaperHero({ reveal = "complete", eyebrow, facts, issue, 
                   </mask>
                 </defs>
                 <image href="/assets/kesi-avatar.png" width="835" height="864" mask={reveal === "complete" ? undefined : `url(#${id}-ink)`} />
+                <g transform="translate(749 496) scale(1.25)" data-horn="" aria-hidden="true" pointerEvents="none">
+                  <rect width="2" height="2" fill="transparent" />
+                  {confettiFlights.map((_, i) => (
+                    <g key={i} data-confetti="" opacity="0" fill={confettiColors[i % confettiColors.length]}>
+                      {i % 5 === 0
+                        ? <path d="M-12 -3 Q-5 -12 2 -4 T16 -7 L17 -2 Q9 8 0 0 T-10 3Z" />
+                        : <rect x="-7" y="-8" width={i % 3 ? 15 : 9} height={i % 3 ? 16 : 24} rx="2" />}
+                    </g>
+                  ))}
+                </g>
               </svg>
               <figcaption className="envelope-label mt-2 flex items-center justify-between border-t border-[#2c1a0c]/18 pt-3 text-[#805b26]"><span>PERSONAL FILE</span><span>KZ / 2026</span></figcaption>
             </figure>

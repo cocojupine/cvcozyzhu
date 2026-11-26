@@ -1,0 +1,66 @@
+.desk {
+  --scene: url("/assets/workbench-expanded.webp");
+  position: fixed; inset: 0; z-index: 100; isolation: isolate; overflow: hidden;
+  display: grid; place-items: center; background: #ddc399; color: #372f24;
+}
+/* Size the photograph and its interactive overlay in the same coordinate space. */
+.scene {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: max(100vw, calc(100dvh * 1672 / 941)); aspect-ratio: 1672 / 941;
+  background: var(--scene) center / 100% 100% no-repeat;
+}
+@media (orientation: landscape) {
+  .scene {
+    /* The marked desktop frame spans 1216 × 686 pixels of the 1672 × 941 master. */
+    --frame-fit: min(calc(100vw * 1672 / 1216), calc(100dvh * 1672 / 686));
+    width: max(100vw, calc(100dvh * 1672 / 941), var(--frame-fit));
+    left: 0; top: 0;
+    transform: translate(
+      clamp(calc(100vw - 100%), calc(50vw - 50.95%), 0px),
+      clamp(calc(100dvh - 100%), calc(50dvh - 52.45%), 0px)
+    );
+  }
+}
+.bag {
+  position: absolute; left: 31.04%; top: 27.42%; width: 41.63%; height: 51.01%;
+}
+.layers { position: absolute; inset: 0; perspective: 1400px; pointer-events: none; }
+.lining, .face, .cord, .hit { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lining { background: #bd9a62 url("/assets/kraft-grain.webp") repeat; }
+.face { background: url("/assets/idea-folder-unfastened.webp") center / 100% 100%; clip-path: inset(0 24.5% 0 0); }
+.flap { position: absolute; right: 0; inset-block: 0; width: 24.5%; transform-origin: right center; transform-style: preserve-3d; }
+.flap::before, .flap::after { content: ""; position: absolute; inset: 0; backface-visibility: hidden; }
+.flap::before { background: url("/assets/idea-folder-unfastened.webp") right center / 408.16% 100%; }
+.flap::after { transform: rotateY(180deg); background: #d4bc88 url("/assets/kraft-grain.webp") repeat; }
+.cord { overflow: visible; pointer-events: none; filter: drop-shadow(0 2px 1px #63482d); }
+.hit { cursor: pointer; background: transparent; border: 0; }
+.hit:focus-visible { outline: 3px solid #284c46; outline-offset: 5px; }
+.tap {
+  position: absolute; left: 82%; top: 54%; width: clamp(68px, 11.5%, 108px);
+  display: grid; justify-items: center; pointer-events: none; opacity: 0;
+  color: rgb(255 255 255 / 76%); font: 700 clamp(14px, 1.2vw, 17px)/1 system-ui, sans-serif;
+  letter-spacing: .1em; text-shadow: 0 1px 3px #4c331bd9, 0 2px 6px #4c331b80;
+  animation: hintVisibility 3.4s ease-in-out .4s infinite;
+}
+.tap img {
+  width: 100%; margin-bottom: -15%; transform-origin: 25% 30%;
+  filter: drop-shadow(0 2px 2px #50380c99);
+  animation: hintPress 3.4s ease-in-out .4s infinite;
+}
+@keyframes hintVisibility {
+  0%, 58%, 100% { opacity: 0; }
+  9%, 45% { opacity: 1; }
+}
+@keyframes hintPress {
+  0%, 12%, 30%, 100% { transform: none; }
+  21% { transform: translate(-2px, -2px) scale(.85); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tap, .tap img { animation: none; opacity: 1; }
+}
+.page { position: absolute; inset: 0; z-index: 3; overflow: hidden; background: #f2ead9; pointer-events: none; }
+@media (orientation: portrait) {
+  .desk { --scene: url("/assets/workbench-mobile.webp"); }
+  .scene { width: min(100%, calc(100dvh * 941 / 1672)); aspect-ratio: 941 / 1672; }
+  .bag { left: 5.84%; top: 24.4%; width: 89.05%; height: 34%; }
+}
