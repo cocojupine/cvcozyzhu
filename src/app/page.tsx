@@ -80,8 +80,8 @@ const content = {
         company: "MICROSOFT · POWERPOINT AI",
         role: "PRODUCT MANAGER INTERN",
         period: "2026.05-PRESENT",
-        tags: ["AI PRODUCT", "EVAL PLATFORM", "MULTIMODAL"],
-        detail: "Responsible for brand capabilities and quality evaluation for enterprise AI PowerPoint generation. Through test system design, Failure Pattern attribution, and product solution exploration, drove continuous improvements in brand consistency, content adaptation, and delivery reliability.",
+        tags: ["POWERPOINT AGENT", "BRAND GUIDELINES", "AI EVALUATION"],
+        detail: "I led product development for an internal PowerPoint prototype that turns a company’s PDF brand guide into reusable design rules and assets. The agent used them to generate slides and passed about 90% of cases on our regular slide-generation test set. I also built a tool that groups evaluation findings by issue and links each finding to its source, so reviewers could work through a summary of roughly 26,000 Chinese characters of feedback in about 15 minutes.",
       },
       {
         company: "SINGULARITY LEAP · START-UP",
@@ -232,8 +232,8 @@ const content = {
         company: "微软 · Microsoft",
         role: "产品经理实习生 (PowerPoint AI)",
         period: "2026.05-至今",
-        tags: ["AI 产品", "Eval 平台", "多模态生成"],
-        detail: "负责企业级 AI PowerPoint 生成的品牌能力与质量评测，通过测试体系设计、Failure Pattern 归因及产品方案探索，推动生成结果在品牌一致性、内容适配与交付稳定性上的持续优化。",
+        tags: ["PowerPoint Agent", "品牌规范", "AI 评测"],
+        detail: "我负责企业品牌 PPT 助手的产品设计，把企业的 PDF 品牌手册拆成可复用的设计规则和素材，让助手生成幻灯片时能直接调用。产品进入微软内部试用，在常用测试集上，最终生成环节约 90% 的用例通过。为了看清哪些问题反复出现，我还独立开发了评测分析工具，把约 2.6 万字评估记录按问题归类，支持回看原始证据，约 15 分钟就能审阅主要发现。",
       },
       {
         company: "奇点跃迁 · Start—up",
